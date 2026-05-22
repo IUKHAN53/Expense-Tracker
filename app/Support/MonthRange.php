@@ -28,4 +28,21 @@ class MonthRange
 
         return [$base->startOfMonth(), $base->endOfMonth()];
     }
+
+    /**
+     * Build a "YYYY-MM" => "Month YYYY" map for the last $count months.
+     * Used by the admin's month-filter selects.
+     *
+     * @return array<string, string>
+     */
+    public static function options(int $count = 24): array
+    {
+        $out = [];
+        for ($i = 0; $i < $count; $i++) {
+            $d = CarbonImmutable::now()->subMonths($i);
+            $out[$d->format('Y-m')] = $d->format('F Y');
+        }
+
+        return $out;
+    }
 }

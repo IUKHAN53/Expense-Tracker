@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Receipts\Tables;
 
+use App\Support\MonthTableFilter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -53,6 +54,7 @@ class ReceiptsTable
                     ->sortable(),
             ])
             ->filters([
+                MonthTableFilter::make('created_at'),
                 SelectFilter::make('receipt_type')
                     ->options([
                         'grocery' => 'Grocery',

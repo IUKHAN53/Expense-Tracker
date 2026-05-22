@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Entries\Tables;
 
+use App\Support\MonthTableFilter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -48,6 +49,7 @@ class EntriesTable
                     }),
             ])
             ->filters([
+                MonthTableFilter::make('purchased_at'),
                 SelectFilter::make('spending_list_id')
                     ->label('List')
                     ->relationship('spendingList', 'name'),

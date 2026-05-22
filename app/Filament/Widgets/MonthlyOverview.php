@@ -4,23 +4,27 @@ namespace App\Filament\Widgets;
 
 use App\Models\Entry;
 use App\Models\SpendingList;
+use App\Support\MonthRange;
 use Carbon\CarbonImmutable;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class MonthlyOverview extends StatsOverviewWidget
 {
+    use InteractsWithPageFilters;
+
     protected function getStats(): array
     {
-        $start = CarbonImmutable::now()->startOfMonth();
-        $end = CarbonImmutable::now()->endOfMonth();
+        $monthKey = $this->pageFilters['month'] ?? CarbonImmutable::now()->format('Y-m');
+        [$start, $end] = MonthRange::resolve($monthKey);
+        $monthLabel = $start->format('F Y');
 
         $monthEntries = Entry::query()->whereBetween('purchased_at', [$start, $end]);
 
         $grandTotal = (float) $monthEntries->clone()->sum('amount');
         $entryCount = (int) $monthEntries->clone()->count();
 
-        // Highest-spending person this month.
         $topPerson = SpendingList::query()
             ->where('type', SpendingList::TYPE_PERSON)
             ->withSum(['entries as spent' => fn ($q) => $q->whereBetween('purchased_at', [$start, $end])], 'amount')
@@ -31,7 +35,7 @@ class MonthlyOverview extends StatsOverviewWidget
         $carTotal = $this->listTotal(SpendingList::TYPE_VEHICLE, $start, $end);
 
         return [
-            Stat::make('Total spent this month', 'Rs '.number_format($grandTotal))
+            Stat::make("Total spent in {$monthLabel}", 'Rs '.number_format($grandTotal))
                 ->description($entryCount.' '.str('entry')->plural($entryCount))
                 ->descriptionIcon('heroicon-m-banknotes')
                 ->color('primary'),

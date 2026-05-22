@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\BankMessages\Tables;
 
+use App\Support\MonthTableFilter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -47,7 +48,7 @@ class BankMessagesTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                MonthTableFilter::make('created_at'),
             ])
             ->recordActions([
                 EditAction::make(),
