@@ -31,6 +31,8 @@ class AdminPanelTest extends TestCase
             '/admin/receipts/create',
             '/admin/bank-messages',
             '/admin/bank-messages/create',
+            '/admin/fuel-records',
+            '/admin/fuel-records/create',
         ];
 
         foreach ($pages as $url) {

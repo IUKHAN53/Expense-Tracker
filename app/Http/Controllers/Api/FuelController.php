@@ -48,6 +48,10 @@ class FuelController extends Controller
                 $kmpl = round($kmSince / $liters, 2);
             }
 
+            $rsPerKm = ($kmSince !== null && $kmSince > 0)
+                ? round((float) $e->amount / $kmSince, 2)
+                : null;
+
             $records[] = [
                 'id' => $e->id,
                 'date' => $e->purchased_at?->toIso8601String(),
@@ -61,6 +65,7 @@ class FuelController extends Controller
                 'notes' => $e->notes,
                 'km_since_last' => $kmSince,
                 'km_per_liter' => $kmpl,
+                'rs_per_km' => $rsPerKm,
             ];
 
             if ($odo !== null) {
