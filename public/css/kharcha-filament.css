@@ -1,0 +1,39 @@
+/* Kharcha — warm cream re-theme polish for the Filament admin panel.
+   The saffron + warm-grey palette is set in AdminPanelProvider; this file
+   adds the Newsreader display type and the cream page background. */
+
+/* Italic Newsreader for page, section and modal headings. */
+.fi-header-heading,
+.fi-section-header-heading,
+.fi-modal-heading,
+.fi-form-section-header-heading,
+.fi-ta-header-heading {
+    font-family: 'Newsreader', Georgia, serif !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.01em;
+}
+
+/* Warm cream page background. */
+.fi-body,
+.fi-simple-layout {
+    background-color: #fdf8ee !important;
+}
+
+/* Slightly lifted ivory for the sidebar and topbar. */
+.fi-sidebar,
+.fi-topbar > nav,
+.fi-topbar nav {
+    background-color: #fffaf0 !important;
+}
+
+/* Mono numerals read nicely in stat widgets. */
+.fi-wi-stats-overview-stat-value {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    letter-spacing: -0.01em;
+}
+
+/* Brand wordmark on the login screen. */
+.fi-simple-main {
+    background-color: #fffaf0;
+}

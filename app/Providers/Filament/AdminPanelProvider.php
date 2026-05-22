@@ -10,8 +10,8 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -28,9 +28,26 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('Kharcha')
+            ->brandLogo(fn () => view('filament.brand'))
+            ->brandLogoHeight('2.1rem')
+            ->favicon(asset('img/kharcha-mark.svg'))
+            ->darkMode(false)
+            ->font('Geist')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#c9621f'),
+                'gray' => Color::hex('#7c6a52'),
+                'success' => Color::hex('#5d7a3d'),
+                'danger' => Color::hex('#b14430'),
+                'warning' => Color::hex('#c9621f'),
+                'info' => Color::hex('#5d7a3d'),
             ])
+            ->renderHook(
+                PanelsRenderHook::HEAD_END,
+                fn (): string => '<link rel="preconnect" href="https://fonts.googleapis.com">'
+                    .'<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;1,400;1,500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">'
+                    .'<link rel="stylesheet" href="'.asset('css/kharcha-filament.css').'">',
+            )
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -39,7 +56,6 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
