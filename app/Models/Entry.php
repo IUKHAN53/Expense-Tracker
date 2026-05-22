@@ -26,6 +26,9 @@ class Entry extends Model
         'fuel_liters',
         'fuel_rate',
         'odometer',
+        'fuel_type',
+        'is_full_tank',
+        'possible_duplicate_of_entry_id',
     ];
 
     protected function casts(): array
@@ -37,6 +40,7 @@ class Entry extends Model
             'fuel_liters' => 'decimal:2',
             'fuel_rate' => 'decimal:2',
             'odometer' => 'integer',
+            'is_full_tank' => 'boolean',
         ];
     }
 

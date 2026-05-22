@@ -79,6 +79,8 @@ class EntryController extends Controller
             'fuel_liters' => ['nullable', 'numeric', 'min:0'],
             'fuel_rate' => ['nullable', 'numeric', 'min:0'],
             'odometer' => ['nullable', 'integer', 'min:0'],
+            'fuel_type' => ['nullable', 'string', 'max:16'],
+            'is_full_tank' => ['nullable', 'boolean'],
         ]);
 
         $data['quantity'] = $data['quantity'] ?? 1;
@@ -113,6 +115,8 @@ class EntryController extends Controller
             'fuel_liters' => ['nullable', 'numeric', 'min:0'],
             'fuel_rate' => ['nullable', 'numeric', 'min:0'],
             'odometer' => ['nullable', 'integer', 'min:0'],
+            'fuel_type' => ['nullable', 'string', 'max:16'],
+            'is_full_tank' => ['nullable', 'boolean'],
         ]);
 
         $entry->update($data);
@@ -158,6 +162,9 @@ class EntryController extends Controller
             'fuel_liters' => $entry->fuel_liters !== null ? (float) $entry->fuel_liters : null,
             'fuel_rate' => $entry->fuel_rate !== null ? (float) $entry->fuel_rate : null,
             'odometer' => $entry->odometer,
+            'fuel_type' => $entry->fuel_type,
+            'is_full_tank' => $entry->is_full_tank,
+            'possible_duplicate_of_entry_id' => $entry->possible_duplicate_of_entry_id,
         ];
     }
 }

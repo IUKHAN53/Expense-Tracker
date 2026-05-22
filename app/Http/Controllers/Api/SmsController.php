@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Entry;
 use App\Models\SpendingList;
 use App\Services\GeminiService;
+use App\Support\EntryDeduper;
 use App\Support\Fuel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -49,6 +50,7 @@ class SmsController extends Controller
             'imported' => 0,
             'skipped' => 0,
             'transactions' => 0,
+            'duplicates' => 0,
             'ignored' => 0,
             'failed' => 0,
             'messages' => [],
@@ -100,22 +102,37 @@ class SmsController extends Controller
             if ($isSpend) {
                 $isFuel = $parsed['is_fuel'] || Fuel::looksLikeFuel($parsed['merchant']);
                 $targetList = ($isFuel && $carList) ? $carList : $fallbackList;
+                $purchasedAt = $this->safeDate($parsed['occurred_at']) ?? $receivedAt ?? now();
 
-                $entry = Entry::create([
-                    'spending_list_id' => $targetList->id,
-                    'category_id' => $isFuel ? $fuelCategoryId : null,
-                    'item_name' => $parsed['merchant'] ?: 'Card transaction',
-                    'amount' => $parsed['amount'],
-                    'quantity' => 1,
-                    'purchased_at' => $this->safeDate($parsed['occurred_at']) ?? $receivedAt ?? now(),
-                    'source' => Entry::SOURCE_SMS,
-                    'notes' => 'Imported from SMS'.($sender ? " ({$sender})" : ''),
-                ]);
+                $duplicate = EntryDeduper::findDuplicate(
+                    $targetList->id,
+                    (float) $parsed['amount'],
+                    $purchasedAt,
+                );
 
-                $record->matched_list_id = $targetList->id;
-                $record->entry_id = $entry->id;
-                $record->status = 'imported';
-                $summary['transactions']++;
+                if ($duplicate) {
+                    // A manual / receipt-scan entry already covers this spend.
+                    $record->matched_list_id = $targetList->id;
+                    $record->entry_id = $duplicate->id;
+                    $record->status = 'duplicate';
+                    $summary['duplicates']++;
+                } else {
+                    $entry = Entry::create([
+                        'spending_list_id' => $targetList->id,
+                        'category_id' => $isFuel ? $fuelCategoryId : null,
+                        'item_name' => $parsed['merchant'] ?: 'Card transaction',
+                        'amount' => $parsed['amount'],
+                        'quantity' => 1,
+                        'purchased_at' => $purchasedAt,
+                        'source' => Entry::SOURCE_SMS,
+                        'notes' => 'Imported from SMS'.($sender ? " ({$sender})" : ''),
+                    ]);
+
+                    $record->matched_list_id = $targetList->id;
+                    $record->entry_id = $entry->id;
+                    $record->status = 'imported';
+                    $summary['transactions']++;
+                }
             } else {
                 $record->status = 'ignored';
                 $summary['ignored']++;
