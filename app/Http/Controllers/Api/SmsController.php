@@ -104,16 +104,19 @@ class SmsController extends Controller
                 $targetList = ($isFuel && $carList) ? $carList : $fallbackList;
                 $purchasedAt = $this->safeDate($parsed['occurred_at']) ?? $receivedAt ?? now();
 
-                $duplicate = EntryDeduper::findDuplicate(
-                    $targetList->id,
-                    (float) $parsed['amount'],
-                    $purchasedAt,
-                );
+                $amount = (float) $parsed['amount'];
+                $duplicate = EntryDeduper::findDuplicate($targetList->id, $amount, $purchasedAt);
+                $duplicateReceipt = $duplicate
+                    ? null
+                    : EntryDeduper::findDuplicateReceipt($amount, $purchasedAt);
 
-                if ($duplicate) {
-                    // A manual / receipt-scan entry already covers this spend.
+                if ($duplicate || $duplicateReceipt) {
+                    // Already covered by a manual entry or by a scanned receipt
+                    // (whose items may be split across several lists).
+                    $linkEntryId = $duplicate?->id
+                        ?? $duplicateReceipt?->entries()->orderBy('id')->value('id');
                     $record->matched_list_id = $targetList->id;
-                    $record->entry_id = $duplicate->id;
+                    $record->entry_id = $linkEntryId;
                     $record->status = 'duplicate';
                     $summary['duplicates']++;
                 } else {
