@@ -68,7 +68,11 @@ class EntryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'spending_list_id' => ['required', 'integer', 'exists:spending_lists,id'],
+            // Either a single list id (regular entry) or an array of list ids
+            // (split — the amount is divided equally between them).
+            'spending_list_id' => ['required_without:spending_list_ids', 'integer', 'exists:spending_lists,id'],
+            'spending_list_ids' => ['required_without:spending_list_id', 'array', 'min:1', 'max:10'],
+            'spending_list_ids.*' => ['integer', 'distinct', 'exists:spending_lists,id'],
             'category_id' => ['nullable', 'integer', 'exists:categories,id'],
             'item_name' => ['required', 'string', 'max:255'],
             'amount' => ['required', 'numeric', 'min:0'],
@@ -83,11 +87,39 @@ class EntryController extends Controller
             'is_full_tank' => ['nullable', 'boolean'],
         ]);
 
+        $listIds = $data['spending_list_ids'] ?? [$data['spending_list_id']];
+        unset($data['spending_list_id'], $data['spending_list_ids']);
+
         $data['quantity'] = $data['quantity'] ?? 1;
         $data['purchased_at'] = $data['purchased_at'] ?? now();
         $data['source'] = Entry::SOURCE_MANUAL;
 
-        $entry = Entry::create($data);
+        // Split mode — divide the amount equally and link the shares with a UUID.
+        if (count($listIds) > 1) {
+            $share = round((float) $data['amount'] / count($listIds), 2);
+            $groupId = (string) \Illuminate\Support\Str::uuid();
+
+            $entries = collect($listIds)->map(function (int $listId) use ($data, $share, $groupId) {
+                return Entry::create(array_merge($data, [
+                    'spending_list_id' => $listId,
+                    'amount' => $share,
+                    'split_group_id' => $groupId,
+                ]));
+            })->all();
+
+            return response()->json([
+                'data' => array_map(
+                    fn ($e) => $this->present($e->load(['spendingList', 'category'])),
+                    $entries,
+                ),
+                'split_group_id' => $groupId,
+                'split_share' => $share,
+            ], 201);
+        }
+
+        $entry = Entry::create(array_merge($data, [
+            'spending_list_id' => $listIds[0],
+        ]));
 
         return response()->json([
             'data' => $this->present($entry->load(['spendingList', 'category'])),
@@ -165,6 +197,7 @@ class EntryController extends Controller
             'fuel_type' => $entry->fuel_type,
             'is_full_tank' => $entry->is_full_tank,
             'possible_duplicate_of_entry_id' => $entry->possible_duplicate_of_entry_id,
+            'split_group_id' => $entry->split_group_id,
         ];
     }
 }

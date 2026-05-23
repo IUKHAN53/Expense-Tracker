@@ -29,6 +29,7 @@ class Entry extends Model
         'fuel_type',
         'is_full_tank',
         'possible_duplicate_of_entry_id',
+        'split_group_id',
     ];
 
     protected function casts(): array
