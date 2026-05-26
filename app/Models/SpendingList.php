@@ -2,16 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToAccount;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SpendingList extends Model
 {
+    use BelongsToAccount;
+
     public const TYPE_PERSON = 'person';
     public const TYPE_HOUSEHOLD = 'household';
     public const TYPE_VEHICLE = 'vehicle';
 
     protected $fillable = [
+        'account_id',
         'name',
         'type',
         'color',

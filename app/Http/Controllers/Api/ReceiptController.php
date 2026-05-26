@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Entry;
 use App\Models\Receipt;
 use App\Models\SpendingList;
+use App\Rules\OwnedByTenant;
 use App\Services\GeminiService;
 use App\Support\Fuel;
 use Illuminate\Http\Request;
@@ -107,8 +108,8 @@ class ReceiptController extends Controller
     {
         $data = $request->validate([
             'items' => ['required', 'array', 'min:1'],
-            'items.*.spending_list_id' => ['required', 'integer', 'exists:spending_lists,id'],
-            'items.*.category_id' => ['nullable', 'integer', 'exists:categories,id'],
+            'items.*.spending_list_id' => ['required', 'integer', new OwnedByTenant(SpendingList::class)],
+            'items.*.category_id' => ['nullable', 'integer', new OwnedByTenant(Category::class)],
             'items.*.item_name' => ['required', 'string', 'max:255'],
             'items.*.amount' => ['required', 'numeric', 'min:0'],
             'items.*.quantity' => ['nullable', 'numeric', 'min:0'],

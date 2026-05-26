@@ -2,20 +2,22 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToAccount;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Entry extends Model
 {
+    use BelongsToAccount;
+
     public const SOURCE_MANUAL = 'manual';
     public const SOURCE_SCAN = 'scan';
-    public const SOURCE_SMS = 'sms';
 
     protected $fillable = [
+        'account_id',
         'spending_list_id',
         'category_id',
         'receipt_id',
-        'bank_message_id',
         'item_name',
         'amount',
         'quantity',
@@ -58,10 +60,5 @@ class Entry extends Model
     public function receipt(): BelongsTo
     {
         return $this->belongsTo(Receipt::class);
-    }
-
-    public function bankMessage(): BelongsTo
-    {
-        return $this->belongsTo(BankMessage::class);
     }
 }

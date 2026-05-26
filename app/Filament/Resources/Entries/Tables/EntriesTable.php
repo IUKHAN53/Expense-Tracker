@@ -44,7 +44,6 @@ class EntriesTable
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'scan' => 'success',
-                        'sms' => 'info',
                         default => 'gray',
                     }),
             ])
@@ -60,7 +59,6 @@ class EntriesTable
                     ->options([
                         'manual' => 'Manual',
                         'scan' => 'Receipt scan',
-                        'sms' => 'SMS import',
                     ]),
             ])
             ->recordActions([

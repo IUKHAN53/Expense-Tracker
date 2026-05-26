@@ -48,7 +48,6 @@ class EntryForm
                     ->options([
                         'manual' => 'Manual',
                         'scan' => 'Receipt scan',
-                        'sms' => 'SMS import',
                     ])
                     ->default('manual')
                     ->required(),

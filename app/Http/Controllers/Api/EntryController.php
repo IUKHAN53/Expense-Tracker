@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Entry;
+use App\Models\SpendingList;
+use App\Rules\OwnedByTenant;
 use App\Support\MonthRange;
 use Illuminate\Http\Request;
 
@@ -13,12 +16,12 @@ class EntryController extends Controller
     public function index(Request $request)
     {
         $data = $request->validate([
-            'spending_list_id' => ['nullable', 'integer', 'exists:spending_lists,id'],
-            'category_id' => ['nullable', 'integer', 'exists:categories,id'],
+            'spending_list_id' => ['nullable', 'integer', new OwnedByTenant(SpendingList::class)],
+            'category_id' => ['nullable', 'integer', new OwnedByTenant(Category::class)],
             'month' => ['nullable', 'regex:/^\d{4}-\d{2}$/'],
             'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date'],
-            'source' => ['nullable', 'in:manual,scan,sms'],
+            'source' => ['nullable', 'in:manual,scan'],
             'search' => ['nullable', 'string', 'max:100'],
             'limit' => ['nullable', 'integer', 'min:1', 'max:1000'],
         ]);
@@ -70,10 +73,10 @@ class EntryController extends Controller
         $data = $request->validate([
             // Either a single list id (regular entry) or an array of list ids
             // (split — the amount is divided equally between them).
-            'spending_list_id' => ['required_without:spending_list_ids', 'integer', 'exists:spending_lists,id'],
+            'spending_list_id' => ['required_without:spending_list_ids', 'integer', new OwnedByTenant(SpendingList::class)],
             'spending_list_ids' => ['required_without:spending_list_id', 'array', 'min:1', 'max:10'],
-            'spending_list_ids.*' => ['integer', 'distinct', 'exists:spending_lists,id'],
-            'category_id' => ['nullable', 'integer', 'exists:categories,id'],
+            'spending_list_ids.*' => ['integer', 'distinct', new OwnedByTenant(SpendingList::class)],
+            'category_id' => ['nullable', 'integer', new OwnedByTenant(Category::class)],
             'item_name' => ['required', 'string', 'max:255'],
             'amount' => ['required', 'numeric', 'min:0'],
             'quantity' => ['nullable', 'numeric', 'min:0'],
@@ -136,8 +139,8 @@ class EntryController extends Controller
     public function update(Request $request, Entry $entry)
     {
         $data = $request->validate([
-            'spending_list_id' => ['sometimes', 'integer', 'exists:spending_lists,id'],
-            'category_id' => ['nullable', 'integer', 'exists:categories,id'],
+            'spending_list_id' => ['sometimes', 'integer', new OwnedByTenant(SpendingList::class)],
+            'category_id' => ['nullable', 'integer', new OwnedByTenant(Category::class)],
             'item_name' => ['sometimes', 'string', 'max:255'],
             'amount' => ['sometimes', 'numeric', 'min:0'],
             'quantity' => ['nullable', 'numeric', 'min:0'],
@@ -183,7 +186,6 @@ class EntryController extends Controller
                 'color' => $entry->category->color,
             ] : null,
             'receipt_id' => $entry->receipt_id,
-            'bank_message_id' => $entry->bank_message_id,
             'item_name' => $entry->item_name,
             'amount' => (float) $entry->amount,
             'quantity' => (float) $entry->quantity,
