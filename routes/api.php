@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\EntryController;
@@ -24,6 +25,9 @@ Route::post('reset-password', [AuthController::class, 'resetPassword']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('me', [AuthController::class, 'me']);
     Route::post('logout', [AuthController::class, 'logout']);
+
+    // Account self-service.
+    Route::delete('account', [AccountController::class, 'destroy']);
 
     // Spending lists (people / home / car)
     Route::get('lists', [SpendingListController::class, 'index']);
