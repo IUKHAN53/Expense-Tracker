@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\WelcomeMail;
 use App\Models\User;
 use App\Support\AccountProvisioner;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
@@ -37,6 +40,17 @@ class AuthController extends Controller
             $user,
             $data['household_name'] ?? ($data['name']."'s Household"),
         );
+
+        // Welcome email. Mail failures must never block a successful signup.
+        try {
+            Mail::to($user->email)->send(new WelcomeMail($user->fresh('account')));
+        } catch (\Throwable $e) {
+            Log::warning('Welcome email failed to send', [
+                'user_id' => $user->id,
+                'email'   => $user->email,
+                'error'   => $e->getMessage(),
+            ]);
+        }
 
         $token = $user->createToken($data['device_name'] ?? 'mobile')->plainTextToken;
 
