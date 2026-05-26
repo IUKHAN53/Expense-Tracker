@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /reset-password
+
+Sitemap: https://expense.iukhan.tech/sitemap.xml
