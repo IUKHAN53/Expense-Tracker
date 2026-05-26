@@ -5,7 +5,6 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\EntryController;
 use App\Http\Controllers\Api\FuelController;
 use App\Http\Controllers\Api\ReceiptController;
-use App\Http\Controllers\Api\SmsController;
 use App\Http\Controllers\Api\SpendingListController;
 use App\Http\Controllers\Api\SummaryController;
 use Illuminate\Support\Facades\Route;
@@ -50,8 +49,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('receipts', [ReceiptController::class, 'index']);
     Route::get('receipts/{receipt}', [ReceiptController::class, 'show']);
     Route::post('receipts/{receipt}/confirm', [ReceiptController::class, 'confirm']);
-
-    // Transaction SMS importer
-    Route::post('sms/import', [SmsController::class, 'import']);
-    Route::get('sms', [SmsController::class, 'index']);
 });

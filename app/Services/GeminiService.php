@@ -7,12 +7,9 @@ use Illuminate\Support\Facades\Log;
 use RuntimeException;
 
 /**
- * Thin client around Google's Gemini API used for two jobs:
- *   1. parseReceipt() - vision: turn a photo of a bill into line items.
- *   2. parseSms()     - text:   turn a bank/wallet SMS into a transaction.
- *
- * Both calls ask Gemini to return strict JSON (responseMimeType) and the
- * expected shape is described inline in the prompt.
+ * Thin client around Google's Gemini API: parseReceipt() turns a photo of
+ * a bill into structured line items. The call asks Gemini for strict JSON
+ * (responseMimeType) and the expected shape is described inline in the prompt.
  */
 class GeminiService
 {
@@ -118,66 +115,6 @@ PROMPT;
             'fuel_liters' => isset($data['fuel_liters']) ? (float) $data['fuel_liters'] : null,
             'fuel_rate' => isset($data['fuel_rate']) ? (float) $data['fuel_rate'] : null,
             'items' => $items,
-            'raw' => $data,
-        ];
-    }
-
-    /**
-     * Parse a bank/wallet SMS into a transaction.
-     *
-     * @return array{is_transaction:bool,amount:?float,direction:?string,merchant:?string,is_fuel:bool,occurred_at:?string,bank:?string,raw:array}
-     */
-    public function parseSms(string $body, ?string $sender = null): array
-    {
-        $sender = $sender ?: 'unknown';
-
-        $prompt = <<<PROMPT
-You are a bank and mobile-wallet SMS parser for a household expense tracker in Pakistan.
-Pakistani banks and wallets (HBL, UBL, MCB, Meezan, Allied, Bank Alfalah, JazzCash,
-Easypaisa, SadaPay, NayaPay, etc.) send SMS messages for account activity.
-
-Decide whether the message below represents money SPENT by the account holder
-(a debit: card purchase, POS, online payment, fuel, ATM withdrawal, bill payment,
-fund transfer out). Ignore OTP codes, promotions/marketing, balance enquiries and
-pure informational messages.
-
-Return ONLY a JSON object with exactly this shape:
-{
-  "is_transaction": true or false,
-  "amount": number or null,
-  "direction": "debit | credit | null",
-  "merchant": "payee / merchant / shop name, or null",
-  "is_fuel": true or false,
-  "occurred_at": "YYYY-MM-DD HH:MM:SS if a date/time is present, else null",
-  "bank": "bank or wallet name if identifiable, else null"
-}
-
-Rules:
-- "is_transaction" is true ONLY for an actual spending/debit event.
-- "amount" is a plain number in PKR (no "Rs", no commas).
-- "is_fuel" is true when the merchant is a petrol pump, fuel/filling station or CNG.
-- Respond with the JSON object only, no markdown, no commentary.
-
-SMS sender: {$sender}
-SMS body:
-{$body}
-PROMPT;
-
-        $data = $this->generate([['text' => $prompt]]);
-
-        $direction = isset($data['direction']) ? strtolower((string) $data['direction']) : null;
-        if (! in_array($direction, ['debit', 'credit'], true)) {
-            $direction = null;
-        }
-
-        return [
-            'is_transaction' => (bool) ($data['is_transaction'] ?? false),
-            'amount' => isset($data['amount']) ? (float) $data['amount'] : null,
-            'direction' => $direction,
-            'merchant' => $this->stringOrNull($data['merchant'] ?? null),
-            'is_fuel' => (bool) ($data['is_fuel'] ?? false),
-            'occurred_at' => $this->stringOrNull($data['occurred_at'] ?? null),
-            'bank' => $this->stringOrNull($data['bank'] ?? null),
             'raw' => $data,
         ];
     }
