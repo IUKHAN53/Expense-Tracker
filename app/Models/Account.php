@@ -28,7 +28,7 @@ class Account extends Model
     /** Currencies the app understands. Add new codes here as needed. */
     public const SUPPORTED_CURRENCIES = [
         'USD', 'EUR', 'GBP', 'INR', 'PKR', 'BDT', 'LKR',
-        'AED', 'SAR', 'CAD', 'AUD',
+        'AED', 'SAR', 'CAD', 'AUD', 'CNY',
     ];
 
     protected $fillable = [
