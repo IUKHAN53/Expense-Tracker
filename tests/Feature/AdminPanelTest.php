@@ -50,7 +50,7 @@ class AdminPanelTest extends TestCase
         $user = User::create([
             'name' => 'Regular', 'email' => 'reg@example.com',
             'password' => Hash::make('secret12345'), 'is_super_admin' => false,
-        ]);
+            'email_verified_at' => now(),]);
         AccountProvisioner::provision($user, 'Reg HH');
 
         $pages = [
@@ -77,7 +77,7 @@ class AdminPanelTest extends TestCase
         $user = User::create([
             'name' => 'Regular', 'email' => 'reg@example.com',
             'password' => Hash::make('secret12345'), 'is_super_admin' => false,
-        ]);
+            'email_verified_at' => now(),]);
         AccountProvisioner::provision($user, 'Reg HH');
 
         $this->refreshAuth()->actingAs($user)->get('/admin')->assertForbidden();

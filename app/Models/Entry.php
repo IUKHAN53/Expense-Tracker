@@ -15,6 +15,7 @@ class Entry extends Model
 
     protected $fillable = [
         'account_id',
+        'created_by_user_id',
         'spending_list_id',
         'category_id',
         'receipt_id',

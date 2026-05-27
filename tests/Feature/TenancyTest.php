@@ -68,6 +68,11 @@ class TenancyTest extends TestCase
             'name' => 'B', 'email' => 'b@example.com', 'password' => 'secret12345',
         ])->assertCreated();
 
+        // The tenancy boundary is what we're testing here, not the verification
+        // flow; mark both newly-registered users verified so the protected
+        // routes don't 403 us before we can prove the scope works.
+        User::query()->whereNull('email_verified_at')->update(['email_verified_at' => now()]);
+
         $userA = User::where('email', 'a@example.com')->firstOrFail();
         $userB = User::where('email', 'b@example.com')->firstOrFail();
         $listA = SpendingList::withoutGlobalScopes()->where('account_id', $userA->account_id)->first();

@@ -124,7 +124,7 @@ class ScanQuotaTest extends TestCase
             'email' => 'scanner@example.com',
             'password' => Hash::make('secret'),
             'is_super_admin' => false,
-        ]);
+            'email_verified_at' => now(),]);
         AccountProvisioner::provision($user, 'Scanner HH');
 
         return $user->fresh('account');

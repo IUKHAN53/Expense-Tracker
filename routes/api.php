@@ -3,9 +3,10 @@
 use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\Api\InvitationController;
+use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\Api\EntryController;
 use App\Http\Controllers\Api\FuelController;
+use App\Http\Controllers\Api\InvitationController;
 use App\Http\Controllers\Api\ReceiptController;
 use App\Http\Controllers\Api\SpendingListController;
 use App\Http\Controllers\Api\SummaryController;
@@ -27,13 +28,20 @@ Route::post('reset-password', [AuthController::class, 'resetPassword']);
 Route::get('invitations/{token}', [InvitationController::class, 'show']);
 Route::post('invitations/{token}/accept', [InvitationController::class, 'accept']);
 
+// Authenticated routes that work BEFORE email verification (so the OTP wall
+// in the app can call them).
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('me', [AuthController::class, 'me']);
     Route::post('logout', [AuthController::class, 'logout']);
-
-    // Account self-service.
     Route::delete('account', [AccountController::class, 'destroy']);
 
+    // OTP verification flow.
+    Route::post('email/verify', [EmailVerificationController::class, 'verify']);
+    Route::post('email/resend', [EmailVerificationController::class, 'resend']);
+});
+
+// Everything else requires both auth AND a verified email.
+Route::middleware(['auth:sanctum', 'verified.json'])->group(function () {
     // Household members & invitations.
     Route::get('account/members', [InvitationController::class, 'index']);
     Route::post('account/invitations', [InvitationController::class, 'store']);

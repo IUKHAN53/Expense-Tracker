@@ -196,7 +196,7 @@ class InvitationTest extends TestCase
             'email' => $email,
             'password' => Hash::make('correct-passphrase'),
             'is_super_admin' => false,
-        ]);
+            'email_verified_at' => now(),]);
         AccountProvisioner::provision($u, 'HH '.$email);
 
         return $u->fresh('account');
@@ -210,6 +210,6 @@ class InvitationTest extends TestCase
             'password' => Hash::make('correct-passphrase'),
             'is_super_admin' => false,
             'account_id' => $accountId,
-        ]);
+            'email_verified_at' => now(),]);
     }
 }

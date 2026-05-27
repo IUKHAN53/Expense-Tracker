@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\Api\EmailVerificationController;
 
 class AuthController extends Controller
 {
@@ -41,6 +42,17 @@ class AuthController extends Controller
             $data['household_name'] ?? ($data['name']."'s Household"),
         );
 
+        // Send the 6-digit verification code so the inbox-wall screen in
+        // the app has something to verify against. Wrapped in try/catch in
+        // case SMTP is down; the user can request a re-send from the wall.
+        try {
+            EmailVerificationController::dispatchFor($user);
+        } catch (\Throwable $e) {
+            Log::warning('Verification dispatch failed', [
+                'user_id' => $user->id, 'email' => $user->email, 'error' => $e->getMessage(),
+            ]);
+        }
+
         // Welcome email. Mail failures must never block a successful signup.
         try {
             Mail::to($user->email)->send(new WelcomeMail($user->fresh('account')));
@@ -57,6 +69,7 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token,
             'user' => $this->presentUser($user->fresh('account')),
+            'requires_email_verification' => true,
         ], 201);
     }
 
@@ -165,6 +178,7 @@ class AuthController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
+            'email_verified_at' => $user->email_verified_at?->toIso8601String(),
             'is_super_admin' => $user->isSuperAdmin(),
             'account' => $account ? [
                 'id' => $account->id,

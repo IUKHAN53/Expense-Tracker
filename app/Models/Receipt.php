@@ -17,6 +17,7 @@ class Receipt extends Model
 
     protected $fillable = [
         'account_id',
+        'created_by_user_id',
         'image_path',
         'merchant',
         'receipt_type',

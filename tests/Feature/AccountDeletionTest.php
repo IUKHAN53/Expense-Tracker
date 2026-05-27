@@ -131,7 +131,7 @@ class AccountDeletionTest extends TestCase
             'email' => $email,
             'password' => Hash::make('correct-passphrase'),
             'is_super_admin' => false,
-        ]);
+            'email_verified_at' => now(),]);
 
         AccountProvisioner::provision($user, $user->name."'s Household");
 

@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@expense.app',
             'password' => Hash::make('password'),
             'is_super_admin' => true,
+            'email_verified_at' => now(),
         ]);
 
         AccountProvisioner::provision($user, 'Admin Household');
