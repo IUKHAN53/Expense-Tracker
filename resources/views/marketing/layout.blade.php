@@ -197,12 +197,18 @@
         .nav-cta {
             background: var(--ink);
             color: var(--card);
-            padding: var(--s-2) var(--s-4);
+            padding: var(--s-3) var(--s-5);
             border-radius: 2px;
+            font-family: var(--sans);
             font-weight: 500;
-            min-height: 38px;
+            font-size: 13.5px;
+            letter-spacing: 0.02em;
+            line-height: 1;
+            min-height: 40px;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
+            white-space: nowrap;
             transition: background 200ms var(--ease-out), transform 100ms var(--ease-out);
         }
         @media (hover: hover) and (pointer: fine) {
