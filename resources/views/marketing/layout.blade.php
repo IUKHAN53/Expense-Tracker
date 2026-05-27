@@ -200,6 +200,7 @@
         .nav-cta {
             background: var(--ink);
             color: var(--card);
+            text-decoration: none;
             padding: var(--s-3) var(--s-5);
             border-radius: 2px;
             font-family: var(--sans);
