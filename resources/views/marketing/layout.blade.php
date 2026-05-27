@@ -457,7 +457,7 @@
                 <a href="/#features">Features</a>
                 <a href="/#faq">FAQ</a>
                 <a href="/admin/login">Sign in</a>
-                <a href="/#cta" class="nav-cta">Start free</a>
+                <a href="/admin/login" class="nav-cta">Start free</a>
             </div>
         </nav>
     </header>
@@ -491,10 +491,11 @@
                     </ul>
                 </div>
                 <div class="col">
-                    <h4>Account</h4>
+                    <h4>Company</h4>
                     <ul>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
                         <li><a href="/admin/login">Sign in</a></li>
-                        <li><a href="/#cta">Start free</a></li>
                     </ul>
                 </div>
                 <div class="col">
@@ -507,7 +508,7 @@
             </div>
             <div class="bottom">
                 <span>© {{ date('Y') }} Kharcha · iukhan.tech</span>
-                <span>Karachi · Lahore · Islamabad · Peshawar</span>
+                <span>Made in Pakistan</span>
             </div>
         </div>
     </footer>

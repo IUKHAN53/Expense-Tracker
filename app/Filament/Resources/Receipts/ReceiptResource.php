@@ -2,18 +2,19 @@
 
 namespace App\Filament\Resources\Receipts;
 
-use App\Filament\Resources\Receipts\Pages\CreateReceipt;
-use App\Filament\Resources\Receipts\Pages\EditReceipt;
 use App\Filament\Resources\Receipts\Pages\ListReceipts;
-use App\Filament\Resources\Receipts\Schemas\ReceiptForm;
 use App\Filament\Resources\Receipts\Tables\ReceiptsTable;
 use App\Models\Receipt;
 use BackedEnum;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
+/**
+ * Receipts are produced by the AI scan flow; humans never hand-edit one.
+ * The /admin surface is read-only: list page + the per-row View modal
+ * (defined in ReceiptsTable) that enlarges the photo and shows parsed
+ * metadata. No create, no edit.
+ */
 class ReceiptResource extends Resource
 {
     protected static ?string $model = Receipt::class;
@@ -22,9 +23,14 @@ class ReceiptResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-    public static function form(Schema $schema): Schema
+    public static function canCreate(): bool
     {
-        return ReceiptForm::configure($schema);
+        return false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        return false;
     }
 
     public static function table(Table $table): Table
@@ -32,19 +38,10 @@ class ReceiptResource extends Resource
         return ReceiptsTable::configure($table);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
             'index' => ListReceipts::route('/'),
-            'create' => CreateReceipt::route('/create'),
-            'edit' => EditReceipt::route('/{record}/edit'),
         ];
     }
 }

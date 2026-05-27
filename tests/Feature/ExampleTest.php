@@ -18,6 +18,8 @@ class ExampleTest extends TestCase
     public function test_marketing_pages_render(): void
     {
         $this->get('/pricing')->assertOk()->assertSee('Pro', false);
+        $this->get('/about')->assertOk()->assertSee('Irfan Ullah', false);
+        $this->get('/contact')->assertOk()->assertSee('hello@iukhan.tech', false);
         $this->get('/privacy')->assertOk()->assertSee('Privacy notice', false);
         $this->get('/terms')->assertOk()->assertSee('Terms of use', false);
     }

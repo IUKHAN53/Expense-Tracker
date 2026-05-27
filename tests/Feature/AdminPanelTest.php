@@ -31,7 +31,6 @@ class AdminPanelTest extends TestCase
             '/admin/categories',
             '/admin/categories/create',
             '/admin/receipts',
-            '/admin/receipts/create',
             '/admin/fuel-records',
             '/admin/fuel-records/create',
             '/admin/accounts',
@@ -60,6 +59,8 @@ class AdminPanelTest extends TestCase
             '/app/categories',
             '/app/receipts',
             '/app/fuel-records',
+            // /app/receipts/create and /app/receipts/{id}/edit intentionally
+            // omitted: ReceiptResource is read-only on both panels.
         ];
 
         foreach ($pages as $url) {

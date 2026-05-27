@@ -657,7 +657,7 @@
             <h1 class="rise d-1">Where the<br><span class="accent">month</span><span class="roman">,</span><br>went<span class="accent">.</span></h1>
             <p class="lede rise d-2">A calm expense tracker for Pakistani households. Snap a receipt, split a bill, log fuel by the litre. <em>See exactly where the rupees go</em>, without spreadsheets and without guesswork.</p>
             <div class="hero-cta rise d-3">
-                <a class="btn btn-primary" href="#cta">
+                <a class="btn btn-primary" href="/admin/login">
                     Start free
                     <span class="arrow" aria-hidden="true">→</span>
                 </a>
@@ -665,7 +665,7 @@
             </div>
             <div class="hero-meta rise d-4">
                 <span><span class="dot" aria-hidden="true"></span>Free forever tier</span>
-                <span><span class="dot" aria-hidden="true"></span>PKR pricing</span>
+                <span><span class="dot" aria-hidden="true"></span>Up to 5 household members</span>
                 <span><span class="dot" aria-hidden="true"></span>Android &amp; web</span>
             </div>
         </div>
@@ -693,7 +693,7 @@
 <section class="band wrap" id="features">
     <div class="reveal">
         <p class="eyebrow"><span class="line"></span> What it does</p>
-        <h2 class="h2">Four small frictions<br><span class="accent">removed</span><span class="roman">.</span></h2>
+        <h2 class="h2">Five small frictions<br><span class="accent">removed</span><span class="roman">.</span></h2>
         <p class="lede" style="max-width: 56ch;">Not another budget app that asks you to categorise every transaction by hand. Kharcha is built around the way a household actually shops, drives and pays.</p>
     </div>
 
@@ -719,7 +719,13 @@
         <article class="feature reveal">
             <p class="num">04 <span aria-hidden="true">·</span></p>
             <h3 class="h3">A list per person, plus Home and Car.</h3>
-            <p>Five household members, Home and Car: separate ledgers, one monthly view. The dashboard answers a question parents actually ask, <em>where did the month go?</em></p>
+            <p>Separate ledgers for each household member, plus Home and Car: one monthly view across all of them. The dashboard answers the question parents actually ask, <em>where did the month go?</em></p>
+        </article>
+
+        <article class="feature reveal">
+            <p class="num">05 <span aria-hidden="true">·</span></p>
+            <h3 class="h3">Invite the family. One household, one ledger.</h3>
+            <p>Send an email invitation to your spouse, parent or child; they sign up and join your household instead of starting a separate ledger. Free covers <strong>up to 3 members</strong>; Pro raises it to 5. When you upgrade, <em>everyone in the household inherits Pro</em>, no separate billing.</p>
         </article>
     </div>
 </section>
@@ -891,7 +897,7 @@
                 <li>· Unlimited lists, splits, fuel</li>
                 <li>· Monthly dashboard &amp; charts</li>
             </ul>
-            <a class="btn btn-ghost cta" href="#cta">Start free</a>
+            <a class="btn btn-ghost cta" href="/admin/login">Start free</a>
         </div>
 
         <div class="price featured">
@@ -904,7 +910,7 @@
                 <li>· Early access to new features</li>
                 <li>· Direct support from the maker</li>
             </ul>
-            <a class="btn btn-accent cta" href="#cta">Choose Pro</a>
+            <a class="btn btn-accent cta" href="/admin/login">Choose Pro</a>
         </div>
 
         <div class="price">
@@ -917,7 +923,7 @@
                 <li>· Founder pricing</li>
                 <li>· Future features included</li>
             </ul>
-            <a class="btn btn-ghost cta" href="#cta">Pay once</a>
+            <a class="btn btn-ghost cta" href="/admin/login">Pay once</a>
         </div>
     </div>
 
@@ -951,6 +957,14 @@
         <details>
             <summary>Is Kharcha made in Pakistan? <span class="plus" aria-hidden="true">+</span></summary>
             <p class="a">Yes, by a small team in Karachi. Pricing, language, and the features themselves are designed for Pakistani households. Currency is PKR by default and every receipt the AI has seen is local.</p>
+        </details>
+        <details>
+            <summary>How do household members work? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">From the app, open Settings → Household and send an email invitation. The invitee follows the link, signs up (or signs in if they already have Kharcha), and joins your household. Their entries land in the same ledger as yours. Free households fit up to 3 members; Pro raises the cap to 5. When you upgrade to Pro, every existing member inherits it at no extra cost.</p>
+        </details>
+        <details>
+            <summary>Do I need to verify my email? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">Yes. After signup you get a 6-digit code in your inbox; entering it unlocks the rest of the app. The code expires in 15 minutes and you can request a fresh one any time. This keeps fake signups off the service and means we can reach you when a household member sends an invitation.</p>
         </details>
         <details>
             <summary>What happens if the Gemini quota runs out? <span class="plus" aria-hidden="true">+</span></summary>

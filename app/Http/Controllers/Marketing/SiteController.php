@@ -24,6 +24,16 @@ class SiteController extends Controller
         ]));
     }
 
+    public function about()
+    {
+        return view('marketing.about');
+    }
+
+    public function contact()
+    {
+        return view('marketing.contact');
+    }
+
     public function privacy()
     {
         return view('marketing.privacy');
@@ -42,6 +52,8 @@ class SiteController extends Controller
         $urls = [
             ['loc' => $base.'/',         'priority' => '1.0', 'changefreq' => 'monthly'],
             ['loc' => $base.'/pricing',  'priority' => '0.9', 'changefreq' => 'monthly'],
+            ['loc' => $base.'/about',    'priority' => '0.6', 'changefreq' => 'monthly'],
+            ['loc' => $base.'/contact',  'priority' => '0.5', 'changefreq' => 'monthly'],
             ['loc' => $base.'/privacy',  'priority' => '0.3', 'changefreq' => 'yearly'],
             ['loc' => $base.'/terms',    'priority' => '0.3', 'changefreq' => 'yearly'],
         ];

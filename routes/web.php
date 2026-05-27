@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 // Marketing.
 Route::get('/',         [SiteController::class, 'home'])->name('home');
 Route::get('/pricing',  [SiteController::class, 'pricing'])->name('pricing');
+Route::get('/about',    [SiteController::class, 'about'])->name('about');
+Route::get('/contact',  [SiteController::class, 'contact'])->name('contact');
 Route::get('/privacy',  [SiteController::class, 'privacy'])->name('privacy');
 Route::get('/terms',    [SiteController::class, 'terms'])->name('terms');
 Route::get('/sitemap.xml', [SiteController::class, 'sitemap']);
