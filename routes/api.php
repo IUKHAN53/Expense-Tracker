@@ -58,6 +58,8 @@ Route::middleware(['auth:sanctum', 'verified.json'])->group(function () {
     // Categories
     Route::get('categories', [CategoryController::class, 'index']);
     Route::post('categories', [CategoryController::class, 'store']);
+    Route::put('categories/{category}', [CategoryController::class, 'update']);
+    Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
 
     // Entries (individual purchases)
     Route::get('entries', [EntryController::class, 'index']);

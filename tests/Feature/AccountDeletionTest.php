@@ -92,7 +92,7 @@ class AccountDeletionTest extends TestCase
         $victim = $this->makeProvisionedUser('victim@example.com');
         $bystander = $this->makeProvisionedUser('bystander@example.com');
 
-        // AccountProvisioner seeded each user's 7 default lists. Bypass the
+        // AccountProvisioner seeded each user's default lists. Bypass the
         // tenant scope when counting so the victim's auth state can't hide rows.
         $bystanderListCount = SpendingList::withoutGlobalScope(AccountScope::class)
             ->where('account_id', $bystander->account_id)

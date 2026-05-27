@@ -27,4 +27,24 @@ class CategoryController extends Controller
 
         return response()->json(['data' => $category], 201);
     }
+
+    public function update(Request $request, Category $category)
+    {
+        $data = $request->validate([
+            'name' => ['sometimes', 'string', 'max:100'],
+            'icon' => ['nullable', 'string', 'max:100'],
+            'color' => ['nullable', 'string', 'max:20'],
+        ]);
+
+        $category->update($data);
+
+        return response()->json(['data' => $category->only(['id', 'name', 'icon', 'color'])]);
+    }
+
+    public function destroy(Category $category)
+    {
+        $category->delete();
+
+        return response()->json(['message' => 'Category deleted.']);
+    }
 }

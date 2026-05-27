@@ -27,15 +27,15 @@ class ApiTest extends TestCase
         $this->assertNotEmpty($login['token']);
         $headers = ['Authorization' => "Bearer {$login['token']}"];
 
-        // Seeded lists: 5 people + Home + Car.
+        // Seeded lists: Home + Car. Users add Persons from the app.
         $this->getJson('/api/lists', $headers)
             ->assertOk()
-            ->assertJsonCount(7, 'data');
+            ->assertJsonCount(2, 'data');
 
         $this->getJson('/api/categories', $headers)->assertOk();
 
-        // Create an entry.
-        $list = SpendingList::where('type', 'person')->first();
+        // Create an entry on the Home list.
+        $list = SpendingList::where('type', 'household')->first();
         $entry = $this->postJson('/api/entries', [
             'spending_list_id' => $list->id,
             'item_name' => 'Test rice 5kg',

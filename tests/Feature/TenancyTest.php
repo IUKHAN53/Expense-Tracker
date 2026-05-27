@@ -35,7 +35,7 @@ class TenancyTest extends TestCase
         $this->assertFalse($user->isSuperAdmin());
 
         $account = Account::find($user->account_id);
-        $this->assertSame(7, $account->spendingLists()->count());
+        $this->assertSame(2, $account->spendingLists()->count());
         $this->assertSame(11, $account->categories()->count());
     }
 
@@ -83,10 +83,10 @@ class TenancyTest extends TestCase
             'spending_list_id' => $listA->id, 'item_name' => 'A-only milk', 'amount' => 100,
         ])->assertCreated();
 
-        // B sees only their own 7 lists (not 14) and zero entries.
+        // B sees only their own 2 lists (not 4) and zero entries.
         $this->asUser($userB)->getJson('/api/lists')
             ->assertOk()
-            ->assertJsonCount(7, 'data');
+            ->assertJsonCount(2, 'data');
         $this->asUser($userB)->getJson('/api/entries')
             ->assertOk()
             ->assertJsonCount(0, 'data');

@@ -16,13 +16,8 @@ use Illuminate\Support\Facades\DB;
  */
 class AccountProvisioner
 {
-    /** Default spending-list bundle: 5 person lists + Home + Car. */
+    /** Default spending-list bundle: Home + Car. Persons are added by the user from the app. */
     public const DEFAULT_LISTS = [
-        ['name' => 'Person 1', 'type' => SpendingList::TYPE_PERSON, 'color' => '#6366f1', 'icon' => 'heroicon-o-user'],
-        ['name' => 'Person 2', 'type' => SpendingList::TYPE_PERSON, 'color' => '#ec4899', 'icon' => 'heroicon-o-user'],
-        ['name' => 'Person 3', 'type' => SpendingList::TYPE_PERSON, 'color' => '#f59e0b', 'icon' => 'heroicon-o-user'],
-        ['name' => 'Person 4', 'type' => SpendingList::TYPE_PERSON, 'color' => '#10b981', 'icon' => 'heroicon-o-user'],
-        ['name' => 'Person 5', 'type' => SpendingList::TYPE_PERSON, 'color' => '#06b6d4', 'icon' => 'heroicon-o-user'],
         ['name' => 'Home', 'type' => SpendingList::TYPE_HOUSEHOLD, 'color' => '#0ea5e9', 'icon' => 'heroicon-o-home'],
         ['name' => 'Car', 'type' => SpendingList::TYPE_VEHICLE, 'color' => '#ef4444', 'icon' => 'heroicon-o-truck'],
     ];
