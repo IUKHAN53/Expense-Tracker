@@ -29,6 +29,17 @@ class ReceiptController extends Controller
             'image' => ['required', 'image', 'max:12288'], // 12 MB
         ]);
 
+        $account = $request->user()->account;
+
+        if (! $account?->canScanReceipt()) {
+            return response()->json([
+                'message' => 'You have used all '.\App\Models\Account::FREE_SCANS_PER_MONTH.' free scans this month. Upgrade to Pro for unlimited scans, or wait until next month.',
+                'scans_used' => $account?->scansThisMonth() ?? 0,
+                'scans_free_quota' => \App\Models\Account::FREE_SCANS_PER_MONTH,
+                'is_pro' => $account?->isPro() ?? false,
+            ], 402); // Payment Required
+        }
+
         $file = $request->file('image');
         $path = $file->store('receipts', 'public');
 
@@ -45,11 +56,15 @@ class ReceiptController extends Controller
         } catch (Throwable $e) {
             $receipt->update(['status' => 'failed', 'error' => $e->getMessage()]);
 
+            // Gemini failed; do NOT consume a scan from the quota.
             return response()->json([
                 'message' => 'Could not read the receipt. '.$e->getMessage(),
                 'receipt' => $this->present($receipt),
             ], 422);
         }
+
+        // Only charge the quota after a successful Gemini parse.
+        $account->recordScan();
 
         $purchasedAt = $this->safeDate($parsed['purchased_at']);
 

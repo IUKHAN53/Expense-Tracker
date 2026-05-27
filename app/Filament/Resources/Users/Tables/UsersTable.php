@@ -3,12 +3,17 @@
 namespace App\Filament\Resources\Users\Tables;
 
 use App\Models\Account;
+use App\Models\User;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UsersTable
 {
@@ -63,6 +68,25 @@ class UsersTable
                     ])
                     ->label('Plan'),
             ])
-            ->recordActions([EditAction::make()]);
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make()
+                    ->label('Delete')
+                    ->modalHeading('Delete this user?')
+                    ->modalDescription(fn (User $record) => "{$record->email} will be removed. If they are the last user on their household, that household and all its data will be deleted too.")
+                    ->modalSubmitActionLabel('Delete forever')
+                    ->visible(fn (User $record) => Auth::user()?->isSuperAdmin() && $record->id !== Auth::id())
+                    ->using(function (User $record) {
+                        DB::transaction(function () use ($record) {
+                            $accountId = $record->account_id;
+                            $record->tokens()->delete();
+                            $record->delete();
+
+                            if ($accountId && ! User::where('account_id', $accountId)->exists()) {
+                                Account::query()->whereKey($accountId)->delete();
+                            }
+                        });
+                    }),
+            ]);
     }
 }

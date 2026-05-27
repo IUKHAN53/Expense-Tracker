@@ -45,11 +45,18 @@ class UserResource extends Resource
         return false;
     }
 
+    /**
+     * SuperAdmin can hard-delete any user except themselves. The delete
+     * action revokes the user's tokens and cascades the household if
+     * they were its last member.
+     */
     public static function canDelete($record): bool
     {
-        // Hard-deleting a user must go through the account-deletion path
-        // (DELETE /api/account) so cascades and token revocation happen.
-        return false;
+        $current = Auth::user();
+
+        return (bool) ($current?->isSuperAdmin()
+            && $record
+            && $record->id !== $current->id);
     }
 
     public static function form(Schema $schema): Schema

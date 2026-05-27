@@ -20,6 +20,11 @@ class Account extends Model
     /** Free-tier monthly cap on AI receipt scans. */
     public const FREE_SCANS_PER_MONTH = 3;
 
+    /** Per-plan household member caps. Counts the owner plus invited users. */
+    public const FREE_MAX_MEMBERS = 3;
+
+    public const PRO_MAX_MEMBERS = 5;
+
     protected $fillable = [
         'name',
         'plan',
@@ -102,5 +107,34 @@ class Account extends Model
         // Touch `scansThisMonth` first to roll the counter at month boundaries.
         $this->scansThisMonth();
         $this->increment('scans_used_this_month');
+    }
+
+    /** Member cap depends on the household's plan. */
+    public function maxMembers(): int
+    {
+        return $this->isPro() ? self::PRO_MAX_MEMBERS : self::FREE_MAX_MEMBERS;
+    }
+
+    /** Live count = users on the account + unaccepted, unexpired invites. */
+    public function memberUsage(): int
+    {
+        return $this->users()->count() + $this->pendingInvitations()->count();
+    }
+
+    public function canInviteMore(): bool
+    {
+        return $this->memberUsage() < $this->maxMembers();
+    }
+
+    public function pendingInvitations()
+    {
+        return $this->hasMany(AccountInvitation::class)
+            ->whereNull('accepted_at')
+            ->where('expires_at', '>', now());
+    }
+
+    public function invitations()
+    {
+        return $this->hasMany(AccountInvitation::class);
     }
 }

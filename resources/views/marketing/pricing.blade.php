@@ -315,6 +315,7 @@
             <p class="blurb">For households entering most expenses by hand and only scanning a few receipts each month.</p>
             <ul>
                 <li><strong>3 AI receipt scans</strong> per calendar month</li>
+                <li><strong>Up to 3 household members</strong></li>
                 <li>Unlimited manual entries</li>
                 <li>Unlimited spending lists</li>
                 <li>Split expenses across people</li>
@@ -330,9 +331,10 @@
             <p class="name">Pro · Monthly</p>
             <p class="price"><span class="cur">{{ $pricing['currency'] }}</span>{{ $pricing['monthly_display'] }}</p>
             <p class="per">per month, cancel anytime</p>
-            <p class="blurb">For families who scan most receipts and want every AI lift Kharcha can give.</p>
+            <p class="blurb">For larger families who scan most receipts. Invited members inherit Pro at no extra cost.</p>
             <ul>
                 <li><strong>Unlimited</strong> AI receipt scans</li>
+                <li><strong>Up to 5 household members</strong>, all on Pro</li>
                 <li>Everything in Free</li>
                 <li>Early access to new features</li>
                 <li>Direct support from the maker</li>
@@ -348,6 +350,7 @@
             <p class="blurb">Pay once and Kharcha Pro is yours for life. About {{ $pricing['breakeven_months'] }} months of the monthly plan; everything after is free.</p>
             <ul>
                 <li>Pro features, <strong>forever</strong></li>
+                <li>Up to 5 household members included</li>
                 <li>One payment, zero renewals</li>
                 <li>Founder pricing while it lasts</li>
                 <li>Future Pro features included</li>
@@ -376,6 +379,8 @@
             </thead>
             <tbody>
                 <tr><th scope="row">AI receipt scans</th><td class="center">3 / month</td><td class="center">Unlimited</td><td class="center">Unlimited</td></tr>
+                <tr><th scope="row">Household members</th><td class="center">Up to 3</td><td class="center">Up to 5</td><td class="center">Up to 5</td></tr>
+                <tr><th scope="row">Pro features inherited by members</th><td class="dash"></td><td class="check"></td><td class="check"></td></tr>
                 <tr><th scope="row">Manual entries</th><td class="center">Unlimited</td><td class="center">Unlimited</td><td class="center">Unlimited</td></tr>
                 <tr><th scope="row">Spending lists</th><td class="center">Unlimited</td><td class="center">Unlimited</td><td class="center">Unlimited</td></tr>
                 <tr><th scope="row">Split expenses</th><td class="check"></td><td class="check"></td><td class="check"></td></tr>
