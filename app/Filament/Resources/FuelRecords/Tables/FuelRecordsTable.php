@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\FuelRecords\Tables;
 
+use App\Models\Account;
+use App\Models\User;
 use App\Support\MonthTableFilter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -11,11 +13,14 @@ use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class FuelRecordsTable
 {
     public static function configure(Table $table): Table
     {
+        $isSuperAdmin = (bool) Auth::user()?->isSuperAdmin();
+
         return $table
             ->defaultSort('purchased_at', 'desc')
             ->columns([
@@ -26,7 +31,7 @@ class FuelRecordsTable
                 TextColumn::make('fuel_type')
                     ->badge()
                     ->color('danger')
-                    ->placeholder('—'),
+                    ->placeholder('·'),
                 TextColumn::make('odometer')
                     ->label('Odometer')
                     ->numeric(decimalPlaces: 0, thousandsSeparator: ',')
@@ -50,6 +55,14 @@ class FuelRecordsTable
                 IconColumn::make('is_full_tank')
                     ->label('Full')
                     ->boolean(),
+                TextColumn::make('createdBy.name')
+                    ->label('Added by')
+                    ->placeholder('·')
+                    ->toggleable(),
+                TextColumn::make('account.name')
+                    ->label('Household')
+                    ->visible($isSuperAdmin)
+                    ->toggleable(),
                 TextColumn::make('notes')
                     ->wrap()
                     ->limit(40)
@@ -62,6 +75,15 @@ class FuelRecordsTable
                 SelectFilter::make('is_full_tank')
                     ->label('Full tank')
                     ->options([1 => 'Full', 0 => 'Partial']),
+                SelectFilter::make('created_by_user_id')
+                    ->label('Added by')
+                    ->options(fn () => self::userOptions($isSuperAdmin))
+                    ->searchable(),
+                SelectFilter::make('account_id')
+                    ->label('Household')
+                    ->options(fn () => Account::orderBy('name')->pluck('name', 'id')->all())
+                    ->searchable()
+                    ->visible($isSuperAdmin),
             ])
             ->recordActions([
                 EditAction::make(),
@@ -71,5 +93,17 @@ class FuelRecordsTable
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    private static function userOptions(bool $isSuperAdmin): array
+    {
+        $query = User::query()->orderBy('name');
+        if (! $isSuperAdmin) {
+            $query->where('account_id', Auth::user()?->account_id);
+        }
+
+        return $query->get(['id', 'name', 'email'])
+            ->mapWithKeys(fn (User $u) => [$u->id => $u->name.' ('.$u->email.')'])
+            ->all();
     }
 }
