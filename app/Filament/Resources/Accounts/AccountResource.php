@@ -27,9 +27,18 @@ class AccountResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    public static function canViewAny(): bool
+    /**
+     * Belt-and-braces: canAccess blocks every route on the resource, not just
+     * the index. A regular tenant who guessed /admin/accounts/3/edit gets 403.
+     */
+    public static function canAccess(): bool
     {
         return (bool) Auth::user()?->isSuperAdmin();
+    }
+
+    public static function canViewAny(): bool
+    {
+        return self::canAccess();
     }
 
     public static function canCreate(): bool

@@ -35,6 +35,7 @@ class AdminPanelTest extends TestCase
             '/admin/fuel-records',
             '/admin/fuel-records/create',
             '/admin/accounts',
+            '/admin/users',
         ];
 
         foreach ($pages as $url) {
@@ -65,8 +66,10 @@ class AdminPanelTest extends TestCase
             $this->refreshAuth()->actingAs($user)->get($url)->assertOk();
         }
 
-        // Accounts resource is SuperAdmin-only: should 403 here.
+        // SuperAdmin-only resources must 403 on the /app panel even for
+        // an authenticated regular user.
         $this->refreshAuth()->actingAs($user)->get('/app/accounts')->assertForbidden();
+        $this->refreshAuth()->actingAs($user)->get('/app/users')->assertForbidden();
     }
 
     public function test_regular_user_cannot_enter_admin_panel(): void

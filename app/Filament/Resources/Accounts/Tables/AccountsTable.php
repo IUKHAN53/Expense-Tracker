@@ -30,7 +30,7 @@ class AccountsTable
                 TextColumn::make('plan_expires_at')
                     ->label('Expires')
                     ->dateTime('d M Y')
-                    ->placeholder('—'),
+                    ->placeholder('·'),
                 TextColumn::make('scans_used_this_month')->label('Scans')->sortable(),
                 TextColumn::make('created_at')->label('Joined')->date('d M Y')->sortable(),
             ])
