@@ -1,6 +1,6 @@
 @extends('marketing.layout', [
     'title' => 'Pricing · Kharcha',
-    'description' => 'Kharcha pricing in Pakistani Rupees: a free forever tier with three AI scans a month, Pro Monthly at PKR 499, Pro Lifetime at PKR 7,999.',
+    'description' => 'Kharcha pricing adapts to your region. Free forever tier with three AI scans a month. Pro Monthly from USD 1.99 (PKR 499, INR 149). Pro Lifetime one-time payment.',
     'active' => 'pricing',
 ])
 

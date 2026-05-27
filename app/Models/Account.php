@@ -25,12 +25,19 @@ class Account extends Model
 
     public const PRO_MAX_MEMBERS = 5;
 
+    /** Currencies the app understands. Add new codes here as needed. */
+    public const SUPPORTED_CURRENCIES = [
+        'USD', 'EUR', 'GBP', 'INR', 'PKR', 'BDT', 'LKR',
+        'AED', 'SAR', 'CAD', 'AUD',
+    ];
+
     protected $fillable = [
         'name',
         'plan',
         'plan_expires_at',
         'scans_used_this_month',
         'scans_reset_at',
+        'currency',
     ];
 
     protected function casts(): array

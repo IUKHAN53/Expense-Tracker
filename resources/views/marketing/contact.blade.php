@@ -169,7 +169,7 @@
             </div>
             <div class="topic">
                 <h4>Scan misreading a receipt</h4>
-                <p>The AI gets receipts wrong sometimes. Attach the photo and what it should have read; the model improves on real Pakistani receipts the more we see.</p>
+                <p>The AI gets receipts wrong sometimes. Attach the photo and what it should have read; the model improves on real receipts the more we see, from any country.</p>
             </div>
             <div class="topic">
                 <h4>Pro, billing, refunds</h4>

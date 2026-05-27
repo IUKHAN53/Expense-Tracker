@@ -14,6 +14,28 @@ use Illuminate\Validation\ValidationException;
 class AccountController extends Controller
 {
     /**
+     * Set or change the account's display currency. The mobile app calls
+     * this from the first-launch picker and from the Settings → Currency
+     * row. Amounts already stored on the account are NOT converted; this
+     * is a relabel, not a re-conversion.
+     */
+    public function setCurrency(\Illuminate\Http\Request $request)
+    {
+        $data = $request->validate([
+            'currency' => ['required', 'string', 'size:3', 'in:'.implode(',', \App\Models\Account::SUPPORTED_CURRENCIES)],
+        ]);
+
+        $account = $request->user()->account;
+        $account->forceFill(['currency' => strtoupper($data['currency'])])->save();
+
+        return response()->json([
+            'message' => 'Currency set to '.$account->currency,
+            'currency' => $account->currency,
+        ]);
+    }
+
+
+    /**
      * Hard-delete the current user and their household account.
      *
      * Required by Google Play (Data Safety): every app that lets users

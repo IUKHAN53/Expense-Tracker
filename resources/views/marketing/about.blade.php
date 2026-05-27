@@ -1,6 +1,6 @@
 @extends('marketing.layout', [
     'title' => 'About · Kharcha',
-    'description' => 'Kharcha is built by Irfan Ullah, a full-stack developer in Pakistan, to fix a frustration his own household kept hitting. One person, one ledger, calmly maintained.',
+    'description' => 'Kharcha is built by Irfan Ullah, a full-stack developer who needed a household ledger that just worked. Multi-currency, multi-member, calmly maintained, for households anywhere.',
 ])
 
 @section('head-style')
@@ -121,8 +121,8 @@
         <div class="prose">
             <p>For years my household tracked expenses in a spreadsheet that nobody fully trusted. Receipts got lost. Someone would buy groceries on a card, someone else would handle the milk man in cash, and at the end of the month <em>nobody could say where the rupees went</em>.</p>
             <p>The apps we tried wanted us to categorise every transaction by hand, in English, with categories that did not match how we shop. They billed in dollars. They never quite worked.</p>
-            <p>So I built one for us. A camera that reads the receipt. A way to split a single bill across the people who chipped in. Fuel logged the way drivers actually measure it, in litres per Pakistani Rupee.</p>
-            <p>Then friends asked for a copy, and Kharcha became a product.</p>
+            <p>So I built one for us. A camera that reads the receipt. A way to split a single bill across the people who chipped in. Fuel logged the way drivers actually measure it, in litres per local currency unit.</p>
+            <p>Then friends asked for a copy, and Kharcha became a product. It now ships with multi-currency support so a household in Lahore, London or Lagos can use the same app in its own currency.</p>
         </div>
     </div>
 </section>
@@ -179,8 +179,8 @@
             <div class="k">First release</div>
         </div>
         <div class="stat">
-            <div class="v">100%</div>
-            <div class="k">PKR-first pricing</div>
+            <div class="v">11+</div>
+            <div class="k">Currencies supported</div>
         </div>
         <div class="stat">
             <div class="v">1</div>

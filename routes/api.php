@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('me', [AuthController::class, 'me']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::delete('account', [AccountController::class, 'destroy']);
+    Route::post('account/currency', [AccountController::class, 'setCurrency']);
 
     // OTP verification flow.
     Route::post('email/verify', [EmailVerificationController::class, 'verify']);

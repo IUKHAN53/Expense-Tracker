@@ -188,6 +188,8 @@ class AuthController extends Controller
                 'scans_used_this_month' => $account->scansThisMonth(),
                 'scans_free_quota' => \App\Models\Account::FREE_SCANS_PER_MONTH,
                 'plan_expires_at' => $account->plan_expires_at?->toIso8601String(),
+                'currency' => $account->currency,
+                'requires_currency' => $account->currency === null,
             ] : null,
         ];
     }

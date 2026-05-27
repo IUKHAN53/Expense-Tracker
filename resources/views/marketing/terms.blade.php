@@ -129,9 +129,9 @@
         <section id="pro">
             <h2>5. Pro plans &amp; billing</h2>
             <ul>
-                <li><strong>Pro Monthly</strong>: PKR 499 per calendar month, charged on the day of the month you subscribed. Cancel any time from settings; access continues to the end of the period you have paid for.</li>
-                <li><strong>Pro Lifetime</strong>: PKR 7,999 one-time, paid once and never charged again. "Lifetime" means the lifetime of Kharcha as a service. We have no plans to close, but if Kharcha shuts down we will give at least 90 days' notice and an export of your data.</li>
-                <li><strong>All prices are in Pakistani Rupees</strong> and exclude any provincial or federal taxes that may apply.</li>
+                <li><strong>Pro Monthly</strong>: charged on the day of the month you subscribed, in your local currency. Pricing varies by region (USD 1.99, PKR 499, INR 149 and so on). Cancel any time from settings; access continues to the end of the period you have paid for.</li>
+                <li><strong>Pro Lifetime</strong>: a single payment in your local currency, paid once and never charged again. "Lifetime" means the lifetime of Kharcha as a service. We have no plans to close, but if Kharcha shuts down we will give at least 90 days' notice and an export of your data.</li>
+                <li><strong>Local taxes (VAT, sales tax, etc.)</strong> are excluded from the displayed price and added at checkout where applicable.</li>
                 <li><strong>Failed payments</strong>: a Monthly subscription falls back to the Free tier after a single failed charge and one reminder. Your data stays; only the unlimited-scan benefit pauses until you update payment.</li>
             </ul>
         </section>
@@ -153,7 +153,7 @@
 
         <section id="liability">
             <h2>9. Liability</h2>
-            <p>To the extent permitted by Pakistani law, our total liability to you for anything arising out of Kharcha is capped at the total amount you have paid us in the 12 months before the claim. For free accounts that cap is PKR 0; for Pro accounts it is what you paid. We are not liable for indirect, consequential, or special damages.</p>
+            <p>To the extent permitted by Pakistani law, our total liability to you for anything arising out of Kharcha is capped at the total amount you have paid us in the 12 months before the claim. For free accounts that cap is zero; for Pro accounts it is what you paid. We are not liable for indirect, consequential, or special damages.</p>
         </section>
 
         <section id="termination">

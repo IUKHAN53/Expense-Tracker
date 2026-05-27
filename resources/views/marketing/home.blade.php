@@ -1,6 +1,6 @@
 @extends('marketing.layout', [
     'title' => 'Kharcha · A household ledger, kept by hand',
-    'description' => 'The calm expense tracker for Pakistani households. Snap a receipt with the camera, split a bill across the family, log fuel by the litre, see exactly where the month went.',
+    'description' => 'The calm expense tracker for households anywhere. Snap a receipt with the camera, split a bill across the family, log fuel by the litre, see exactly where the month went. Multi-currency.',
     'active' => 'home',
 ])
 
@@ -655,7 +655,7 @@
         <div>
             <p class="eyebrow rise"><span class="line"></span> A household ledger, kept by hand</p>
             <h1 class="rise d-1">Where the<br><span class="accent">month</span><span class="roman">,</span><br>went<span class="accent">.</span></h1>
-            <p class="lede rise d-2">A calm expense tracker for Pakistani households. Snap a receipt, split a bill, log fuel by the litre. <em>See exactly where the rupees go</em>, without spreadsheets and without guesswork.</p>
+            <p class="lede rise d-2">A calm expense tracker for households anywhere. Snap a receipt, split a bill, log fuel by the litre, in <em>your currency</em>. Without spreadsheets and without guesswork.</p>
             <div class="hero-cta rise d-3">
                 <a class="btn btn-primary" href="/admin/login">
                     Start free
@@ -665,7 +665,7 @@
             </div>
             <div class="hero-meta rise d-4">
                 <span><span class="dot" aria-hidden="true"></span>Free forever tier</span>
-                <span><span class="dot" aria-hidden="true"></span>Up to 5 household members</span>
+                <span><span class="dot" aria-hidden="true"></span>Multi-currency</span>
                 <span><span class="dot" aria-hidden="true"></span>Android &amp; web</span>
             </div>
         </div>
@@ -673,7 +673,7 @@
         <div class="rise d-2" aria-hidden="true">
             <div class="receipt">
                 <h4>Imtiaz Super Market</h4>
-                <p class="place">Karachi · 17:42</p>
+                <p class="place">Today · 17:42</p>
                 <ul>
                     <li><span><span class="qty">2×</span>Milk pack 1L</span><span>540</span></li>
                     <li><span><span class="qty">1×</span>Atta 10kg</span><span>1,820</span></li>
@@ -955,8 +955,12 @@
             <p class="a">Yes. Monthly Pro can be cancelled in one tap from settings; you stay Pro until the end of the billing period and revert to free after. Lifetime Pro is one payment, no recurring charges to cancel.</p>
         </details>
         <details>
-            <summary>Is Kharcha made in Pakistan? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">Yes, by a small team in Karachi. Pricing, language, and the features themselves are designed for Pakistani households. Currency is PKR by default and every receipt the AI has seen is local.</p>
+            <summary>Who built Kharcha? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">A solo developer in Karachi, Pakistan. The app itself is built for households anywhere: pick your currency on first sign-in, change it whenever, and the dashboard always speaks the right symbols. The receipt AI was trained on local receipts initially and is steadily learning more shop layouts as users sign up from new places.</p>
+        </details>
+        <details>
+            <summary>Which currencies does Kharcha support? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">USD, GBP, EUR, INR, PKR, BDT, LKR, AED, SAR, CAD, AUD, and more on request. You pick your currency on first sign-in and change it any time from Settings. Pricing for Pro adapts to your region automatically.</p>
         </details>
         <details>
             <summary>How do household members work? <span class="plus" aria-hidden="true">+</span></summary>

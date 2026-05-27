@@ -7,7 +7,7 @@
 
     {{-- SEO --}}
     <title>{{ $title ?? 'Kharcha · A household ledger, kept by hand' }}</title>
-    <meta name="description" content="{{ $description ?? 'Kharcha is the calm household expense tracker for Pakistani families. Snap a receipt, split with everyone, log fuel, see where the month went.' }}">
+    <meta name="description" content="{{ $description ?? 'Kharcha is the calm household expense tracker for families anywhere. Snap a receipt, split with everyone, log fuel, see where the month went. Multi-currency.' }}">
     <link rel="canonical" href="{{ url()->current() }}">
     <meta name="robots" content="index, follow">
 
@@ -15,7 +15,7 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Kharcha">
     <meta property="og:title" content="{{ $title ?? 'Kharcha · A household ledger, kept by hand' }}">
-    <meta property="og:description" content="{{ $description ?? 'Snap a receipt, split with everyone, log fuel, see where the month went. The calm expense tracker for Pakistani households.' }}">
+    <meta property="og:description" content="{{ $description ?? 'Snap a receipt, split with everyone, log fuel, see where the month went. A calm household expense tracker for families anywhere.' }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:image" content="{{ url('/og.svg') }}">
     <meta property="og:image:width" content="1200">
@@ -490,7 +490,7 @@
                         </svg>
                         <span class="wordmark">kharcha</span>
                     </a>
-                    <p class="colophon">A household ledger, kept by hand. Made in Pakistan for Pakistani families.</p>
+                    <p class="colophon">A household ledger, kept by hand. Multi-currency, for families anywhere.</p>
                 </div>
                 <div class="col">
                     <h4>Product</h4>
@@ -518,7 +518,7 @@
             </div>
             <div class="bottom">
                 <span>© {{ date('Y') }} Kharcha · iukhan.tech</span>
-                <span>Made in Pakistan</span>
+                <span>Built by a developer in Karachi</span>
             </div>
         </div>
     </footer>
