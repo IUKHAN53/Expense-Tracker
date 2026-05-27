@@ -184,16 +184,19 @@
             font-family: var(--sans);
             font-size: 14px;
         }
-        .nav-links a {
+        /* Scoped so the .nav-cta button does not inherit muted link color
+           or zero horizontal padding from the generic rule (which would
+           otherwise win on specificity, .nav-links a being 0-1-1). */
+        .nav-links a:not(.nav-cta) {
             color: var(--ink-soft);
             text-decoration: none;
             transition: color 180ms var(--ease-out);
             padding: var(--s-2) 0;
         }
         @media (hover: hover) and (pointer: fine) {
-            .nav-links a:hover { color: var(--accent); }
+            .nav-links a:not(.nav-cta):hover { color: var(--accent); }
         }
-        .nav-links a.here { color: var(--ink); }
+        .nav-links a.here:not(.nav-cta) { color: var(--ink); }
         .nav-cta {
             background: var(--ink);
             color: var(--card);
