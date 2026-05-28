@@ -51,6 +51,7 @@ class AdminPanelTest extends TestCase
 
         $pages = [
             '/admin',
+            '/admin/reports',
             '/admin/spending-lists',
             '/admin/entries',
             '/admin/categories',
@@ -69,6 +70,7 @@ class AdminPanelTest extends TestCase
 
         $pages = [
             '/app',
+            '/app/reports',
             '/app/spending-lists',
             '/app/entries',
             '/app/categories',

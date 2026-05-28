@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Entry;
 use App\Models\SpendingList;
+use App\Support\Money;
 use App\Support\MonthRange;
 use Carbon\CarbonImmutable;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
@@ -33,24 +34,25 @@ class MonthlyOverview extends StatsOverviewWidget
 
         $homeTotal = $this->listTotal(SpendingList::TYPE_HOUSEHOLD, $start, $end);
         $carTotal = $this->listTotal(SpendingList::TYPE_VEHICLE, $start, $end);
+        $ccy = Money::current();
 
         return [
-            Stat::make("Total spent in {$monthLabel}", 'Rs '.number_format($grandTotal))
+            Stat::make("Total spent in {$monthLabel}", Money::format($grandTotal, $ccy))
                 ->description($entryCount.' '.str('entry')->plural($entryCount))
                 ->descriptionIcon('heroicon-m-banknotes')
                 ->color('primary'),
 
             Stat::make('Top spender', $topPerson?->name ?? '—')
-                ->description($topPerson ? 'Rs '.number_format((float) $topPerson->spent) : 'No spending yet')
+                ->description($topPerson ? Money::format((float) $topPerson->spent, $ccy) : 'No spending yet')
                 ->descriptionIcon('heroicon-m-user')
                 ->color('warning'),
 
-            Stat::make('Home / General', 'Rs '.number_format($homeTotal))
+            Stat::make('Home / General', Money::format($homeTotal, $ccy))
                 ->description('Shared household spending')
                 ->descriptionIcon('heroicon-m-home')
                 ->color('info'),
 
-            Stat::make('Car / Fuel', 'Rs '.number_format($carTotal))
+            Stat::make('Car / Fuel', Money::format($carTotal, $ccy))
                 ->description('Vehicle spending')
                 ->descriptionIcon('heroicon-m-truck')
                 ->color('danger'),
