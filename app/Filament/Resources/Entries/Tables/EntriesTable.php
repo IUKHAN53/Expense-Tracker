@@ -42,6 +42,12 @@ class EntriesTable
                     ->money('PKR')
                     ->sortable()
                     ->summarize(Sum::make()->money('PKR')),
+                TextColumn::make('original_amount')
+                    ->label('Original')
+                    ->formatStateUsing(fn ($state, $record) => $state !== null
+                        ? number_format((float) $state, 2).' '.$record->original_currency
+                        : '—')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('quantity')
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: true),

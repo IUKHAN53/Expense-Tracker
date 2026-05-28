@@ -11,6 +11,7 @@ class Entry extends Model
     use BelongsToAccount;
 
     public const SOURCE_MANUAL = 'manual';
+
     public const SOURCE_SCAN = 'scan';
 
     protected $fillable = [
@@ -21,6 +22,9 @@ class Entry extends Model
         'receipt_id',
         'item_name',
         'amount',
+        'original_amount',
+        'original_currency',
+        'fx_rate',
         'quantity',
         'unit',
         'purchased_at',
@@ -39,6 +43,8 @@ class Entry extends Model
     {
         return [
             'amount' => 'decimal:2',
+            'original_amount' => 'decimal:2',
+            'fx_rate' => 'decimal:8',
             'quantity' => 'decimal:2',
             'purchased_at' => 'datetime',
             'fuel_liters' => 'decimal:2',

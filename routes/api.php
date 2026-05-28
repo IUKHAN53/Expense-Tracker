@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\Api\EntryController;
 use App\Http\Controllers\Api\FuelController;
+use App\Http\Controllers\Api\FxController;
 use App\Http\Controllers\Api\InvitationController;
 use App\Http\Controllers\Api\ReceiptController;
 use App\Http\Controllers\Api\SpendingListController;
@@ -73,6 +74,9 @@ Route::middleware(['auth:sanctum', 'verified.json'])->group(function () {
 
     // Fuel records + stats for the Car list
     Route::get('fuel', [FuelController::class, 'index']);
+
+    // FX rate lookup for receipt currency conversion (server-side rates).
+    Route::get('fx', [FxController::class, 'show']);
 
     // Receipt / bill scanner
     Route::post('receipts/scan', [ReceiptController::class, 'scan']);

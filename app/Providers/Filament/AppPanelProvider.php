@@ -20,9 +20,10 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 /**
- * The end-user Filament panel at /app. Regular signed-up users land here
- * (the /admin panel is SuperAdmin-only). Same resources are discovered;
- * the AccountScope global filter handles tenant isolation.
+ * The end-user Filament panel at /app. Regular signed-up users land here.
+ * Both /app and /admin are per-account (tenant-isolated via AccountScope);
+ * cross-tenant god-mode lives in the separate /superadmin panel. Same
+ * resources are discovered; SuperAdmin-only resources self-gate via canAccess.
  */
 class AppPanelProvider extends PanelProvider
 {
@@ -56,6 +57,10 @@ class AppPanelProvider extends PanelProvider
                 fn (): string => '<link rel="preconnect" href="https://fonts.googleapis.com">'
                     .'<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;1,400;1,500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">'
                     .'<link rel="stylesheet" href="'.asset('css/kharcha-filament.css').'">',
+            )
+            ->renderHook(
+                PanelsRenderHook::BODY_START,
+                fn (): string => view('filament.impersonation-banner')->render(),
             )
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

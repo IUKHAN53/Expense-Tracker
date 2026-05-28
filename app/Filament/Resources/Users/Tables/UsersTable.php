@@ -2,10 +2,13 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Filament\Resources\Accounts\AccountResource;
+use App\Filament\Resources\Users\UserResource;
 use App\Models\Account;
 use App\Models\User;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -27,7 +30,7 @@ class UsersTable
                     ->label('Household')
                     ->searchable()
                     ->url(fn ($record) => $record->account_id
-                        ? route('filament.admin.resources.accounts.edit', ['record' => $record->account_id])
+                        ? AccountResource::getUrl('edit', ['record' => $record->account_id])
                         : null),
                 TextColumn::make('account.plan')
                     ->label('Plan')
@@ -67,6 +70,8 @@ class UsersTable
                     ->label('Plan'),
             ])
             ->recordActions([
+                ViewAction::make(),
+                UserResource::impersonateAction(),
                 EditAction::make(),
                 DeleteAction::make()
                     ->label('Delete')

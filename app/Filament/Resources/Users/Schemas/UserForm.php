@@ -4,8 +4,8 @@ namespace App\Filament\Resources\Users\Schemas;
 
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 
 class UserForm
 {
@@ -27,7 +27,7 @@ class UserForm
                     ])->columns(2),
 
                 Section::make('Privileges')
-                    ->description('Granting SuperAdmin gives this user cross-tenant access to /admin and every other household\'s data. Use carefully.')
+                    ->description('Granting SuperAdmin gives this user cross-tenant access to /superadmin and every other household\'s data. Use carefully.')
                     ->schema([
                         Toggle::make('is_super_admin')
                             ->label('SuperAdmin')

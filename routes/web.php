@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Marketing\SiteController;
+use App\Http\Controllers\Web\ImpersonationController;
 use App\Http\Controllers\Web\InvitationController as WebInvitationController;
 use App\Http\Controllers\Web\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,11 @@ Route::post('/reset-password', [ResetPasswordController::class, 'update'])->name
 
 // Invitation accept (public, opened from the email link).
 Route::get('/invitation', [WebInvitationController::class, 'show'])->name('invitation.show');
+
+// SuperAdmin impersonation. start() is gated to SuperAdmins inside the
+// controller; leave() restores the original session for whoever is being
+// impersonated, so it only needs auth.
+Route::middleware('auth')->group(function () {
+    Route::get('/impersonate/{user}', [ImpersonationController::class, 'start'])->name('impersonate.start');
+    Route::get('/impersonate-leave', [ImpersonationController::class, 'leave'])->name('impersonate.leave');
+});

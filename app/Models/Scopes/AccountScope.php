@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Scope;
  * can operate on raw rows.
  *
  * SuperAdmins bypass the filter — they see every account's data in the
- * /admin Filament panel.
+ * /superadmin Filament panel.
  */
 class AccountScope implements Scope
 {

@@ -19,7 +19,7 @@ class ImportFuelCsv extends Command
     public function handle(): int
     {
         try {
-            $result = (new FuelCsvImporter())->importFile($this->argument('file'));
+            $result = (new FuelCsvImporter)->importFile($this->argument('file'));
         } catch (Throwable $e) {
             $this->error($e->getMessage());
 

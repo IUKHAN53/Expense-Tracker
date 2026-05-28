@@ -9,6 +9,7 @@ use App\Models\SpendingList;
 use App\Rules\OwnedByTenant;
 use App\Support\MonthRange;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class EntryController extends Controller
 {
@@ -100,7 +101,7 @@ class EntryController extends Controller
         // Split mode — divide the amount equally and link the shares with a UUID.
         if (count($listIds) > 1) {
             $share = round((float) $data['amount'] / count($listIds), 2);
-            $groupId = (string) \Illuminate\Support\Str::uuid();
+            $groupId = (string) Str::uuid();
 
             $entries = collect($listIds)->map(function (int $listId) use ($data, $share, $groupId) {
                 return Entry::create(array_merge($data, [
@@ -188,6 +189,9 @@ class EntryController extends Controller
             'receipt_id' => $entry->receipt_id,
             'item_name' => $entry->item_name,
             'amount' => (float) $entry->amount,
+            'original_amount' => $entry->original_amount !== null ? (float) $entry->original_amount : null,
+            'original_currency' => $entry->original_currency,
+            'fx_rate' => $entry->fx_rate !== null ? (float) $entry->fx_rate : null,
             'quantity' => (float) $entry->quantity,
             'unit' => $entry->unit,
             'purchased_at' => $entry->purchased_at?->toIso8601String(),

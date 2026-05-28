@@ -43,14 +43,18 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     }
 
     /**
-     * Panel access: SuperAdmins use /admin, regular users use /app.
+     * Panel access:
+     *  - /superadmin — SuperAdmins only (god-mode, cross-tenant).
+     *  - /admin, /app — any user attached to a household (own tenant only).
+     * A SuperAdmin without a household can still reach /superadmin but not
+     * the per-account panels, which is fine — they manage everything there.
      * Each panel calls this with its own Panel instance.
      */
     public function canAccessPanel(Panel $panel): bool
     {
         return match ($panel->getId()) {
-            'admin' => $this->isSuperAdmin(),
-            'app' => (bool) $this->account_id,
+            'superadmin' => $this->isSuperAdmin(),
+            'admin', 'app' => (bool) $this->account_id,
             default => false,
         };
     }

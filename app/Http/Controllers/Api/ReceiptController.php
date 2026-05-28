@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Account;
 use App\Models\Category;
 use App\Models\Entry;
 use App\Models\Receipt;
@@ -10,10 +11,12 @@ use App\Models\SpendingList;
 use App\Rules\OwnedByTenant;
 use App\Services\GeminiService;
 use App\Support\Fuel;
+use App\Support\Fx;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class ReceiptController extends Controller
@@ -33,9 +36,9 @@ class ReceiptController extends Controller
 
         if (! $account?->canScanReceipt()) {
             return response()->json([
-                'message' => 'You have used all '.\App\Models\Account::FREE_SCANS_PER_MONTH.' free scans this month. Upgrade to Pro for unlimited scans, or wait until next month.',
+                'message' => 'You have used all '.Account::FREE_SCANS_PER_MONTH.' free scans this month. Upgrade to Pro for unlimited scans, or wait until next month.',
                 'scans_used' => $account?->scansThisMonth() ?? 0,
-                'scans_free_quota' => \App\Models\Account::FREE_SCANS_PER_MONTH,
+                'scans_free_quota' => Account::FREE_SCANS_PER_MONTH,
                 'is_pro' => $account?->isPro() ?? false,
             ], 402); // Payment Required
         }
@@ -122,6 +125,11 @@ class ReceiptController extends Controller
     public function confirm(Request $request, Receipt $receipt)
     {
         $data = $request->validate([
+            // Currency the receipt amounts are in. When it differs from the
+            // account's base currency the server converts; item amounts are
+            // taken as the ORIGINAL (receipt) values, never pre-converted.
+            'currency' => ['nullable', 'string', 'size:3', 'in:'.implode(',', Account::SUPPORTED_CURRENCIES)],
+            'fx_rate' => ['nullable', 'numeric', 'gt:0'],
             'items' => ['required', 'array', 'min:1'],
             'items.*.spending_list_id' => ['required', 'integer', new OwnedByTenant(SpendingList::class)],
             'items.*.category_id' => ['nullable', 'integer', new OwnedByTenant(Category::class)],
@@ -134,14 +142,36 @@ class ReceiptController extends Controller
             'items.*.odometer' => ['nullable', 'integer', 'min:0'],
         ]);
 
-        $count = DB::transaction(function () use ($data, $receipt) {
+        $base = strtoupper($request->user()->account?->currency ?: 'USD');
+        $receiptCcy = strtoupper($data['currency'] ?? $base);
+        $converting = $receiptCcy !== $base;
+
+        // Prefer the rate the client passed (what the user actually saw and
+        // could edit); fall back to the server's stored reference rate.
+        $rate = $converting
+            ? (float) ($data['fx_rate'] ?? Fx::rate($receiptCcy, $base) ?? 0)
+            : 1.0;
+
+        if ($converting && $rate <= 0) {
+            throw ValidationException::withMessages([
+                'fx_rate' => ["No usable {$receiptCcy} → {$base} rate."],
+            ]);
+        }
+
+        $count = DB::transaction(function () use ($data, $receipt, $converting, $receiptCcy, $rate) {
             foreach ($data['items'] as $item) {
+                $original = (float) $item['amount'];
+                $baseAmount = round($original * $rate, 2);
+
                 Entry::create([
                     'spending_list_id' => $item['spending_list_id'],
                     'category_id' => $item['category_id'] ?? null,
                     'receipt_id' => $receipt->id,
                     'item_name' => $item['item_name'],
-                    'amount' => $item['amount'],
+                    'amount' => $baseAmount,
+                    'original_amount' => $converting ? $original : null,
+                    'original_currency' => $converting ? $receiptCcy : null,
+                    'fx_rate' => $converting ? $rate : null,
                     'quantity' => $item['quantity'] ?? 1,
                     'unit' => $item['unit'] ?? null,
                     'purchased_at' => $receipt->purchased_at ?? now(),

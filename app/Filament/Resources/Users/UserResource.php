@@ -4,13 +4,18 @@ namespace App\Filament\Resources\Users;
 
 use App\Filament\Resources\Users\Pages\EditUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
+use App\Filament\Resources\Users\Pages\ViewUser;
 use App\Filament\Resources\Users\Schemas\UserForm;
+use App\Filament\Resources\Users\Schemas\UserInfolist;
 use App\Filament\Resources\Users\Tables\UsersTable;
 use App\Models\User;
+use App\Support\Impersonation;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -64,20 +69,48 @@ class UserResource extends Resource
         return UserForm::configure($schema);
     }
 
+    public static function infolist(Schema $schema): Schema
+    {
+        return UserInfolist::configure($schema);
+    }
+
     public static function table(Table $table): Table
     {
         return UsersTable::configure($table);
+    }
+
+    /**
+     * Shared "Impersonate" action used by both the table row and the profile
+     * page header. Logs the SuperAdmin in as the target inside the /app panel;
+     * a return banner there restores the original session.
+     */
+    public static function impersonateAction(): Action
+    {
+        return Action::make('impersonate')
+            ->label('Impersonate')
+            ->icon('heroicon-o-finger-print')
+            ->color('warning')
+            ->requiresConfirmation()
+            ->modalHeading('Impersonate user')
+            ->modalDescription(fn (User $record) => "You'll be signed in as {$record->email} in the user app. Use the banner there to return.")
+            ->modalSubmitActionLabel('Impersonate')
+            ->visible(fn (?User $record) => $record
+                && Auth::user()?->isSuperAdmin()
+                && $record->id !== Auth::id()
+                && $record->account_id)
+            ->action(fn (User $record) => Impersonation::start($record));
     }
 
     public static function getPages(): array
     {
         return [
             'index' => ListUsers::route('/'),
+            'view' => ViewUser::route('/{record}'),
             'edit' => EditUser::route('/{record}/edit'),
         ];
     }
 
-    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    public static function getEloquentQuery(): Builder
     {
         // Eager-load the account so the table doesn't N+1 across plan + scans.
         return parent::getEloquentQuery()->with('account');

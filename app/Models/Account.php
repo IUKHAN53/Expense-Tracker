@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * Tenant boundary. Every SpendingList, Entry, Receipt and Category belongs to
  * exactly one Account; a User belongs to exactly one Account. SuperAdmins
- * bypass account scoping and see everything in the /admin Filament panel.
+ * bypass account scoping and see everything in the /superadmin Filament panel.
  */
 class Account extends Model
 {
