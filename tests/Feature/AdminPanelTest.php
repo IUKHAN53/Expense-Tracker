@@ -90,6 +90,16 @@ class AdminPanelTest extends TestCase
         $this->refreshAuth()->actingAs($user)->get('/admin/users')->assertForbidden();
     }
 
+    public function test_report_print_view_renders_for_account_holder(): void
+    {
+        $user = $this->makeAccountHolder();
+
+        $this->refreshAuth()->actingAs($user)
+            ->get('/reports/print?period=this_month')
+            ->assertOk()
+            ->assertSee('Spending report');
+    }
+
     public function test_account_holder_can_enter_admin_but_not_superadmin(): void
     {
         $user = $this->makeAccountHolder();
