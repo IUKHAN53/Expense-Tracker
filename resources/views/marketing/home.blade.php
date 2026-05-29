@@ -650,6 +650,8 @@
 
 @section('content')
 
+@php $playUrl = 'https://play.google.com/store/apps/details?id=com.iukhan.kharcha'; @endphp
+
 <section class="hero wrap">
     <div class="hero-grid">
         <div>
@@ -657,11 +659,11 @@
             <h1 class="rise d-1">Where the<br><span class="accent">month</span><span class="roman">,</span><br>went<span class="accent">.</span></h1>
             <p class="lede rise d-2">A calm expense tracker for households anywhere. Snap a receipt, split a bill, log fuel by the litre, in <em>your currency</em>. Without spreadsheets and without guesswork.</p>
             <div class="hero-cta rise d-3">
-                <a class="btn btn-primary" href="/admin/login">
-                    Start free
-                    <span class="arrow" aria-hidden="true">→</span>
+                <a class="btn btn-primary" href="{{ $playUrl }}" target="_blank" rel="noopener">
+                    <span class="play-mark" aria-hidden="true">▶</span>
+                    Get it on Google Play
                 </a>
-                <a class="btn btn-ghost" href="/pricing">See pricing</a>
+                <a class="btn btn-ghost" href="/admin/login">Open web app</a>
             </div>
             <div class="hero-meta rise d-4">
                 <span><span class="dot" aria-hidden="true"></span>Free forever tier</span>
@@ -983,11 +985,11 @@
         <h2 class="h2">Start tracking<br><span class="accent">your month</span><span class="roman">.</span></h2>
         <p>Free forever, no card required. Sign in to the web dashboard, install the Android app, and your household ledger lives in both places.</p>
         <div style="display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap;">
-            <a class="btn btn-accent" href="/admin/login">
-                Open Kharcha
-                <span class="arrow" aria-hidden="true">→</span>
+            <a class="btn btn-accent" href="{{ $playUrl }}" target="_blank" rel="noopener">
+                <span class="play-mark" aria-hidden="true">▶</span>
+                Get it on Google Play
             </a>
-            <a class="btn btn-ghost" href="/pricing" style="color: oklch(0.97 0.014 80); border-color: oklch(0.97 0.014 80 / 0.30);">See pricing</a>
+            <a class="btn btn-ghost" href="/admin/login" style="color: oklch(0.97 0.014 80); border-color: oklch(0.97 0.014 80 / 0.30);">Open web app</a>
         </div>
     </div>
 </section>
