@@ -18,7 +18,7 @@ class Account extends Model
     public const PLAN_PRO_LIFETIME = 'pro_lifetime';
 
     /** Free-tier monthly cap on AI receipt scans. */
-    public const FREE_SCANS_PER_MONTH = 3;
+    public const FREE_SCANS_PER_MONTH = 5;
 
     /** Per-plan household member caps. Counts the owner plus invited users. */
     public const FREE_MAX_MEMBERS = 3;
