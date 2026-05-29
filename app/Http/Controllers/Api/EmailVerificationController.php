@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mail\EmailVerificationCodeMail;
+use App\Mail\WelcomeMail;
 use App\Models\EmailVerificationCode;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -59,6 +60,18 @@ class EmailVerificationController extends Controller
 
         $record->forceFill(['consumed_at' => now()])->save();
         $user->forceFill(['email_verified_at' => now()])->save();
+
+        // Welcome the user now that we know the address is real. Mail failures
+        // must never block a successful verification.
+        try {
+            Mail::to($user->email)->send(new WelcomeMail($user->fresh('account')));
+        } catch (\Throwable $e) {
+            Log::warning('Welcome email failed to send', [
+                'user_id' => $user->id,
+                'email'   => $user->email,
+                'error'   => $e->getMessage(),
+            ]);
+        }
 
         return response()->json([
             'message' => 'Email verified.',
