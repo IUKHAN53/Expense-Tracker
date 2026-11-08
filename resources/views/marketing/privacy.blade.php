@@ -180,6 +180,7 @@
             <ul>
                 <li><strong>In the app</strong>: edit or delete any entry, export everything, or delete it all by uninstalling the app.</li>
                 <li><strong>Older server accounts</strong>: email us to get a copy of your data or to delete the account; we reply within seven days and delete within 30.</li>
+                <li><strong>Receipt scanning</strong>: we keep no photos or receipt contents, only a hashed install ID with a count of your scans. To delete it, email us the install ID shown in the app under Settings → Kharcha Pro, or simply uninstall: a new install starts a new, unlinked ID.</li>
             </ul>
         </section>
 
