@@ -135,12 +135,12 @@
 
         <section id="network">
             <h2>4. What leaves your phone</h2>
+            <p><strong>Nothing.</strong> The app makes no network requests of its own: no accounts, no sync, no analytics, no crash reporting, no ads.</p>
             <ul>
-                <li><strong>App updates</strong>: the app checks Expo's update service (expo.dev) for bug-fix updates. That request carries the app version and platform, not your data.</li>
                 <li><strong>Google Play</strong>: installs and updates the app under Google's own privacy policy.</li>
                 <li><strong>Sharing the app</strong>: the "Share app" screen only opens Android's share sheet or the Play Store with a link to Kharcha.</li>
+                <li><strong>Files you export</strong>: backups and CSVs go only where you choose to save or send them (see section 5).</li>
             </ul>
-            <p>Nothing else. Your expenses are never sent to us or to anyone else.</p>
         </section>
 
         <section id="backups">
