@@ -41,4 +41,10 @@ return [
         'endpoint' => env('GEMINI_ENDPOINT', 'https://generativelanguage.googleapis.com/v1beta'),
     ],
 
+    'google_play' => [
+        'key_path' => env('GOOGLE_PLAY_KEY_PATH', ''),
+        'package' => env('GOOGLE_PLAY_PACKAGE', 'com.iukhan.kharcha'),
+        'product_id' => env('GOOGLE_PLAY_PRO_PRODUCT', 'kharcha_pro'),
+    ],
+
 ];

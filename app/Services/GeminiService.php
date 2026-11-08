@@ -37,7 +37,7 @@ class GeminiService
      * @param  string  $imagePath  Absolute path to the image file.
      * @return array{receipt_type:string,merchant:?string,purchased_at:?string,total:?float,fuel_liters:?float,fuel_rate:?float,items:array<int,array<string,mixed>>,raw:array}
      */
-    public function parseReceipt(string $imagePath, ?string $mimeType = null): array
+    public function parseReceipt(string $imagePath, ?string $mimeType = null, string $currency = 'PKR', ?array $categories = null): array
     {
         if (! is_file($imagePath)) {
             throw new RuntimeException("Receipt image not found: {$imagePath}");
@@ -47,8 +47,8 @@ class GeminiService
         $base64 = base64_encode((string) file_get_contents($imagePath));
 
         $prompt = <<<'PROMPT'
-You are a receipt and bill parser for a household expense tracker used in Pakistan.
-The currency is always Pakistani Rupee (PKR). Read the attached photo of a receipt,
+You are a receipt and bill parser for a household expense tracker.
+Amounts are in {CURRENCY} unless the receipt clearly shows otherwise. Read the attached photo of a receipt,
 bill or shop slip (it may be printed or hand-written, in English or Urdu) and extract
 its contents.
 
@@ -67,7 +67,7 @@ Return ONLY a JSON object with exactly this shape:
       "unit": "kg | ltr | pcs | dozen | etc, or null",
       "unit_price": number or null,
       "amount": number,
-      "suggested_category": "Groceries | Vegetables & Fruit | Meat | Dairy | Snacks | Household | Personal Care | Medicine | Fuel | Other"
+      "suggested_category": "{CATEGORIES}"
     }
   ]
 }
@@ -76,11 +76,20 @@ Rules:
 - If this is a petrol/diesel/CNG/fuel-station receipt, set "receipt_type" to "fuel",
   put liters in "fuel_liters", price-per-liter in "fuel_rate", and return a single
   item named "Fuel" (or the fuel grade) with the total amount.
-- All numbers must be plain (no "Rs", no commas, no currency symbols).
-- "amount" is the line total in rupees and is required for every item.
+- All numbers must be plain (no currency symbols, no thousands separators).
+- "amount" is the line total and is required for every item.
 - If a field is unknown, use null. Never invent items that are not on the receipt.
 - Respond with the JSON object only, no markdown, no commentary.
 PROMPT;
+
+        $cats = array_values(array_filter(array_map(
+            fn ($c) => trim(preg_replace('/[^\p{L}\p{N} &\-]/u', '', (string) $c)),
+            $categories ?: ['Groceries', 'Vegetables & Fruit', 'Meat', 'Dairy', 'Snacks', 'Household', 'Personal Care', 'Medicine', 'Fuel', 'Other'],
+        )));
+        $prompt = strtr($prompt, [
+            '{CURRENCY}' => preg_match('/^[A-Z]{3}$/', $currency) ? $currency : 'PKR',
+            '{CATEGORIES}' => implode(' | ', array_slice($cats, 0, 40)),
+        ]);
 
         $data = $this->generate([
             ['text' => $prompt],

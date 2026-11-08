@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+// Kharcha 2.x (standalone app, no accounts): receipt scan. Pro checked with Google Play.
+Route::post('v2/scan', \App\Http\Controllers\Api\V2\ScanController::class)->middleware('throttle:20,1');
+
 // Public auth — no token required.
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
