@@ -75,14 +75,14 @@
     <header class="legal-head reveal">
         <p class="eyebrow"><span class="line"></span> Terms of use</p>
         <h1 class="display">A short<br><span class="accent">honest</span> agreement<span class="roman">.</span></h1>
-        <p class="legal-meta">Effective {{ now()->format('d F Y') }} · Kharcha, Karachi, Pakistan</p>
+        <p class="legal-meta">Effective 9 November 2026 · Kharcha, Karachi, Pakistan</p>
     </header>
 
     <nav class="toc reveal" aria-label="Contents">
         <p>Contents</p>
         <ol>
             <li><a href="#agreement">The agreement</a></li>
-            <li><a href="#account">Your account</a></li>
+            <li><a href="#account">Using the app</a></li>
             <li><a href="#use">Acceptable use</a></li>
             <li><a href="#data">Your data</a></li>
             <li><a href="#pro">Pro plans &amp; billing</a></li>
@@ -99,13 +99,13 @@
     <article class="reveal">
         <section id="agreement">
             <h2>1. The agreement</h2>
-            <p>By creating an account or using Kharcha you agree to these terms. They form a contract between you and the team that runs Kharcha, registered in Karachi, Pakistan. If you do not agree, do not use the service.</p>
+            <p>By installing or using Kharcha you agree to these terms. They form a contract between you and the team that runs Kharcha, registered in Karachi, Pakistan. If you do not agree, do not use the service.</p>
         </section>
 
         <section id="account">
-            <h2>2. Your account</h2>
-            <p>You may create one account per household. You are responsible for keeping the password to that account secret. If anyone you have given the password to records expenses, those entries are yours.</p>
-            <p>You must be 13 or older to create an account. If you create a household for your family, anyone you invite into it is treated as part of your account.</p>
+            <h2>2. Using the app</h2>
+            <p>Kharcha 2.0 and later has no accounts. Your data is stored, encrypted, on your device, and you are responsible for keeping that device and any backup passwords safe. We cannot recover data from a lost phone or a forgotten backup password.</p>
+            <p>You must be 13 or older to use Kharcha.</p>
         </section>
 
         <section id="use">
@@ -115,35 +115,35 @@
                 <li>Scan or store anything illegal under Pakistani law.</li>
                 <li>Reverse-engineer the AI, the API, or the app.</li>
                 <li>Spam, abuse, or attempt to harm other users or the service.</li>
-                <li>Resell access to your account.</li>
+                <li>Resell or automate access to the receipt scanning service.</li>
             </ul>
-            <p>We reserve the right to suspend accounts that violate this section. Where the violation is unambiguous (the law has been broken, the service has been abused) we will suspend without notice.</p>
+            <p>We may block access to scanning for devices that violate this section. Where the violation is unambiguous (the law has been broken, the service has been abused) we will suspend without notice.</p>
         </section>
 
         <section id="data">
             <h2>4. Your data</h2>
-            <p>Everything in your ledger remains <strong>yours</strong>. We hold it on your behalf so the service can work. We do not claim a licence to your data beyond what is necessary to run Kharcha for you: storing it, displaying it back to you, parsing receipts through Gemini when you ask for it, and including it in our backups.</p>
-            <p>You can export it as CSV at any time and delete your account in one tap.</p>
+            <p>Everything in your ledger remains <strong>yours</strong>, and it stays on your device. The only data we process is a receipt photo you choose to scan, which we read through Google Gemini and discard, as described in the <a href="/privacy">privacy notice</a>.</p>
+            <p>You can save an encrypted backup or export a CSV at any time.</p>
         </section>
 
         <section id="pro">
             <h2>5. Pro plans &amp; billing</h2>
             <ul>
-                <li><strong>Pro Monthly</strong>: charged on the day of the month you subscribed, in your local currency. Pricing varies by region (USD 1.99, PKR 499, INR 149 and so on). Cancel any time from settings; access continues to the end of the period you have paid for.</li>
-                <li><strong>Pro Lifetime</strong>: a single payment in your local currency, paid once and never charged again. "Lifetime" means the lifetime of Kharcha as a service. We have no plans to close, but if Kharcha shuts down we will give at least 90 days' notice and an export of your data.</li>
-                <li><strong>Local taxes (VAT, sales tax, etc.)</strong> are excluded from the displayed price and added at checkout where applicable.</li>
-                <li><strong>Failed payments</strong>: a Monthly subscription falls back to the Free tier after a single failed charge and one reminder. Your data stays; only the unlimited-scan benefit pauses until you update payment.</li>
+                <li><strong>Kharcha Pro</strong> is an auto-renewing subscription, monthly or yearly, sold and billed by Google Play in your local currency. Prices are shown in Google Play before you confirm and on our <a href="/pricing">pricing page</a>.</li>
+                <li><strong>Free trial</strong>: new subscribers get 7 days free. If you don't cancel before the trial ends, Google Play charges the plan you chose.</li>
+                <li><strong>Cancelling</strong>: cancel any time in the Play Store. Pro continues until the end of the period you have paid for.</li>
+                <li><strong>Taxes and payment problems</strong> are handled by Google Play under its own terms. If a renewal fails, Pro pauses; your data is never affected.</li>
             </ul>
         </section>
 
         <section id="refunds">
             <h2>6. Refunds</h2>
-            <p>If you ask for a refund within seven days of any payment, we will issue it, no questions. After seven days we look at it case by case and generally still refund. Lifetime is refundable on the same terms.</p>
+            <p>Refunds for Pro are handled by Google Play: request one from your Play order history. If Google declines and you think it is unfair, email us and we will look at it.</p>
         </section>
 
         <section id="availability">
             <h2>7. Availability</h2>
-            <p>We aim for 99% uptime measured monthly. We do not offer a credit for downtime; if you find that unacceptable, Kharcha is not the right tool for you yet. We post incidents and post-mortems on the changelog when they happen.</p>
+            <p>The app works offline. Receipt scanning needs our server and Google Gemini, which we aim to keep available but cannot guarantee; we do not offer credits for downtime.</p>
         </section>
 
         <section id="warranty">
@@ -153,12 +153,12 @@
 
         <section id="liability">
             <h2>9. Liability</h2>
-            <p>To the extent permitted by Pakistani law, our total liability to you for anything arising out of Kharcha is capped at the total amount you have paid us in the 12 months before the claim. For free accounts that cap is zero; for Pro accounts it is what you paid. We are not liable for indirect, consequential, or special damages.</p>
+            <p>To the extent permitted by Pakistani law, our total liability to you for anything arising out of Kharcha is capped at the total amount you have paid us in the 12 months before the claim. For free use that cap is zero; for Pro it is what you paid. We are not liable for indirect, consequential, or special damages.</p>
         </section>
 
         <section id="termination">
             <h2>10. Termination</h2>
-            <p>You can stop using Kharcha and delete your account at any time. We can suspend or terminate your account if you violate these terms or fail to pay a Pro charge. On termination we delete your data within 30 days, as described in the <a href="/privacy">privacy notice</a>.</p>
+            <p>You can stop using Kharcha at any time; uninstalling deletes your data from the device. We can block scanning for a device that violates these terms.</p>
         </section>
 
         <section id="law">
@@ -168,7 +168,7 @@
 
         <section id="changes">
             <h2>12. Changes</h2>
-            <p>We may update these terms. Material changes will be posted here with a new effective date and announced by email to Pro users at least 14 days before they take effect. Continued use after a change means you accept it.</p>
+            <p>We may update these terms. Material changes will be posted here with a new effective date and announced in the app at least 14 days before they take effect. Continued use after a change means you accept it.</p>
         </section>
     </article>
 </section>

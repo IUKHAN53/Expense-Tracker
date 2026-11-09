@@ -24,6 +24,20 @@ class ExampleTest extends TestCase
         $this->get('/terms')->assertOk()->assertSee('Terms of use', false);
     }
 
+    public function test_pricing_matches_google_play_and_has_no_1x_leftovers(): void
+    {
+        $this->get('/pricing?cc=PK')->assertOk()
+            ->assertSee('PKR', false)->assertSee('300', false)->assertSee('2,500', false)
+            ->assertSee('id=com.iukhan.kharcha', false);
+
+        foreach (['/', '/pricing', '/about', '/contact', '/terms'] as $url) {
+            $this->get($url)->assertOk()
+                ->assertDontSee('/admin/login', false)
+                ->assertDontSee('Lifetime', false)
+                ->assertDontSee('household member', false);
+        }
+    }
+
     public function test_sitemap_is_xml(): void
     {
         $response = $this->get('/sitemap.xml');

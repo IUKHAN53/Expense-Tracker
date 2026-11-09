@@ -57,14 +57,14 @@
                     '@type'              => 'SoftwareApplication',
                     'name'               => 'Kharcha',
                     'applicationCategory'=> 'FinanceApplication',
-                    'operatingSystem'    => 'Android, Web',
+                    'operatingSystem'    => 'Android',
                     'downloadUrl'        => 'https://play.google.com/store/apps/details?id=com.iukhan.kharcha',
                     'installUrl'         => 'https://play.google.com/store/apps/details?id=com.iukhan.kharcha',
-                    'description'        => 'Household expense tracker with AI receipt scanning, split expenses, and fuel logging.',
+                    'description'        => 'Private household expense tracker: no account, encrypted on your phone, with receipt scanning, split expenses and fuel logging.',
                     'offers' => [
                         ['@type' => 'Offer', 'price' => '0',     'priceCurrency' => 'USD', 'name' => 'Free'],
-                        ['@type' => 'Offer', 'price' => '1.99',  'priceCurrency' => 'USD', 'name' => 'Pro Monthly'],
-                        ['@type' => 'Offer', 'price' => '29.99', 'priceCurrency' => 'USD', 'name' => 'Pro Lifetime'],
+                        ['@type' => 'Offer', 'price' => '1.09', 'priceCurrency' => 'USD', 'name' => 'Pro Monthly'],
+                        ['@type' => 'Offer', 'price' => '8.99', 'priceCurrency' => 'USD', 'name' => 'Pro Yearly'],
                     ],
                 ],
             ],
@@ -473,8 +473,7 @@
                 <a href="/pricing" @if(($active ?? '') === 'pricing') class="here" aria-current="page" @endif>Pricing</a>
                 <a href="/#features">Features</a>
                 <a href="/#faq">FAQ</a>
-                <a href="/admin/login">Sign in</a>
-                <a href="/admin/login" class="nav-cta">Start free</a>
+                <a href="{{ $playUrl }}" class="nav-cta">Get the app</a>
             </div>
         </nav>
     </header>
@@ -497,7 +496,7 @@
                         </svg>
                         <span class="wordmark">kharcha</span>
                     </a>
-                    <p class="colophon">A household ledger, kept by hand. Multi-currency, for families anywhere.</p>
+                    <p class="colophon">A household ledger, kept by hand. Private, encrypted, no account.</p>
                 </div>
                 <div class="col">
                     <h4>Product</h4>
@@ -505,7 +504,7 @@
                         <li><a href="/#features">Features</a></li>
                         <li><a href="/pricing">Pricing</a></li>
                         <li><a href="/#faq">FAQ</a></li>
-                        <li><a href="https://play.google.com/store/apps/details?id=com.iukhan.kharcha" target="_blank" rel="noopener">Get the Android app</a></li>
+                        <li><a href="{{ $playUrl }}" target="_blank" rel="noopener">Get the Android app</a></li>
                     </ul>
                 </div>
                 <div class="col">
@@ -513,7 +512,6 @@
                     <ul>
                         <li><a href="/about">About</a></li>
                         <li><a href="/contact">Contact</a></li>
-                        <li><a href="/admin/login">Sign in</a></li>
                     </ul>
                 </div>
                 <div class="col">

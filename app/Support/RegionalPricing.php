@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 
 /**
  * Marketing-page pricing in the visitor's local currency, with USD as the
- * base of truth. Schema-level prices (the PKR figures Stripe will eventually
- * charge) live elsewhere; this is for what people read on the landing.
+ * fallback. Mirrors the Google Play prices; this is only what people read on the site.
  */
 class RegionalPricing
 {
@@ -18,18 +17,17 @@ class RegionalPricing
     public const COOKIE = 'kharcha_cc';
 
     /**
-     * Region table. Prices are hand-tuned per market for fairness, not a
-     * straight FX conversion. They round to numbers that feel native locally
-     * (PKR 499 not PKR 555.43; INR 149 not INR 165.20).
+     * Region table: the Kharcha Pro prices set in Google Play (kharcha_pro,
+     * monthly + yearly base plans). Keep in sync with Play Console when prices change.
      */
     private const REGIONS = [
-        'US' => ['name' => 'United States', 'currency' => 'USD', 'monthly' => 1.99,  'lifetime' => 29.99],
-        'PK' => ['name' => 'Pakistan',      'currency' => 'PKR', 'monthly' => 499,   'lifetime' => 7999],
-        'IN' => ['name' => 'India',         'currency' => 'INR', 'monthly' => 149,   'lifetime' => 2499],
-        'BD' => ['name' => 'Bangladesh',    'currency' => 'BDT', 'monthly' => 199,   'lifetime' => 3299],
-        'LK' => ['name' => 'Sri Lanka',     'currency' => 'LKR', 'monthly' => 599,   'lifetime' => 9999],
-        'AE' => ['name' => 'UAE',           'currency' => 'AED', 'monthly' => 7.49,  'lifetime' => 119],
-        'GB' => ['name' => 'United Kingdom','currency' => 'GBP', 'monthly' => 1.49,  'lifetime' => 24.99],
+        'US' => ['name' => 'United States', 'currency' => 'USD', 'monthly' => 1.09, 'yearly' => 8.99],
+        'PK' => ['name' => 'Pakistan',      'currency' => 'PKR', 'monthly' => 300,  'yearly' => 2500],
+        'IN' => ['name' => 'India',         'currency' => 'INR', 'monthly' => 120,  'yearly' => 1000],
+        'BD' => ['name' => 'Bangladesh',    'currency' => 'BDT', 'monthly' => 150,  'yearly' => 1300],
+        'LK' => ['name' => 'Sri Lanka',     'currency' => 'LKR', 'monthly' => 350,  'yearly' => 3000],
+        'AE' => ['name' => 'UAE',           'currency' => 'AED', 'monthly' => 4.19, 'yearly' => 34.99],
+        'GB' => ['name' => 'United Kingdom','currency' => 'GBP', 'monthly' => 0.99, 'yearly' => 7.99],
     ];
 
     /**
@@ -65,10 +63,10 @@ class RegionalPricing
             'name'      => $r['name'],
             'currency'  => $r['currency'],
             'monthly'   => $r['monthly'],
-            'lifetime'  => $r['lifetime'],
-            'monthly_display'  => self::format($r['monthly']),
-            'lifetime_display' => self::format($r['lifetime']),
-            'breakeven_months' => max(1, (int) round($r['lifetime'] / max($r['monthly'], 0.01))),
+            'yearly'    => $r['yearly'],
+            'monthly_display' => self::format($r['monthly']),
+            'yearly_display'  => self::format($r['yearly']),
+            'yearly_saving'   => (int) round(100 * (1 - $r['yearly'] / ($r['monthly'] * 12))),
         ];
     }
 

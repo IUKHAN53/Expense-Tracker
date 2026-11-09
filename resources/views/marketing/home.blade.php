@@ -650,8 +650,6 @@
 
 @section('content')
 
-@php $playUrl = 'https://play.google.com/store/apps/details?id=com.iukhan.kharcha'; @endphp
-
 <section class="hero wrap">
     <div class="hero-grid">
         <div>
@@ -663,12 +661,12 @@
                     <span class="play-mark" aria-hidden="true">▶</span>
                     Get it on Google Play
                 </a>
-                <a class="btn btn-ghost" href="/admin/login">Open web app</a>
+                <a class="btn btn-ghost" href="/pricing">See pricing</a>
             </div>
             <div class="hero-meta rise d-4">
-                <span><span class="dot" aria-hidden="true"></span>Free forever tier</span>
+                <span><span class="dot" aria-hidden="true"></span>Free, no account</span>
                 <span><span class="dot" aria-hidden="true"></span>Multi-currency</span>
-                <span><span class="dot" aria-hidden="true"></span>Android &amp; web</span>
+                <span><span class="dot" aria-hidden="true"></span>Encrypted on your phone</span>
             </div>
         </div>
 
@@ -703,7 +701,7 @@
         <article class="feature reveal">
             <p class="num">01 <span aria-hidden="true">·</span></p>
             <h3 class="h3">Snap. The receipt parses itself.</h3>
-            <p>Open the camera on a paper receipt or a phone bill. Gemini reads every line, totals it up, and asks you who in the family it belongs to. Three free scans every month; unlimited on Pro.</p>
+            <p>Open the camera on a paper receipt or a phone bill. Every line is read for you; check each item and assign it to the right person or list before saving. Three scans to try; unlimited with Pro.</p>
         </article>
 
         <article class="feature reveal">
@@ -715,19 +713,19 @@
         <article class="feature reveal">
             <p class="num">03 <span aria-hidden="true">·</span></p>
             <h3 class="h3">Fuel, the way drivers measure it.</h3>
-            <p>Log a refill by rupees and rate; Kharcha computes the litres, your km/L and your Rs/km between full tanks. A dedicated Fuel tab keeps the car's history away from the household ledger.</p>
+            <p>Enter any two of amount, rate and litres and Kharcha works out the third, then your km/L and cost per km between full tanks. Top-ups are handled correctly.</p>
         </article>
 
         <article class="feature reveal">
             <p class="num">04 <span aria-hidden="true">·</span></p>
             <h3 class="h3">A list per person, plus Home and Car.</h3>
-            <p>Separate ledgers for each household member, plus Home and Car: one monthly view across all of them. The dashboard answers the question parents actually ask, <em>where did the month go?</em></p>
+            <p>A list for each person, plus Home and Car, each with an optional monthly budget: one view across all of them. The dashboard answers the question parents actually ask, <em>where did the month go?</em></p>
         </article>
 
         <article class="feature reveal">
             <p class="num">05 <span aria-hidden="true">·</span></p>
-            <h3 class="h3">Invite the family. One household, one ledger.</h3>
-            <p>Send an email invitation to your spouse, parent or child; they sign up and join your household instead of starting a separate ledger. Free covers <strong>up to 3 members</strong>; Pro raises it to 5. When you upgrade, <em>everyone in the household inherits Pro</em>, no separate billing.</p>
+            <h3 class="h3">Private by design. No account, no cloud.</h3>
+            <p>Your ledger is encrypted on your phone and never leaves it. No sign-up, no server copy, no ads, no trackers. Save an <em>encrypted backup file</em> whenever you like and restore it on a new phone.</p>
         </article>
     </div>
 </section>
@@ -742,8 +740,8 @@
             <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--s-3); color: var(--ink-soft); font-size: 15px;">
                 <li>· Current month is always the home view.</li>
                 <li>· Tap any list to drill into its entries.</li>
-                <li>· Pull up the Fuel tab for refill history and km/L.</li>
-                <li>· FAB opens a quick menu: fuel refill or other expense.</li>
+                <li>· The car button opens refills and km/L.</li>
+                <li>· The scan button reads a receipt into items.</li>
             </ul>
         </div>
 
@@ -837,7 +835,7 @@
         <div class="reveal">
             <p class="eyebrow"><span class="line"></span> The car gets its own page</p>
             <h2 class="h2">Petrol, by the litre,<br><span class="accent">measured properly</span><span class="roman">.</span></h2>
-            <p style="color: var(--ink-soft); font-size: 16px;">Type the rate and the rupees. Kharcha calculates the litres, your km since the last full tank, and the Rs/km between fills. Import a year of CSV from old logs in one paste.</p>
+            <p style="color: var(--ink-soft); font-size: 16px;">Type what you paid. Kharcha prefills the last rate, calculates the litres, your km since the last full tank and the cost per km between fills, and warns you if the odometer looks wrong.</p>
         </div>
         <div class="fuel-chart reveal" aria-hidden="true">
             <div class="topline">
@@ -884,48 +882,47 @@
 <section class="band wrap pricing-teaser" id="pricing-teaser">
     <div class="reveal">
         <p class="eyebrow" style="justify-content:center;"><span class="line"></span> Pricing</p>
-        <h2 class="h2">Free forever for most.<br><span class="accent">Pro</span><span class="roman">, when scans add up.</span></h2>
-        <p class="lede" style="margin-left: auto; margin-right: auto; max-width: 52ch;">Manual entries, fuel logs, split bills, every chart: free. Pro lifts the cap on AI receipt scans and supports the project.</p>
+        <h2 class="h2">Free to track.<br><span class="accent">Pro</span><span class="roman">, to scan.</span></h2>
+        <p class="lede" style="margin-left: auto; margin-right: auto; max-width: 52ch;">Entries, lists, splits, fuel and encrypted backups: free, no account. Pro adds unlimited receipt scanning, billed by Google Play with a 7-day free trial.</p>
     </div>
 
     <div class="pricing-grid reveal">
         <div class="price">
             <p class="tier">Free</p>
             <p class="amount"><span class="cur">{{ $pricing['currency'] }}</span>0<span class="per">/forever</span></p>
-            <p class="blurb">For households that mostly enter expenses by hand and only scan a few receipts a month.</p>
+            <p class="blurb">Everything you need to track a household by hand, private on your phone.</p>
             <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--ink-soft); display: flex; flex-direction: column; gap: var(--s-2);">
-                <li>· 3 AI receipt scans / month</li>
-                <li>· Unlimited manual entries</li>
-                <li>· Unlimited lists, splits, fuel</li>
-                <li>· Monthly dashboard &amp; charts</li>
+                <li>· 3 receipt scans to try</li>
+                <li>· Unlimited entries and lists</li>
+                <li>· Splits, budgets, fuel km/L</li>
+                <li>· Encrypted backups, CSV export</li>
             </ul>
-            <a class="btn btn-ghost cta" href="/admin/login">Start free</a>
+            <a class="btn btn-ghost cta" href="{{ $playUrl }}">Get the app</a>
         </div>
 
         <div class="price featured">
-            <p class="tier">Pro · Monthly</p>
-            <p class="amount"><span class="cur">{{ $pricing['currency'] }}</span>{{ $pricing['monthly_display'] }}<span class="per">/month</span></p>
-            <p class="blurb">For families who scan most receipts. Unlimited AI scans, early access to whatever ships next.</p>
+            <p class="tier">Pro · Yearly</p>
+            <p class="amount"><span class="cur">{{ $pricing['currency'] }}</span>{{ $pricing['yearly_display'] }}<span class="per">/year</span></p>
+            <p class="blurb">Snap a bill instead of typing it. Save {{ $pricing['yearly_saving'] }}% against monthly.</p>
             <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--ink-soft); display: flex; flex-direction: column; gap: var(--s-2);">
-                <li>· <strong style="color: var(--ink);">Unlimited</strong> AI receipt scans</li>
-                <li>· Everything in Free</li>
-                <li>· Early access to new features</li>
-                <li>· Direct support from the maker</li>
+                <li>· <strong style="color: var(--ink);">Unlimited</strong> receipt scans</li>
+                <li>· Edit and assign every item</li>
+                <li>· Petrol slips fill the refill form</li>
+                <li>· 7 days free</li>
             </ul>
-            <a class="btn btn-accent cta" href="/admin/login">Choose Pro</a>
+            <a class="btn btn-accent cta" href="{{ $playUrl }}">Start free trial</a>
         </div>
 
         <div class="price">
-            <p class="tier">Pro · Lifetime</p>
-            <p class="amount"><span class="cur">{{ $pricing['currency'] }}</span>{{ $pricing['lifetime_display'] }}<span class="per">/once</span></p>
-            <p class="blurb">Pay once, never again. About {{ $pricing['breakeven_months'] }} months of the monthly plan; everything after that is on the house.</p>
+            <p class="tier">Pro · Monthly</p>
+            <p class="amount"><span class="cur">{{ $pricing['currency'] }}</span>{{ $pricing['monthly_display'] }}<span class="per">/month</span></p>
+            <p class="blurb">The same Pro, month to month. Cancel any time in Google Play.</p>
             <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--ink-soft); display: flex; flex-direction: column; gap: var(--s-2);">
-                <li>· Pro features, forever</li>
-                <li>· One payment, no renewals</li>
-                <li>· Founder pricing</li>
-                <li>· Future features included</li>
+                <li>· <strong style="color: var(--ink);">Unlimited</strong> receipt scans</li>
+                <li>· Everything in Free</li>
+                <li>· 7 days free</li>
             </ul>
-            <a class="btn btn-ghost cta" href="/admin/login">Pay once</a>
+            <a class="btn btn-ghost cta" href="{{ $playUrl }}">Start free trial</a>
         </div>
     </div>
 
@@ -936,45 +933,41 @@
 <section class="band wrap" id="faq">
     <div class="reveal" style="max-width: 760px;">
         <p class="eyebrow"><span class="line"></span> Common questions</p>
-        <h2 class="h2">Things people ask,<br><span class="accent">before signing up</span><span class="roman">.</span></h2>
+        <h2 class="h2">Things people ask,<br><span class="accent">before installing</span><span class="roman">.</span></h2>
     </div>
 
     <div class="faq-list reveal" style="max-width: 760px;">
         <details>
             <summary>Is Kharcha really free? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">Yes. The free tier has no time limit and no card on file. Every feature except unlimited AI receipt scans is included. Pro exists for families who scan most of their receipts; if you mostly type expenses in by hand, free will last you forever.</p>
+            <p class="a">Yes. Entries, lists, splits, budgets, fuel tracking and encrypted backups are free with no time limit and no account. Kharcha Pro adds unlimited receipt scanning; everyone gets 3 scans to try it.</p>
+        </details>
+        <details>
+            <summary>Do I need an account? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">No. There is no sign-up and no password. Open the app, pick your currency, and start. Pro is tied to your Google Play account, so it follows you to a new phone.</p>
         </details>
         <details>
             <summary>Where is my data stored? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">On Kharcha's server in your account, owned by you. Receipt images are sent to Google's Gemini API for parsing and immediately released; the extracted text and totals are kept with your account. Nothing is sold, nothing is shared with advertisers, ever.</p>
+            <p class="a">Only on your phone, in a database encrypted with SQLCipher. The key stays in the Android Keystore. Nothing is synced to a server. When you scan a receipt, the photo is read by our server using Google Gemini and then discarded; see the <a href="/privacy" style="color: var(--accent-deep); text-decoration: underline;">privacy notice</a>.</p>
+        </details>
+        <details>
+            <summary>What if I change phones? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">Save an encrypted backup file from Settings (protected by a password you choose), then restore it on the new phone. Tap Restore purchase on the paywall to bring Pro along.</p>
         </details>
         <details>
             <summary>Do you support iPhone? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">Android first, web second. iPhone is on the roadmap. The web app already works on Safari for everything except camera-based scanning, which is best on the Android app.</p>
+            <p class="a">Not yet. Kharcha is Android only for now.</p>
         </details>
         <details>
             <summary>Can I cancel Pro at any time? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">Yes. Monthly Pro can be cancelled in one tap from settings; you stay Pro until the end of the billing period and revert to free after. Lifetime Pro is one payment, no recurring charges to cancel.</p>
-        </details>
-        <details>
-            <summary>Who built Kharcha? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">A solo developer in Karachi, Pakistan. The app itself is built for households anywhere: pick your currency on first sign-in, change it whenever, and the dashboard always speaks the right symbols. The receipt AI was trained on local receipts initially and is steadily learning more shop layouts as users sign up from new places.</p>
+            <p class="a">Yes, in the Play Store under Payments &amp; subscriptions. Pro stays on until the end of the period you paid for, and none of your data is touched.</p>
         </details>
         <details>
             <summary>Which currencies does Kharcha support? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">USD, GBP, EUR, INR, PKR, BDT, LKR, AED, SAR, CAD, AUD, and more on request. You pick your currency on first sign-in and change it any time from Settings. Pricing for Pro adapts to your region automatically.</p>
+            <p class="a">USD, EUR, GBP, INR, PKR, BDT, LKR, AED, SAR, CAD, AUD and CNY. Pick one on first launch and change it any time in Settings.</p>
         </details>
         <details>
-            <summary>How do household members work? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">From the app, open Settings → Household and send an email invitation. The invitee follows the link, signs up (or signs in if they already have Kharcha), and joins your household. Their entries land in the same ledger as yours. Free households fit up to 3 members; Pro raises the cap to 5. When you upgrade to Pro, every existing member inherits it at no extra cost.</p>
-        </details>
-        <details>
-            <summary>Do I need to verify my email? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">Yes. After signup you get a 6-digit code in your inbox; entering it unlocks the rest of the app. The code expires in 15 minutes and you can request a fresh one any time. This keeps fake signups off the service and means we can reach you when a household member sends an invitation.</p>
-        </details>
-        <details>
-            <summary>What happens if the Gemini quota runs out? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">On Free, the third successful scan in a month is your last until the month rolls over. On Pro the cap is effectively unbounded. Manual entry is always available, on any plan, with no count.</p>
+            <summary>Who built Kharcha? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">A solo developer in Karachi, Pakistan, who uses it every day for the family budget and the car.</p>
         </details>
     </div>
 </section>
@@ -983,13 +976,12 @@
 <section class="wrap" id="cta">
     <div class="cta-band reveal">
         <h2 class="h2">Start tracking<br><span class="accent">your month</span><span class="roman">.</span></h2>
-        <p>Free forever, no card required. Sign in to the web dashboard, install the Android app, and your household ledger lives in both places.</p>
+        <p>Free, no account, encrypted on your phone. Install it and log your first expense in a few seconds.</p>
         <div style="display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap;">
             <a class="btn btn-accent" href="{{ $playUrl }}" target="_blank" rel="noopener">
                 <span class="play-mark" aria-hidden="true">▶</span>
                 Get it on Google Play
             </a>
-            <a class="btn btn-ghost" href="/admin/login" style="color: oklch(0.97 0.014 80); border-color: oklch(0.97 0.014 80 / 0.30);">Open web app</a>
         </div>
     </div>
 </section>

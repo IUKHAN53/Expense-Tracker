@@ -138,12 +138,11 @@
     </div>
 
     <ul class="stack-list reveal" aria-label="Tools Kharcha is built with">
-        <li><strong>Laravel 13</strong> &nbsp;Backend</li>
-        <li><strong>Filament 5</strong> &nbsp;Admin</li>
+        <li><strong>Laravel 13</strong> &nbsp;Scan service</li>
         <li><strong>Expo SDK 56</strong> &nbsp;Android</li>
         <li><strong>Google Gemini</strong> &nbsp;Receipt AI</li>
-        <li><strong>SQLite</strong> &nbsp;Storage</li>
-        <li><strong>Zoho Mail</strong> &nbsp;Transactional</li>
+        <li><strong>SQLCipher</strong> &nbsp;On-device storage</li>
+        <li><strong>Google Play</strong> &nbsp;Billing</li>
     </ul>
 </section>
 
@@ -157,12 +156,12 @@
         <article class="pillar">
             <p class="num">01</p>
             <h3>We will never sell your data.</h3>
-            <p>Not to advertisers, not to banks, not to credit scorers. Your ledger is yours; we hold it on your behalf so the service can work. The <a href="/privacy" style="color: var(--accent-deep); text-decoration: underline;">privacy notice</a> spells out exactly what we share with Google Gemini (the receipt photo, on scan, momentarily) and with our hosting provider, and nothing else.</p>
+            <p>Not to advertisers, not to banks, not to credit scorers. We don't even hold it: your ledger stays encrypted on your phone. The <a href="/privacy" style="color: var(--accent-deep); text-decoration: underline;">privacy notice</a> spells out the one exception, a receipt photo you scan, which is read by Google Gemini and discarded.</p>
         </article>
         <article class="pillar">
             <p class="num">02</p>
             <h3>The free tier stays free.</h3>
-            <p>Three AI scans a month plus unlimited manual entry, splits, fuel, lists, and household sharing for up to 3 members, with no card on file. Pro lifts the AI quota and raises the member cap; it is not a paywall around the basics.</p>
+            <p>Unlimited entries, lists, splits, budgets, fuel tracking and encrypted backups, with no account and no card. Pro adds unlimited receipt scanning; it is not a paywall around the basics.</p>
         </article>
         <article class="pillar">
             <p class="num">03</p>
@@ -194,8 +193,8 @@
         <h2 class="h2">Try Kharcha free.<br><span class="accent">Tell me what breaks.</span></h2>
         <p class="lede" style="margin: var(--s-6) auto var(--s-8); max-width: 48ch;">If you have feedback, a bug, or a feature you wish existed, the fastest path to me is email.</p>
         <div style="display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap;">
-            <a class="btn btn-primary" href="/admin/login">
-                Start free
+            <a class="btn btn-primary" href="{{ $playUrl }}">
+                Get the app
                 <span class="arrow" aria-hidden="true">→</span>
             </a>
             <a class="btn btn-ghost" href="/contact">Get in touch</a>

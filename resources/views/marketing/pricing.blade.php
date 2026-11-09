@@ -1,6 +1,6 @@
 @extends('marketing.layout', [
     'title' => 'Pricing · Kharcha',
-    'description' => 'Kharcha pricing adapts to your region. Free forever tier with three AI scans a month. Pro Monthly from USD 1.99 (PKR 499, INR 149). Pro Lifetime one-time payment.',
+    'description' => 'Kharcha is free with no account. Kharcha Pro adds unlimited receipt scans for PKR 300 a month or PKR 2,500 a year, with a 7-day free trial, billed by Google Play.',
     'active' => 'pricing',
 ])
 
@@ -289,8 +289,8 @@
 
 <section class="pricing-hero wrap">
     <p class="eyebrow rise" style="justify-content: center;"><span class="line"></span> Pricing in {{ $pricing['currency'] }}</p>
-    <h1 class="display rise d-1"><span class="roman">Fair</span> <span class="accent">prices</span><span class="roman">,</span><br><span class="roman">in your currency</span><span class="accent">.</span></h1>
-    <p class="lede rise d-2" style="margin-top: var(--s-6);">Free for most households, Pro for the families who scan most receipts. Cancel anytime; everything except the AI quota is included on every plan.</p>
+    <h1 class="display rise d-1"><span class="roman">Free</span> <span class="accent">to use</span><span class="roman">,</span><br><span class="roman">Pro to scan</span><span class="accent">.</span></h1>
+    <p class="lede rise d-2" style="margin-top: var(--s-6);">Everything you type in is free, forever: entries, lists, splits, fuel and encrypted backups. Kharcha Pro adds unlimited receipt scanning. Subscriptions are handled by Google Play, so you can cancel any time from the Play Store.</p>
 
     {{-- Region switcher --}}
     <div class="region rise d-3" role="group" aria-label="Choose your country">
@@ -303,7 +303,7 @@
             </a>
         @endforeach
     </div>
-    <p class="region-meta">Showing {{ $pricing['name'] }} ({{ $pricing['currency'] }}). <a href="?cc={{ \App\Support\RegionalPricing::BASE }}#tiers">Reset to USD</a></p>
+    <p class="region-meta">Showing {{ $pricing['name'] }} ({{ $pricing['currency'] }}). Google Play shows the exact price for your country before you pay.</p>
 </section>
 
 <section class="wrap" id="tiers">
@@ -311,51 +311,48 @@
         <div class="tier-card reveal">
             <p class="name">Free</p>
             <p class="price"><span class="cur">{{ $pricing['currency'] }}</span>0</p>
-            <p class="per">free forever, no card</p>
-            <p class="blurb">For households entering most expenses by hand and only scanning a few receipts each month.</p>
+            <p class="per">free forever, no account</p>
+            <p class="blurb">Everything you need to track a household by hand, private on your phone.</p>
             <ul>
-                <li><strong>3 AI receipt scans</strong> per calendar month</li>
-                <li><strong>Up to 3 household members</strong></li>
-                <li>Unlimited manual entries</li>
-                <li>Unlimited spending lists</li>
-                <li>Split expenses across people</li>
-                <li>Fuel tracking with km/L and per-km cost</li>
-                <li>Monthly dashboard and charts</li>
-                <li class="muted">No early access to new features</li>
+                <li><strong>3 receipt scans</strong> to try it</li>
+                <li>Unlimited entries, lists and categories</li>
+                <li>Split an expense across people</li>
+                <li>Fuel tracking with km/L and cost per km</li>
+                <li>Budgets per list with what's left</li>
+                <li>Encrypted backup files and CSV export</li>
+                <li>Works fully offline, no sign-up</li>
             </ul>
-            <a class="btn btn-ghost cta" href="/#cta">Start free</a>
+            <a class="btn btn-ghost cta" href="{{ $playUrl }}">Get it on Google Play</a>
         </div>
 
         <div class="tier-card featured reveal">
-            <span class="badge">Most popular</span>
-            <p class="name">Pro · Monthly</p>
-            <p class="price"><span class="cur">{{ $pricing['currency'] }}</span>{{ $pricing['monthly_display'] }}</p>
-            <p class="per">per month, cancel anytime</p>
-            <p class="blurb">For larger families who scan most receipts. Invited members inherit Pro at no extra cost.</p>
+            <span class="badge">Best value</span>
+            <p class="name">Pro · Yearly</p>
+            <p class="price"><span class="cur">{{ $pricing['currency'] }}</span>{{ $pricing['yearly_display'] }}</p>
+            <p class="per">per year, 7 days free, save {{ $pricing['yearly_saving'] }}%</p>
+            <p class="blurb">Snap a bill instead of typing it. Every line item is read so you can check it and assign it to a list.</p>
             <ul>
-                <li><strong>Unlimited</strong> AI receipt scans</li>
-                <li><strong>Up to 5 household members</strong>, all on Pro</li>
+                <li><strong>Unlimited</strong> receipt scans</li>
+                <li>Edit and assign every item before saving</li>
+                <li>Petrol slips fill in the refill form</li>
                 <li>Everything in Free</li>
-                <li>Early access to new features</li>
-                <li>Direct support from the maker</li>
-                <li>Cancel from settings, no email needed</li>
+                <li>7-day free trial for new subscribers</li>
             </ul>
-            <a class="btn btn-accent cta" href="/#cta">Choose Pro</a>
+            <a class="btn btn-accent cta" href="{{ $playUrl }}">Start free trial</a>
         </div>
 
         <div class="tier-card reveal">
-            <p class="name">Pro · Lifetime</p>
-            <p class="price"><span class="cur">{{ $pricing['currency'] }}</span>{{ $pricing['lifetime_display'] }}</p>
-            <p class="per">one payment, never again</p>
-            <p class="blurb">Pay once and Kharcha Pro is yours for life. About {{ $pricing['breakeven_months'] }} months of the monthly plan; everything after is free.</p>
+            <p class="name">Pro · Monthly</p>
+            <p class="price"><span class="cur">{{ $pricing['currency'] }}</span>{{ $pricing['monthly_display'] }}</p>
+            <p class="per">per month, 7 days free</p>
+            <p class="blurb">The same Pro, billed monthly. Cancel any time in Google Play and keep Pro until the period ends.</p>
             <ul>
-                <li>Pro features, <strong>forever</strong></li>
-                <li>Up to 5 household members included</li>
-                <li>One payment, zero renewals</li>
-                <li>Founder pricing while it lasts</li>
-                <li>Future Pro features included</li>
+                <li><strong>Unlimited</strong> receipt scans</li>
+                <li>Everything in Free</li>
+                <li>7-day free trial for new subscribers</li>
+                <li>Cancel from the Play Store</li>
             </ul>
-            <a class="btn btn-ghost cta" href="/#cta">Pay once</a>
+            <a class="btn btn-ghost cta" href="{{ $playUrl }}">Start free trial</a>
         </div>
     </div>
 </section>
@@ -373,23 +370,20 @@
                 <tr>
                     <th></th>
                     <th class="center">Free</th>
-                    <th class="center feat">Pro Monthly</th>
-                    <th class="center">Pro Lifetime</th>
+                    <th class="center feat">Pro</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><th scope="row">AI receipt scans</th><td class="center">3 / month</td><td class="center">Unlimited</td><td class="center">Unlimited</td></tr>
-                <tr><th scope="row">Household members</th><td class="center">Up to 3</td><td class="center">Up to 5</td><td class="center">Up to 5</td></tr>
-                <tr><th scope="row">Pro features inherited by members</th><td class="dash"></td><td class="check"></td><td class="check"></td></tr>
-                <tr><th scope="row">Manual entries</th><td class="center">Unlimited</td><td class="center">Unlimited</td><td class="center">Unlimited</td></tr>
-                <tr><th scope="row">Spending lists</th><td class="center">Unlimited</td><td class="center">Unlimited</td><td class="center">Unlimited</td></tr>
-                <tr><th scope="row">Split expenses</th><td class="check"></td><td class="check"></td><td class="check"></td></tr>
-                <tr><th scope="row">Fuel tracking (km/L, Rs/km, CSV import)</th><td class="check"></td><td class="check"></td><td class="check"></td></tr>
-                <tr><th scope="row">Monthly dashboard &amp; charts</th><td class="check"></td><td class="check"></td><td class="check"></td></tr>
-                <tr><th scope="row">Early access to new features</th><td class="dash"></td><td class="check"></td><td class="check"></td></tr>
-                <tr><th scope="row">Direct support from the maker</th><td class="dash"></td><td class="check"></td><td class="check"></td></tr>
-                <tr><th scope="row">Auto-renewal</th><td class="center">·</td><td class="center">Monthly</td><td class="center">Never</td></tr>
-                <tr><th scope="row">Total over 24 months</th><td class="center">{{ $pricing['currency'] }} 0</td><td class="center">{{ $pricing['currency'] }} {{ number_format($pricing['monthly'] * 24, $pricing['monthly'] == floor($pricing['monthly']) ? 0 : 2) }}</td><td class="center">{{ $pricing['currency'] }} {{ $pricing['lifetime_display'] }}</td></tr>
+                <tr><th scope="row">Receipt scans</th><td class="center">3 to try</td><td class="center">Unlimited</td></tr>
+                <tr><th scope="row">Entries, lists, categories</th><td class="center">Unlimited</td><td class="center">Unlimited</td></tr>
+                <tr><th scope="row">Split expenses</th><td class="check"></td><td class="check"></td></tr>
+                <tr><th scope="row">Fuel tracking (km/L, cost per km)</th><td class="check"></td><td class="check"></td></tr>
+                <tr><th scope="row">Budgets per list</th><td class="check"></td><td class="check"></td></tr>
+                <tr><th scope="row">Encrypted on-device data</th><td class="check"></td><td class="check"></td></tr>
+                <tr><th scope="row">Encrypted backups, CSV export</th><td class="check"></td><td class="check"></td></tr>
+                <tr><th scope="row">Account needed</th><td class="center">No</td><td class="center">No</td></tr>
+                <tr><th scope="row">Free trial</th><td class="dash"></td><td class="center">7 days</td></tr>
+                <tr><th scope="row">Price</th><td class="center">{{ $pricing['currency'] }} 0</td><td class="center">{{ $pricing['currency'] }} {{ $pricing['monthly_display'] }}/mo or {{ $pricing['yearly_display'] }}/yr</td></tr>
             </tbody>
         </table>
     </div>
@@ -399,20 +393,20 @@
 <section class="trust wrap">
     <div class="reveal">
         <p class="eyebrow"><span class="line"></span> Fine print, plain language</p>
-        <h2 class="h2">No tricks. No card<br>until you upgrade<span class="accent">.</span></h2>
+        <h2 class="h2">No account. No tricks<span class="accent">.</span></h2>
     </div>
     <div class="trust-grid reveal" style="margin-top: var(--s-10);">
         <div class="trust-item">
-            <h4>No surprise charges</h4>
-            <p>Free is free forever. Pro shows the exact rupee amount before you confirm. We never charge a card on file from the free tier.</p>
+            <h4>Billed by Google Play</h4>
+            <p>Payment, receipts and renewals are handled by Google Play with the method on your Play account. We never see your card.</p>
         </div>
         <div class="trust-item">
-            <h4>Cancel in one tap</h4>
-            <p>Monthly Pro lives in your settings. Tap cancel and you keep Pro until the end of the billing period, then revert to free with no data loss.</p>
+            <h4>Cancel any time</h4>
+            <p>Cancel in the Play Store under Payments &amp; subscriptions. Pro stays on until the end of the period you paid for; your data is never touched.</p>
         </div>
         <div class="trust-item">
-            <h4>Your data is yours</h4>
-            <p>We never sell or share with advertisers. Read the <a href="/privacy" style="color: var(--accent-deep); text-decoration: underline;">privacy notice</a> for the precise list of what is stored, for how long, and why.</p>
+            <h4>Your data stays yours</h4>
+            <p>Your ledger lives encrypted on your phone. Scanned photos are read and discarded. Read the <a href="/privacy" style="color: var(--accent-deep); text-decoration: underline;">privacy notice</a> for the details.</p>
         </div>
     </div>
 </section>
@@ -426,28 +420,28 @@
 
     <div class="faq-list reveal" style="max-width: 760px;">
         <details>
-            <summary>What payment methods can I use? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">Local cards (Visa, Mastercard, and UnionPay), JazzCash and EasyPaisa are on the way; bank transfer is supported on request for Lifetime. We will publish the exact mix when Pro opens for the first households.</p>
+            <summary>How do I pay? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">Inside the app, through Google Play, with whatever payment method your Play account has: card, carrier billing, Play balance or gift cards where available.</p>
         </details>
         <details>
-            <summary>Is there a student or family discount? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">Lifetime at PKR 7,999 is already founder pricing; it will move up. If you are a student or a household genuinely priced out, write in and we will sort something honest.</p>
+            <summary>How does the free trial work? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">New subscribers get 7 days of Pro free on either plan. Cancel in Google Play before the trial ends and you are not charged.</p>
         </details>
         <details>
             <summary>What counts as one scan? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">One photo of one receipt, regardless of how many line items it contains. A 30-item grocery bill is a single scan. Re-scanning the same receipt because the first photo was blurry counts as one extra scan; we do not refund those.</p>
+            <p class="a">One photo of one receipt, however many items it has. A scan that can't be read doesn't count against your free scans.</p>
         </details>
         <details>
-            <summary>Will prices ever go up? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">Possibly, slowly, with at least a month of notice. Lifetime is locked at the price you paid for life. Monthly subscribers get the price they signed up at for as long as they stay subscribed, with grandfathering when it makes sense.</p>
+            <summary>Do I need an account? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">No. Kharcha has no sign-up. Pro is tied to your Google Play account, so it follows you to a new phone: tap Restore purchase in the app.</p>
         </details>
         <details>
-            <summary>Is there a free trial of Pro? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">No trial of Pro itself, because Free already includes every Pro feature except the unlimited scans. Use Free for a month; if you hit the cap and want more, that is the moment Pro is worth it.</p>
+            <summary>What happens to my data if I cancel? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">Nothing. Everything you entered or scanned stays on your phone. You go back to typing entries by hand.</p>
         </details>
         <details>
-            <summary>What if I want a refund? <span class="plus" aria-hidden="true">+</span></summary>
-            <p class="a">Email within seven days of any payment and we will refund it, no questions. After seven days we look at the situation honestly; usually we still refund.</p>
+            <summary>Can I get a refund? <span class="plus" aria-hidden="true">+</span></summary>
+            <p class="a">Request one from Google Play under Order history, or email us and we will help.</p>
         </details>
     </div>
 </section>
@@ -455,10 +449,10 @@
 {{-- CTA --}}
 <section class="wrap" id="cta">
     <div class="reveal" style="text-align: center; padding: clamp(60px, 10vh, 120px) 0;">
-        <h2 class="h2">Try Kharcha free.<br><span class="accent">Upgrade if you outgrow it.</span></h2>
-        <p class="lede" style="margin: var(--s-6) auto var(--s-8); max-width: 48ch;">Three scans a month is enough to learn whether Kharcha fits your household. The rest is unlimited from day one.</p>
-        <a class="btn btn-primary" href="/#cta">
-            Start free
+        <h2 class="h2">Track it free.<br><span class="accent">Scan it with Pro.</span></h2>
+        <p class="lede" style="margin: var(--s-6) auto var(--s-8); max-width: 48ch;">Install Kharcha, try three scans on your own receipts, and decide from there.</p>
+        <a class="btn btn-primary" href="{{ $playUrl }}">
+            Get it on Google Play
             <span class="arrow" aria-hidden="true">→</span>
         </a>
     </div>

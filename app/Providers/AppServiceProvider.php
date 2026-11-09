@@ -14,6 +14,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        \Illuminate\Support\Facades\View::share('playUrl', 'https://play.google.com/store/apps/details?id=com.iukhan.kharcha');
+
         // Reset-password emails point at the Blade page on this host instead
         // of Laravel's default /password/reset/{token} route.
         ResetPassword::createUrlUsing(function ($notifiable, string $token) {

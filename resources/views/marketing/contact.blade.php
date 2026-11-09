@@ -136,7 +136,7 @@
                 </svg>
             </div>
             <h3>Email support</h3>
-            <p>Bug reports, billing questions, account help, anything technical. Reaches the same inbox that runs the service, no triage layer in between.</p>
+            <p>Bug reports, Pro and billing questions, backup help, anything technical. Reaches the same inbox that runs the service, no triage layer in between.</p>
             <a class="target" href="mailto:hello@iukhan.tech?subject=Kharcha%20support">hello@iukhan.tech</a>
         </div>
 
@@ -164,8 +164,8 @@
 
         <div class="topics-grid">
             <div class="topic">
-                <h4>Trouble signing up</h4>
-                <p>Verification code not arriving, password reset stuck, anything blocking you at the door. Mention which email you tried; we will look on our side.</p>
+                <h4>Backups and new phones</h4>
+                <p>A backup that won't restore, or moving to a new phone. We can't see your data or recover a lost backup password, but we can walk you through it.</p>
             </div>
             <div class="topic">
                 <h4>Scan misreading a receipt</h4>
@@ -173,15 +173,15 @@
             </div>
             <div class="topic">
                 <h4>Pro, billing, refunds</h4>
-                <p>Refunds within seven days, no questions. See the <a href="/pricing#faq">pricing FAQ</a> for the long answer; email for anything it does not cover.</p>
+                <p>Pro is billed by Google Play: request refunds there under Order history, or email us and we will help. See the <a href="/pricing#faq">pricing FAQ</a>.</p>
             </div>
             <div class="topic">
-                <h4>Household invitations</h4>
-                <p>Invite emails landing in spam, members not appearing, accidental removals. Send the household name and the affected email and we will sort it.</p>
+                <h4>Older web accounts</h4>
+                <p>Used Kharcha before 2.0 with an email login? Ask us for a copy of that data or to delete the old account, from the email you signed up with.</p>
             </div>
             <div class="topic">
-                <h4>Delete my account</h4>
-                <p>You can delete your own account from Settings in the app. If you cannot reach Settings, email and we will do it for you the same day.</p>
+                <h4>Delete my data</h4>
+                <p>Your ledger lives only on your phone: clearing the app's data or uninstalling deletes it. For older web accounts, email privacy@iukhan.tech.</p>
             </div>
             <div class="topic">
                 <h4>Press, partnerships, the rest</h4>
@@ -193,10 +193,10 @@
 
 <section class="wrap">
     <div class="reveal" style="text-align: center; padding: clamp(60px, 10vh, 120px) 0;">
-        <h2 class="h2">Already a user?<br><span class="accent">Open Kharcha</span><span class="roman">.</span></h2>
-        <p class="lede" style="margin: var(--s-6) auto var(--s-8); max-width: 44ch;">Settings has the same support email and a one-tap account deletion if you ever need it.</p>
-        <a class="btn btn-primary" href="/admin/login">
-            Sign in
+        <h2 class="h2">Not using it yet?<br><span class="accent">Get Kharcha</span><span class="roman">.</span></h2>
+        <p class="lede" style="margin: var(--s-6) auto var(--s-8); max-width: 44ch;">Free, no account, encrypted on your phone.</p>
+        <a class="btn btn-primary" href="{{ $playUrl }}">
+            Get it on Google Play
             <span class="arrow" aria-hidden="true">→</span>
         </a>
     </div>
