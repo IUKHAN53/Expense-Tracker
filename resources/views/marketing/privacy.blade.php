@@ -5,7 +5,7 @@
 
 @section('head-style')
         .legal {
-            padding: clamp(40px, 6vh, 80px) 0 clamp(60px, 10vh, 120px);
+            padding-top: clamp(40px, 6vh, 80px); padding-bottom: clamp(60px, 10vh, 120px);
         }
         .legal-head { margin-bottom: var(--s-10); }
         .legal-meta {
@@ -91,7 +91,7 @@
 <section class="legal wrap-narrow">
     <header class="legal-head reveal">
         <p class="eyebrow"><span class="line"></span> Privacy notice</p>
-        <h1 class="display">Your data,<br><span class="accent">your ledger</span><span class="roman">.</span></h1>
+        <h1 class="display">Your data,<br><span class="accent">your ledger</span>.</h1>
         <p class="legal-meta">Effective 9 November 2026 · Kharcha, Karachi, Pakistan</p>
     </header>
 

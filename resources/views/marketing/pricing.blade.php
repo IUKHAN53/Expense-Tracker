@@ -6,7 +6,7 @@
 
 @section('head-style')
         .pricing-hero {
-            padding: clamp(48px, 8vh, 96px) 0 clamp(32px, 4vh, 56px);
+            padding-top: clamp(48px, 8vh, 96px); padding-bottom: clamp(32px, 4vh, 56px);
             text-align: center;
         }
         .pricing-hero .lede { margin-left: auto; margin-right: auto; }
@@ -49,7 +49,7 @@
             transition: background 180ms var(--ease-out), color 180ms var(--ease-out);
         }
         @media (hover: hover) and (pointer: fine) {
-            .region-chip:hover { background: oklch(0.96 0.030 75); color: var(--accent-deep); }
+            .region-chip:hover { background: var(--soft); color: var(--accent-deep); }
         }
         .region-chip.on {
             background: var(--ink);
@@ -86,9 +86,7 @@
         }
         .tier-card.featured {
             border-color: var(--accent);
-            box-shadow:
-                0 1px 0 oklch(0.620 0.160 45 / 0.10),
-                0 40px 60px -28px oklch(0.500 0.160 45 / 0.30);
+            box-shadow: 8px 8px 0 var(--primary);
         }
         .tier-card .badge {
             position: absolute;
@@ -218,7 +216,7 @@
 
         /* Trust strip. */
         .trust {
-            padding: clamp(60px, 8vh, 100px) 0;
+            padding-top: clamp(60px, 8vh, 100px); padding-bottom: clamp(60px, 8vh, 100px);
         }
         .trust-grid {
             display: grid;
@@ -289,7 +287,7 @@
 
 <section class="pricing-hero wrap">
     <p class="eyebrow rise" style="justify-content: center;"><span class="line"></span> Pricing in {{ $pricing['currency'] }}</p>
-    <h1 class="display rise d-1"><span class="roman">Free</span> <span class="accent">to use</span><span class="roman">,</span><br><span class="roman">Pro to scan</span><span class="accent">.</span></h1>
+    <h1 class="display rise d-1"><span class="roman">Free</span> <span class="accent">to use</span>,<br><span class="roman">Pro to scan</span>.</h1>
     <p class="lede rise d-2" style="margin-top: var(--s-6);">Everything you type in is free, forever: entries, lists, splits, fuel and encrypted backups. Kharcha Pro adds unlimited receipt scanning. Subscriptions are handled by Google Play, so you can cancel any time from the Play Store.</p>
 
     {{-- Region switcher --}}
@@ -361,7 +359,7 @@
 <section class="band wrap compare">
     <div class="reveal">
         <p class="eyebrow"><span class="line"></span> Compare</p>
-        <h2 class="h2">Every feature,<br><span class="accent">side by side</span><span class="roman">.</span></h2>
+        <h2 class="h2">Every feature,<br><span class="accent">side by side</span>.</h2>
     </div>
 
     <div class="reveal" style="overflow-x: auto;">
@@ -393,7 +391,7 @@
 <section class="trust wrap">
     <div class="reveal">
         <p class="eyebrow"><span class="line"></span> Fine print, plain language</p>
-        <h2 class="h2">No account. No tricks<span class="accent">.</span></h2>
+        <h2 class="h2">No account. No tricks.</h2>
     </div>
     <div class="trust-grid reveal" style="margin-top: var(--s-10);">
         <div class="trust-item">
@@ -415,7 +413,7 @@
 <section class="band wrap" id="faq">
     <div class="reveal" style="max-width: 760px;">
         <p class="eyebrow"><span class="line"></span> Pricing questions</p>
-        <h2 class="h2">Asked,<br><span class="accent">answered</span><span class="roman">.</span></h2>
+        <h2 class="h2">Asked,<br><span class="accent">answered</span>.</h2>
     </div>
 
     <div class="faq-list reveal" style="max-width: 760px;">

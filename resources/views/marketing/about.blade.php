@@ -5,7 +5,7 @@
 
 @section('head-style')
         .about-hero {
-            padding: clamp(48px, 8vh, 96px) 0 clamp(24px, 4vh, 56px);
+            padding-top: clamp(48px, 8vh, 96px); padding-bottom: clamp(24px, 4vh, 56px);
         }
 
         .prose {
@@ -108,7 +108,7 @@
 
 <section class="about-hero wrap">
     <p class="eyebrow rise"><span class="line"></span> About</p>
-    <h1 class="display rise d-1">A small tool,<br><span class="accent">built carefully</span><span class="roman">.</span></h1>
+    <h1 class="display rise d-1">A small tool,<br><span class="accent">built carefully</span>.</h1>
     <p class="lede rise d-2" style="margin-top: var(--s-6);">Kharcha is the household ledger I wanted for my own family. It exists because we kept running out of clean answers to a simple question.</p>
 </section>
 
@@ -116,7 +116,7 @@
     <div class="reveal" style="display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(28px, 5vw, 72px); align-items: start;">
         <div>
             <p class="eyebrow"><span class="line"></span> Why this exists</p>
-            <h2 class="h2">The receipts kept piling up<span class="accent">.</span></h2>
+            <h2 class="h2">The receipts kept piling up.</h2>
         </div>
         <div class="prose">
             <p>For years my household tracked expenses in a spreadsheet that nobody fully trusted. Receipts got lost. Someone would buy groceries on a card, someone else would handle the milk man in cash, and at the end of the month <em>nobody could say where the rupees went</em>.</p>
@@ -130,7 +130,7 @@
 <section class="band wrap">
     <div class="reveal">
         <p class="eyebrow"><span class="line"></span> The maker</p>
-        <h2 class="h2">Irfan Ullah,<br><span class="accent">full-stack developer</span><span class="roman">.</span></h2>
+        <h2 class="h2">Irfan Ullah,<br><span class="accent">full-stack developer</span>.</h2>
         <div class="prose" style="margin-top: var(--s-6);">
             <p>I am a full-stack developer based in Pakistan. By day I build internal tools for <a href="https://www.iukhan.tech" target="_blank" rel="noopener">Tameer-e-Khalaq Foundation</a>: a Laravel admin panel that tracks field monitoring across the country, a React Native app for issue tracking, and a Laravel/Sanctum data-collection platform used by 100+ field workers daily.</p>
             <p>Outside of TKF I have shipped projects for 70+ Fiverr clients with a 4.9★ rating, mostly in Laravel + React Native. Kharcha is the first thing I have built that is not work-for-hire. <em>It is for my own household first</em>, and yours by extension.</p>
@@ -149,7 +149,7 @@
 <section class="band wrap">
     <div class="reveal">
         <p class="eyebrow"><span class="line"></span> What we will not do</p>
-        <h2 class="h2">Three commitments<span class="accent">.</span></h2>
+        <h2 class="h2">Three commitments.</h2>
     </div>
 
     <div class="pillars reveal">

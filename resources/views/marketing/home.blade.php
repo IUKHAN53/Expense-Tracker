@@ -1,661 +1,152 @@
 @extends('marketing.layout', [
-    'title' => 'Kharcha · A household ledger, kept by hand',
-    'description' => 'The calm expense tracker for households anywhere. Snap a receipt with the camera, split a bill across the family, log fuel by the litre, see exactly where the month went. Multi-currency.',
+    'title' => 'Kharcha · Private household expense tracker',
+    'description' => 'Kharcha is a private household expense tracker for Android. No account, encrypted on your phone. Split bills, track fuel km/L, scan receipts. Free, with Kharcha Pro for unlimited scans.',
     'active' => 'home',
 ])
 
 @section('head-style')
-        /* ============ HERO ============ */
-        .hero {
-            padding: clamp(40px, 8vh, 96px) 0 clamp(40px, 6vh, 80px);
-        }
+        /* ---------- Hero ---------- */
+        .hero { padding-top: clamp(24px, 5vh, 64px); padding-bottom: clamp(56px, 9vh, 112px); }
         .hero-grid {
             display: grid;
             grid-template-columns: 1.15fr 0.85fr;
-            gap: clamp(28px, 6vw, 80px);
+            gap: clamp(32px, 5vw, 72px);
             align-items: center;
         }
-        .hero h1 {
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 500;
-            font-size: clamp(54px, 7.5vw, 112px);
-            line-height: 0.92;
-            letter-spacing: -0.035em;
-            color: var(--ink);
-            margin: 0 0 var(--s-6);
+        .hero h1 { margin-bottom: var(--s-6); }
+        .hero .lede { font-size: clamp(18px, 1.6vw, 21px); }
+        .hero-cta { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-bottom: var(--s-8); }
+        .hero-meta { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6); list-style: none; padding: 0; margin: 0; }
+        .hero-meta li { display: inline-flex; align-items: center; gap: var(--s-2); font-weight: 600; font-size: 15px; }
+        .tick {
+            width: 22px; height: 22px; border-radius: 50%; flex: none;
+            background: var(--primary); display: inline-grid; place-items: center;
         }
-        .hero h1 .accent { color: var(--accent); font-weight: 600; }
-        .hero h1 .roman { font-style: normal; }
-        .hero .lede {
-            margin-bottom: var(--s-8);
-            max-width: 44ch;
-        }
-        .hero-cta {
-            display: flex;
-            gap: var(--s-3);
-            flex-wrap: wrap;
-        }
-        .hero-meta {
-            margin-top: var(--s-8);
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-faint);
-            display: flex;
-            gap: var(--s-6);
-            flex-wrap: wrap;
-        }
-        .hero-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); display: inline-block; margin-right: var(--s-2); transform: translateY(-2px); }
+        .tick svg { width: 12px; height: 12px; }
 
-        /* Receipt mock in hero. A folded-paper card with an itemized list. */
-        .receipt {
-            background: var(--card);
-            border: 1px solid var(--rule);
-            border-radius: 4px;
-            padding: var(--s-6) var(--s-6) var(--s-5);
-            box-shadow:
-                0 1px 0 oklch(0.220 0.024 60 / 0.04),
-                0 20px 60px -32px oklch(0.220 0.024 60 / 0.30),
-                0 80px 100px -60px oklch(0.500 0.160 45 / 0.22);
-            transform: rotate(-1.5deg);
+        /* ---------- Phone frames (real app screenshots) ---------- */
+        .phone {
             position: relative;
-            font-family: var(--mono);
-            font-size: 12.5px;
-            color: var(--ink);
-            max-width: 360px;
-            margin-left: auto;
+            width: min(100%, 320px);
+            aspect-ratio: 540 / 1000;
+            border: 10px solid var(--ink);
+            border-radius: 44px;
+            background: #fff;
+            overflow: hidden;
+            box-shadow: 14px 14px 0 var(--primary);
         }
-        .receipt::before, .receipt::after {
-            content: '';
-            position: absolute;
-            left: 0; right: 0;
-            height: 12px;
-            background:
-                radial-gradient(circle at 6px 6px, var(--bg) 5px, transparent 5.5px) 0 0/12px 12px repeat-x;
+        .phone img { display: block; width: 100%; height: auto; }
+        .hero-phone { position: relative; justify-self: center; }
+        .sticker {
+            position: absolute; left: -64px; top: 46%; z-index: 2;
+            background: #fff; border: 2px solid var(--ink); border-radius: 16px;
+            padding: 12px 16px; display: flex; gap: 12px; align-items: center;
+            box-shadow: 6px 6px 0 var(--ink);
         }
-        .receipt::before { top: -6px; }
-        .receipt::after  { bottom: -6px; transform: scaleY(-1); }
-        .receipt h4 {
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 500;
-            font-size: 19px;
-            margin: 0 0 var(--s-1);
-            color: var(--ink);
-        }
-        .receipt .place {
-            font-family: var(--mono);
-            font-size: 10.5px;
-            letter-spacing: 0.18em;
-            color: var(--ink-faint);
-            text-transform: uppercase;
-            margin: 0 0 var(--s-4);
-        }
-        .receipt ul {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 var(--s-4);
-            display: flex;
-            flex-direction: column;
-            gap: var(--s-2);
-        }
-        .receipt li {
-            display: flex;
-            justify-content: space-between;
-            font-variant-numeric: tabular-nums;
-        }
-        .receipt li .qty { color: var(--ink-faint); margin-right: var(--s-3); }
-        .receipt .sep {
-            border: 0;
-            border-top: 1px dashed var(--rule-strong);
-            margin: var(--s-3) 0;
-        }
-        .receipt .total {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 500;
-            font-size: 14px;
-            font-variant-numeric: tabular-nums;
-        }
-        .receipt .scanned {
-            margin-top: var(--s-4);
-            font-family: var(--mono);
-            font-size: 10px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--accent-deep);
-            display: flex;
-            align-items: center;
-            gap: var(--s-2);
-        }
-        .receipt .scanned .pip {
-            width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-            box-shadow: 0 0 0 4px oklch(0.620 0.160 45 / 0.18);
-        }
+        .sticker .coin { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); display: grid; place-items: center; font-weight: 800; }
+        .sticker b { display: block; font-size: 15px; letter-spacing: -0.02em; }
+        .sticker span { font-size: 13px; color: var(--ink-soft); }
 
-        @media (max-width: 880px) {
-            .hero-grid { grid-template-columns: 1fr; gap: var(--s-10); }
-            .receipt { margin: 0 auto; transform: rotate(-1deg); }
-        }
+        /* ---------- Sections ---------- */
+        .band { padding-top: clamp(64px, 10vh, 120px); padding-bottom: clamp(64px, 10vh, 120px); }
+        .section-head { max-width: 760px; margin-bottom: var(--s-10); }
 
-        /* ============ SECTION SCAFFOLD ============ */
-        section.band {
-            padding: clamp(60px, 10vh, 140px) 0;
-            position: relative;
+        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+        .feature {
+            border: 1.5px solid var(--rule); border-radius: 20px;
+            padding: var(--s-6); background: #fff;
+            transition: border-color 200ms var(--ease-out), transform 200ms var(--ease-out);
         }
-        section.band + section.band { border-top: 1px solid var(--rule); }
-
-        /* ============ FEATURES (varied, not a card grid) ============ */
-        .features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--s-14) var(--s-10);
+        @media (hover: hover) and (pointer: fine) {
+            .feature:hover { border-color: var(--ink); transform: translateY(-2px); }
         }
         .feature .num {
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin: 0 0 var(--s-3);
-            display: flex;
-            align-items: baseline;
-            gap: var(--s-3);
+            width: 40px; height: 40px; border-radius: 50%; background: var(--primary);
+            display: grid; place-items: center; font-weight: 800; font-size: 15px; margin: 0 0 var(--s-5);
         }
-        .feature .num::after {
-            content: '';
-            display: inline-block;
-            flex: 1;
-            height: 1px;
-            background: var(--rule);
-        }
-        .feature h3 { margin-bottom: var(--s-3); }
         .feature p { color: var(--ink-soft); font-size: 15.5px; margin: 0; }
+        .feature.wide { grid-column: span 2; background: var(--soft); border-color: var(--soft); }
 
-        /* ============ APP PREVIEW (phone mock) ============ */
-        .preview {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--s-14);
-            align-items: center;
-        }
-        .phone-stack {
-            position: relative;
-            min-height: 580px;
-        }
-        .phone {
-            width: 280px;
-            height: 560px;
-            border-radius: 38px;
-            background: var(--bg-deep);
-            border: 1px solid var(--rule-strong);
-            box-shadow:
-                0 2px 0 oklch(0.220 0.024 60 / 0.05),
-                0 30px 80px -30px oklch(0.220 0.024 60 / 0.32),
-                0 80px 140px -60px oklch(0.500 0.160 45 / 0.22);
-            padding: 14px;
-            position: absolute;
-        }
-        .phone .screen {
-            background: var(--bg);
-            border-radius: 26px;
-            height: 100%;
-            padding: var(--s-5) var(--s-4);
-            overflow: hidden;
-            position: relative;
-        }
-        .phone .notch {
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            width: 86px; height: 22px;
-            border-radius: 12px;
-            background: var(--ink);
-            transform: translateX(-50%);
-            opacity: 0.92;
-        }
-        .phone .screen-eyebrow {
-            margin-top: var(--s-6);
-            font-family: var(--mono);
-            font-size: 9.5px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--ink-faint);
-        }
-        .phone .screen-month {
-            font-family: var(--serif);
-            font-style: italic;
-            font-size: 26px;
-            line-height: 1.1;
-            color: var(--ink);
-            margin: var(--s-1) 0 var(--s-4);
-        }
-        .phone .spent {
-            display: flex;
-            align-items: baseline;
-            gap: var(--s-2);
-            margin-bottom: var(--s-6);
-        }
-        .phone .spent .amount {
-            font-family: var(--serif);
-            font-weight: 500;
-            font-size: 38px;
-            letter-spacing: -0.02em;
-            font-variant-numeric: tabular-nums;
-        }
-        .phone .spent .cur {
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            color: var(--ink-faint);
-            text-transform: uppercase;
-        }
-        .phone .bar {
-            height: 6px;
-            background: var(--rule);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: var(--s-6);
-            display: flex;
-        }
-        .phone .bar i { display: block; height: 100%; }
-        .phone .bar .home  { background: var(--accent); width: 38%; }
-        .phone .bar .car   { background: oklch(0.55 0.13 60); width: 22%; }
-        .phone .bar .baba  { background: oklch(0.62 0.10 200); width: 18%; }
-        .phone .bar .ammi  { background: oklch(0.55 0.10 300); width: 14%; }
-        .phone .bar .rest  { background: var(--rule-strong); width: 8%; }
+        .screens { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 56px); }
+        .screen-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .screen-card .phone { width: min(100%, 280px); box-shadow: 10px 10px 0 var(--primary); }
+        .screen-card h3 { margin-top: var(--s-8); }
+        .screen-card p { color: var(--ink-soft); font-size: 15.5px; margin: 0 auto; max-width: 32ch; }
 
-        .phone .lists {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: var(--s-2);
-        }
-        .phone .lists li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: var(--s-3) 0;
-            border-bottom: 1px solid var(--rule);
-        }
-        .phone .lists li:last-child { border-bottom: none; }
-        .phone .lists .swatch { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: var(--s-2); }
-        .phone .lists .name { font-size: 14px; color: var(--ink); }
-        .phone .lists .amt {
-            font-family: var(--mono);
-            font-size: 13px;
-            color: var(--ink-soft);
-            font-variant-numeric: tabular-nums;
-        }
+        /* ---------- Privacy (ink band) ---------- */
+        .private { background: var(--ink); color: #fff; border-radius: 32px; padding: clamp(40px, 7vw, 88px); }
+        .private .eyebrow { color: #BDBDBD; }
+        .private .h2 { color: #fff; }
+        .private .h2 .accent { color: var(--ink); background: var(--primary); padding: 0 0.12em; border-radius: 8px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+        .private .lede { color: #CFCFCF; }
+        .private-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-8); margin-top: var(--s-10); }
+        .private-grid h3 { color: #fff; }
+        .private-grid p { color: #BDBDBD; font-size: 15.5px; margin: 0; }
+        .private-grid .tick { margin-bottom: var(--s-4); width: 32px; height: 32px; }
+        .private-grid .tick svg { width: 16px; height: 16px; }
+        .private a { color: #fff; }
 
-        .phone-front {
-            left: 0; top: 0;
-            transform: rotate(-3deg);
-            z-index: 2;
-        }
-        .phone-back {
-            right: 0; top: 32px;
-            transform: rotate(4deg);
-            opacity: 0.85;
-            z-index: 1;
-        }
-        .phone-back .screen-eyebrow { color: var(--accent-deep); }
-        .phone-back .scan-card {
-            margin-top: var(--s-6);
-            padding: var(--s-4);
-            background: var(--card);
-            border: 1px solid var(--rule);
-            border-radius: 8px;
-        }
-        .phone-back .scan-card .row {
-            display: flex;
-            justify-content: space-between;
-            font-family: var(--mono);
-            font-size: 11.5px;
-            color: var(--ink);
-            margin-bottom: var(--s-2);
-            font-variant-numeric: tabular-nums;
-        }
-        .phone-back .scan-card .row.faint { color: var(--ink-faint); }
-        .phone-back .scan-card .total {
-            margin-top: var(--s-3);
-            padding-top: var(--s-3);
-            border-top: 1px dashed var(--rule-strong);
-            display: flex;
-            justify-content: space-between;
-            font-family: var(--serif);
-            font-style: italic;
-            font-size: 16px;
-        }
+        /* ---------- Pricing teaser ---------- */
+        .pricing-teaser { text-align: center; }
+        .pricing-teaser .eyebrow { justify-content: center; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); margin-top: var(--s-10); text-align: left; }
+        .pricing-grid .price { border: 1.5px solid var(--rule); padding: var(--s-8) var(--s-6) var(--s-6); display: flex; flex-direction: column; background: #fff; }
+        .pricing-grid .tier { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 var(--s-3); }
+        .pricing-grid .amount { font-size: 48px; line-height: 1; margin: 0 0 var(--s-4); font-variant-numeric: tabular-nums; }
+        .pricing-grid .amount .cur { font-size: 15px; font-weight: 600; color: var(--ink-soft); margin-right: 6px; letter-spacing: 0; }
+        .pricing-grid .amount .per { font-size: 15px; font-weight: 500; color: var(--ink-soft); margin-left: 4px; letter-spacing: 0; }
+        .pricing-grid .blurb { color: var(--ink-soft); font-size: 15px; margin: 0 0 var(--s-5); }
+        .pricing-grid ul { margin-bottom: var(--s-6) !important; }
+        .pricing-grid .cta { margin-top: auto; }
 
-        @media (max-width: 880px) {
-            .preview { grid-template-columns: 1fr; gap: var(--s-10); }
-            .phone-stack { min-height: 640px; max-width: 360px; margin: 0 auto; }
-            .phone-front { left: 0; }
-            .phone-back  { right: 0; }
-        }
-
-        /* ============ SPLIT FLOW STRIP ============ */
-        .split-strip {
-            background: var(--card-warm);
-            border: 1px solid var(--rule);
-            border-radius: 4px;
-            padding: clamp(28px, 4vw, 56px);
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: clamp(28px, 5vw, 56px);
-            align-items: center;
-            box-shadow:
-                0 1px 0 oklch(0.220 0.024 60 / 0.03),
-                0 30px 60px -40px oklch(0.500 0.160 45 / 0.24);
-        }
-        .split-strip h2 { margin-bottom: var(--s-3); }
-        .split-people {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: var(--s-2);
-        }
-        .person {
-            border: 1px solid var(--rule);
-            background: var(--card);
-            border-radius: 4px;
-            padding: var(--s-4) var(--s-2);
-            text-align: center;
-            font-family: var(--mono);
-            font-size: 10px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--ink-soft);
-            position: relative;
-        }
-        .person.on {
-            border-color: var(--accent);
-            background: oklch(0.96 0.04 75);
-            color: var(--accent-deep);
-        }
-        .person .avatar {
-            width: 28px; height: 28px;
-            border-radius: 50%;
-            background: var(--rule-strong);
-            margin: 0 auto var(--s-2);
-            font-family: var(--serif);
-            font-style: italic;
-            font-size: 14px;
-            color: var(--card);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-transform: none;
-            letter-spacing: 0;
-        }
-        .person.on .avatar { background: var(--accent); }
-        .person .check {
-            position: absolute;
-            top: 6px; right: 6px;
-            font-family: var(--mono);
-            font-size: 10px;
-            color: var(--accent);
-        }
-        .person.on .check::after { content: '✓'; }
-
-        .split-row {
-            margin-top: var(--s-5);
-            display: flex;
-            justify-content: space-between;
-            font-family: var(--mono);
-            font-size: 12px;
-            color: var(--ink-soft);
-            padding-top: var(--s-3);
-            border-top: 1px dashed var(--rule-strong);
-        }
-        .split-row .each {
-            color: var(--accent-deep);
-            font-weight: 500;
-        }
-
-        @media (max-width: 760px) {
-            .split-strip { grid-template-columns: 1fr; }
-            .split-people { grid-template-columns: repeat(5, 1fr); gap: var(--s-1); }
-            .person { padding: var(--s-3) var(--s-1); }
-        }
-
-        /* ============ FUEL ============ */
-        .fuel {
-            display: grid;
-            grid-template-columns: 1fr 1.4fr;
-            gap: clamp(28px, 5vw, 72px);
-            align-items: center;
-        }
-        .fuel-chart {
-            background: var(--card);
-            border: 1px solid var(--rule);
-            border-radius: 4px;
-            padding: var(--s-6);
-            box-shadow:
-                0 1px 0 oklch(0.220 0.024 60 / 0.04),
-                0 20px 40px -28px oklch(0.220 0.024 60 / 0.18);
-        }
-        .fuel-chart .topline {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: var(--s-4);
-        }
-        .fuel-chart .label {
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--ink-faint);
-        }
-        .fuel-chart .big {
-            font-family: var(--serif);
-            font-style: italic;
-            font-size: 38px;
-            font-weight: 500;
-            line-height: 1;
-            font-variant-numeric: tabular-nums;
-        }
-        .fuel-chart .big .unit {
-            font-family: var(--mono);
-            font-style: normal;
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            color: var(--ink-faint);
-            margin-left: var(--s-2);
-            text-transform: uppercase;
-        }
-        .fuel-svg {
-            width: 100%;
-            height: 140px;
-            display: block;
-        }
-        .fuel-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: var(--s-4);
-            margin-top: var(--s-4);
-            border-top: 1px dashed var(--rule-strong);
-            padding-top: var(--s-4);
-        }
-        .fuel-row .stat .v {
-            font-family: var(--serif);
-            font-style: italic;
-            font-size: 22px;
-            font-variant-numeric: tabular-nums;
-        }
-        .fuel-row .stat .k {
-            font-family: var(--mono);
-            font-size: 10px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--ink-faint);
-        }
-
-        @media (max-width: 880px) {
-            .fuel { grid-template-columns: 1fr; gap: var(--s-8); }
-        }
-
-        /* ============ PRICING TEASER ============ */
-        .pricing-teaser {
-            text-align: center;
-        }
-        .pricing-grid {
-            margin-top: var(--s-10);
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--s-4);
-        }
-        .price {
-            background: var(--card);
-            border: 1px solid var(--rule);
-            border-radius: 4px;
-            padding: var(--s-8) var(--s-6);
-            text-align: left;
-            position: relative;
-        }
-        .price.featured {
-            border-color: var(--accent);
-            box-shadow:
-                0 1px 0 oklch(0.620 0.160 45 / 0.08),
-                0 30px 50px -28px oklch(0.500 0.160 45 / 0.30);
-        }
-        .price .tier {
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: 0.24em;
-            text-transform: uppercase;
-            color: var(--ink-soft);
-            margin: 0 0 var(--s-3);
-        }
-        .price.featured .tier { color: var(--accent-deep); }
-        .price .amount {
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 500;
-            font-size: 44px;
-            line-height: 1;
-            margin: 0 0 var(--s-1);
-            font-variant-numeric: tabular-nums;
-        }
-        .price .amount .cur {
-            font-family: var(--mono);
-            font-style: normal;
-            font-size: 13px;
-            color: var(--ink-faint);
-            letter-spacing: 0.16em;
-            margin-right: var(--s-2);
-        }
-        .price .amount .per {
-            font-family: var(--sans);
-            font-style: normal;
-            font-size: 14px;
-            color: var(--ink-soft);
-            margin-left: var(--s-2);
-        }
-        .price .blurb {
-            color: var(--ink-soft);
-            font-size: 14px;
-            margin: var(--s-3) 0 var(--s-5);
-        }
-        .price .cta {
-            display: inline-flex;
-            justify-content: center;
-            width: 100%;
-            margin-top: var(--s-3);
-        }
-
-        @media (max-width: 880px) {
-            .pricing-grid { grid-template-columns: 1fr; }
-        }
-
-        /* ============ FAQ ============ */
-        .faq-list {
-            margin-top: var(--s-8);
-            border-top: 1px solid var(--rule);
-        }
-        .faq-list details {
-            border-bottom: 1px solid var(--rule);
-            padding: var(--s-5) 0;
-        }
+        /* ---------- FAQ ---------- */
+        .faq-list { border-top: 1.5px solid var(--ink); }
+        .faq-list details { border-bottom: 1px solid var(--rule); padding: var(--s-5) 0; }
         .faq-list summary {
-            list-style: none;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: var(--s-4);
-            font-family: var(--serif);
-            font-style: italic;
-            font-size: 21px;
-            color: var(--ink);
-            transition: color 200ms var(--ease-out);
+            list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            gap: var(--s-4); font-size: 19px;
         }
         .faq-list summary::-webkit-details-marker { display: none; }
-        @media (hover: hover) and (pointer: fine) {
-            .faq-list summary:hover { color: var(--accent-deep); }
-        }
         .faq-list summary .plus {
-            font-family: var(--mono);
-            font-size: 18px;
-            color: var(--accent);
-            transition: transform 220ms var(--ease-out);
-            flex: 0 0 auto;
+            width: 32px; height: 32px; border-radius: 50%; background: var(--soft); flex: none;
+            display: grid; place-items: center; font-size: 20px; transition: transform 220ms var(--ease-out), background 200ms;
         }
-        .faq-list details[open] summary .plus { transform: rotate(45deg); }
-        .faq-list .a {
-            font-family: var(--sans);
-            font-size: 15.5px;
-            color: var(--ink-soft);
-            margin-top: var(--s-4);
-            max-width: 65ch;
-        }
+        .faq-list details[open] summary .plus { transform: rotate(45deg); background: var(--primary); }
+        .faq-list .a { color: var(--ink-soft); font-size: 16px; margin: var(--s-4) 0 0; max-width: 65ch; }
+        .faq-list .a a { color: var(--ink) !important; }
 
-        /* ============ CTA ============ */
-        .cta-band {
-            text-align: center;
-            padding: clamp(60px, 12vh, 140px) var(--s-6);
-            background: var(--ink);
-            color: oklch(0.97 0.014 80);
-            border-radius: 4px;
-            margin: var(--s-10) 0 0;
-            position: relative;
-            overflow: hidden;
+        /* ---------- CTA (yellow band) ---------- */
+        .cta-band { background: var(--primary); border-radius: 32px; padding: clamp(48px, 8vw, 96px) var(--s-6); text-align: center; }
+        .cta-band .h2 .accent { background: none; text-decoration: underline; text-decoration-thickness: 6px; text-underline-offset: 8px; }
+        .cta-band p { color: var(--ink); max-width: 46ch; margin: 0 auto var(--s-8); font-size: 18px; }
+
+        @media (max-width: 960px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-phone { margin-top: var(--s-6); }
+            .sticker { left: -16px; }
+            .features { grid-template-columns: 1fr 1fr; }
+            .feature.wide { grid-column: span 2; }
+            .screens, .private-grid, .pricing-grid { grid-template-columns: 1fr; }
+            .screens { gap: var(--s-14); }
         }
-        .cta-band::before {
-            content: '';
-            position: absolute; inset: 0;
-            background:
-                radial-gradient(80% 60% at 50% 0%, oklch(0.620 0.160 45 / 0.30), transparent 60%);
-            pointer-events: none;
-        }
-        .cta-band > * { position: relative; }
-        .cta-band h2 {
-            color: oklch(0.97 0.014 80);
-            margin-bottom: var(--s-4);
-        }
-        .cta-band h2 .accent { color: var(--accent-soft); }
-        .cta-band p {
-            color: oklch(0.85 0.020 80);
-            max-width: 48ch;
-            margin: 0 auto var(--s-8);
-            font-family: var(--serif);
-            font-size: 19px;
+        @media (max-width: 600px) {
+            .features { grid-template-columns: 1fr; }
+            .feature.wide { grid-column: auto; }
+            .sticker { display: none; }
+            .phone { border-width: 8px; border-radius: 36px; }
         }
 @endsection
 
 @section('content')
 
+@php $tick = '<svg viewBox="0 0 12 12" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3l2.3 2.2 4.7-5"/></svg>'; @endphp
+
 <section class="hero wrap">
     <div class="hero-grid">
         <div>
-            <p class="eyebrow rise"><span class="line"></span> A household ledger, kept by hand</p>
-            <h1 class="rise d-1">Where the<br><span class="accent">month</span><span class="roman">,</span><br>went<span class="accent">.</span></h1>
-            <p class="lede rise d-2">A calm expense tracker for households anywhere. Snap a receipt, split a bill, log fuel by the litre, in <em>your currency</em>. Without spreadsheets and without guesswork.</p>
+            <p class="eyebrow rise">Expense tracker for Android</p>
+            <h1 class="display rise d-1">Where the <span class="accent">month</span> went.</h1>
+            <p class="lede rise d-2">Kharcha is a private household ledger. Log an expense in seconds, split it across the family, track fuel by the litre and scan receipts, in <em>your currency</em>. No account. Everything stays encrypted on your phone.</p>
             <div class="hero-cta rise d-3">
                 <a class="btn btn-primary" href="{{ $playUrl }}" target="_blank" rel="noopener">
                     <span class="play-mark" aria-hidden="true">▶</span>
@@ -663,27 +154,20 @@
                 </a>
                 <a class="btn btn-ghost" href="/pricing">See pricing</a>
             </div>
-            <div class="hero-meta rise d-4">
-                <span><span class="dot" aria-hidden="true"></span>Free, no account</span>
-                <span><span class="dot" aria-hidden="true"></span>Multi-currency</span>
-                <span><span class="dot" aria-hidden="true"></span>Encrypted on your phone</span>
-            </div>
+            <ul class="hero-meta rise d-4">
+                <li><span class="tick" aria-hidden="true">{!! $tick !!}</span>Free, no account</li>
+                <li><span class="tick" aria-hidden="true">{!! $tick !!}</span>Encrypted on your phone</li>
+                <li><span class="tick" aria-hidden="true">{!! $tick !!}</span>Works offline</li>
+            </ul>
         </div>
 
-        <div class="rise d-2" aria-hidden="true">
-            <div class="receipt">
-                <h4>Imtiaz Super Market</h4>
-                <p class="place">Today · 17:42</p>
-                <ul>
-                    <li><span><span class="qty">2×</span>Milk pack 1L</span><span>540</span></li>
-                    <li><span><span class="qty">1×</span>Atta 10kg</span><span>1,820</span></li>
-                    <li><span><span class="qty">3×</span>Soap</span><span>360</span></li>
-                    <li><span><span class="qty">1×</span>Rooh Afza</span><span>440</span></li>
-                    <li><span><span class="qty">6×</span>Egg tray</span><span>720</span></li>
-                </ul>
-                <hr class="sep">
-                <div class="total"><span>Total</span><span>Rs 3,880</span></div>
-                <p class="scanned"><span class="pip"></span>Scanned · routed to Home</p>
+        <div class="hero-phone rise d-2">
+            <div class="phone">
+                <img src="/img/app/home.webp" width="540" height="922" alt="Kharcha home screen: Rs 37,133 spent in November, split across Home, Car and Me, with recent expenses" fetchpriority="high">
+            </div>
+            <div class="sticker" aria-hidden="true">
+                <span class="coin">k</span>
+                <div><b>Rs 49,970 less</b><span>than October</span></div>
             </div>
         </div>
     </div>
@@ -691,188 +175,95 @@
 
 {{-- ====================== FEATURES ====================== --}}
 <section class="band wrap" id="features">
-    <div class="reveal">
-        <p class="eyebrow"><span class="line"></span> What it does</p>
-        <h2 class="h2">Five small frictions<br><span class="accent">removed</span><span class="roman">.</span></h2>
-        <p class="lede" style="max-width: 56ch;">Not another budget app that asks you to categorise every transaction by hand. Kharcha is built around the way a household actually shops, drives and pays.</p>
+    <div class="section-head reveal">
+        <p class="eyebrow">What it does</p>
+        <h2 class="h2">Five small frictions, <span class="accent">removed</span>.</h2>
+        <p class="lede">Not another budget app that wants you to categorise every transaction. Kharcha is built around the way a household actually shops, drives and pays.</p>
     </div>
 
-    <div class="features" style="margin-top: var(--s-10);">
+    <div class="features">
         <article class="feature reveal">
-            <p class="num">01 <span aria-hidden="true">·</span></p>
-            <h3 class="h3">Snap. The receipt parses itself.</h3>
-            <p>Open the camera on a paper receipt or a phone bill. Every line is read for you; check each item and assign it to the right person or list before saving. Three scans to try; unlimited with Pro.</p>
+            <p class="num">1</p>
+            <h3 class="h3">Snap. The receipt reads itself.</h3>
+            <p>Every line is read for you; check each item and assign it to the right person or list before saving. Three scans to try; unlimited with Pro.</p>
         </article>
-
         <article class="feature reveal">
-            <p class="num">02 <span aria-hidden="true">·</span></p>
+            <p class="num">2</p>
             <h3 class="h3">Split a bill across the family.</h3>
-            <p>Tap two, three, four people on one expense. Kharcha divides it evenly and writes one entry into each person's list, all tied to the same split so the total is always honest.</p>
+            <p>Pick two, three or four lists on one expense. Kharcha divides it evenly and writes one entry into each, tied together so the total stays honest.</p>
         </article>
-
         <article class="feature reveal">
-            <p class="num">03 <span aria-hidden="true">·</span></p>
+            <p class="num">3</p>
             <h3 class="h3">Fuel, the way drivers measure it.</h3>
-            <p>Enter any two of amount, rate and litres and Kharcha works out the third, then your km/L and cost per km between full tanks. Top-ups are handled correctly.</p>
+            <p>Enter any two of amount, rate and litres; Kharcha works out the third, then your km/L and cost per km between full tanks. Top-ups handled correctly.</p>
         </article>
-
         <article class="feature reveal">
-            <p class="num">04 <span aria-hidden="true">·</span></p>
+            <p class="num">4</p>
             <h3 class="h3">A list per person, plus Home and Car.</h3>
-            <p>A list for each person, plus Home and Car, each with an optional monthly budget: one view across all of them. The dashboard answers the question parents actually ask, <em>where did the month go?</em></p>
+            <p>Each list can carry a monthly budget. One screen answers the question every family asks: <strong>where did the month go?</strong></p>
         </article>
-
-        <article class="feature reveal">
-            <p class="num">05 <span aria-hidden="true">·</span></p>
+        <article class="feature wide reveal">
+            <p class="num">5</p>
             <h3 class="h3">Private by design. No account, no cloud.</h3>
-            <p>Your ledger is encrypted on your phone and never leaves it. No sign-up, no server copy, no ads, no trackers. Save an <em>encrypted backup file</em> whenever you like and restore it on a new phone.</p>
+            <p>Your ledger is encrypted on your phone and never leaves it. No sign-up, no server copy, no ads, no trackers. Save an encrypted backup file whenever you like and restore it on a new phone.</p>
         </article>
     </div>
 </section>
 
-{{-- ====================== APP PREVIEW ====================== --}}
-<section class="band wrap">
-    <div class="preview">
-        <div class="reveal">
-            <p class="eyebrow"><span class="line"></span> In your hand</p>
-            <h2 class="h2">A month at a glance,<br><span class="accent">person by person</span><span class="roman">.</span></h2>
-            <p class="lede">Open Kharcha and the dashboard shows the current month's total broken down across every list. The split bar is the first thing you see, the first thing your family asks about.</p>
-            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--s-3); color: var(--ink-soft); font-size: 15px;">
-                <li>· Current month is always the home view.</li>
-                <li>· Tap any list to drill into its entries.</li>
-                <li>· The car button opens refills and km/L.</li>
-                <li>· The scan button reads a receipt into items.</li>
-            </ul>
-        </div>
+{{-- ====================== SCREENS ====================== --}}
+<section class="band wrap" id="screens">
+    <div class="section-head reveal">
+        <p class="eyebrow">In your hand</p>
+        <h2 class="h2">Big numbers. <span class="accent">Few taps.</span></h2>
+        <p class="lede">Designed like signage: one clear number per screen and one yellow button for the thing you came to do.</p>
+    </div>
 
-        <div class="phone-stack reveal" aria-hidden="true">
-            <div class="phone phone-back">
-                <div class="screen">
-                    <span class="notch"></span>
-                    <p class="screen-eyebrow">Scan</p>
-                    <p class="screen-month">Imtiaz</p>
-                    <div class="scan-card">
-                        <div class="row"><span>Milk 1L × 2</span><span>540</span></div>
-                        <div class="row"><span>Atta 10kg</span><span>1,820</span></div>
-                        <div class="row"><span>Soap × 3</span><span>360</span></div>
-                        <div class="row faint"><span>Rooh Afza</span><span>440</span></div>
-                        <div class="row faint"><span>Eggs × 6</span><span>720</span></div>
-                        <div class="total"><span>Total</span><span>Rs 3,880</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="phone phone-front">
-                <div class="screen">
-                    <span class="notch"></span>
-                    <p class="screen-eyebrow">May 2026</p>
-                    <p class="screen-month">This month</p>
-                    <div class="spent">
-                        <span class="amount">128,420</span>
-                        <span class="cur">Rs</span>
-                    </div>
-                    <div class="bar" aria-hidden="true">
-                        <i class="home" title="Home"></i>
-                        <i class="car" title="Car"></i>
-                        <i class="baba" title="Baba"></i>
-                        <i class="ammi" title="Ammi"></i>
-                        <i class="rest" title="Others"></i>
-                    </div>
-                    <ul class="lists">
-                        <li>
-                            <span><span class="swatch" style="background: var(--accent);"></span><span class="name">Home</span></span>
-                            <span class="amt">48,810</span>
-                        </li>
-                        <li>
-                            <span><span class="swatch" style="background: oklch(0.55 0.13 60);"></span><span class="name">Car</span></span>
-                            <span class="amt">28,000</span>
-                        </li>
-                        <li>
-                            <span><span class="swatch" style="background: oklch(0.62 0.10 200);"></span><span class="name">Baba</span></span>
-                            <span class="amt">22,310</span>
-                        </li>
-                        <li>
-                            <span><span class="swatch" style="background: oklch(0.55 0.10 300);"></span><span class="name">Ammi</span></span>
-                            <span class="amt">18,000</span>
-                        </li>
-                        <li>
-                            <span><span class="swatch" style="background: var(--rule-strong);"></span><span class="name">Kids</span></span>
-                            <span class="amt">11,300</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="screens">
+        <figure class="screen-card reveal" style="margin: 0;">
+            <div class="phone"><img src="/img/app/scan.webp" width="540" height="922" loading="lazy" alt="Scanned Carrefour receipt with six items, each assigned to a list and category"></div>
+            <figcaption>
+                <h3 class="h3">Scan, check, assign</h3>
+                <p>Every item on the receipt, editable, with one tap to send it to Home, Car or a person.</p>
+            </figcaption>
+        </figure>
+        <figure class="screen-card reveal" style="margin: 0;">
+            <div class="phone"><img src="/img/app/list.webp" width="540" height="922" loading="lazy" alt="Home list for November: Rs 19,980 of a Rs 60,000 budget, broken down by category"></div>
+            <figcaption>
+                <h3 class="h3">Budgets that talk back</h3>
+                <p>See what's left for the month and where it went, category by category.</p>
+            </figcaption>
+        </figure>
+        <figure class="screen-card reveal" style="margin: 0;">
+            <div class="phone"><img src="/img/app/refill.webp" width="540" height="922" loading="lazy" alt="New refill screen with amount, rate, litres, odometer and live km per litre"></div>
+            <figcaption>
+                <h3 class="h3">Refills in ten seconds</h3>
+                <p>Last rate prefilled, litres worked out, km/L shown live as you type the odometer.</p>
+            </figcaption>
+        </figure>
     </div>
 </section>
 
-{{-- ====================== SPLIT STRIP ====================== --}}
-<section class="band wrap">
-    <div class="split-strip reveal">
-        <div>
-            <p class="eyebrow"><span class="line"></span> Split, in one tap</p>
-            <h2 class="h2">One bill, four ledgers,<br><span class="accent">no maths</span><span class="roman">.</span></h2>
-            <p style="color: var(--ink-soft); font-size: 15.5px; margin: 0;">Dinner out, a wedding gift, a school trip: tap everyone who chipped in and Kharcha divides the total evenly. Every entry is tagged with the same split, so the household total never drifts.</p>
-        </div>
-        <div>
-            <div class="split-people" role="group" aria-label="Split between four people">
-                <div class="person on"><div class="avatar">B</div>Baba<span class="check" aria-hidden="true"></span></div>
-                <div class="person on"><div class="avatar">A</div>Ammi<span class="check" aria-hidden="true"></span></div>
-                <div class="person"><div class="avatar">Z</div>Zara</div>
-                <div class="person on"><div class="avatar">H</div>Hamza<span class="check" aria-hidden="true"></span></div>
-                <div class="person on"><div class="avatar">N</div>Nani<span class="check" aria-hidden="true"></span></div>
+{{-- ====================== PRIVACY ====================== --}}
+<section class="band wrap" id="private">
+    <div class="private reveal">
+        <p class="eyebrow">Private by design</p>
+        <h2 class="h2">Your money. <span class="accent">Your phone.</span> Nobody else.</h2>
+        <p class="lede">Kharcha 2.0 has no account and no server copy of your ledger. There is nothing for us to leak, sell or lose.</p>
+        <div class="private-grid">
+            <div>
+                <span class="tick" aria-hidden="true">{!! $tick !!}</span>
+                <h3 class="h3">Encrypted on device</h3>
+                <p>A SQLCipher database with a key kept in the Android Keystore. Cloud backup is switched off.</p>
             </div>
-            <div class="split-row">
-                <span>Total · Rs 6,400</span>
-                <span class="each">Each · Rs 1,600</span>
+            <div>
+                <span class="tick" aria-hidden="true">{!! $tick !!}</span>
+                <h3 class="h3">No account, no tracking</h3>
+                <p>No sign-up, no analytics, no ads. Scanned photos are read and discarded, never stored.</p>
             </div>
-        </div>
-    </div>
-</section>
-
-{{-- ====================== FUEL ====================== --}}
-<section class="band wrap">
-    <div class="fuel">
-        <div class="reveal">
-            <p class="eyebrow"><span class="line"></span> The car gets its own page</p>
-            <h2 class="h2">Petrol, by the litre,<br><span class="accent">measured properly</span><span class="roman">.</span></h2>
-            <p style="color: var(--ink-soft); font-size: 16px;">Type what you paid. Kharcha prefills the last rate, calculates the litres, your km since the last full tank and the cost per km between fills, and warns you if the odometer looks wrong.</p>
-        </div>
-        <div class="fuel-chart reveal" aria-hidden="true">
-            <div class="topline">
-                <span class="big">11.8<span class="unit">avg km / L</span></span>
-                <span class="label">Last 12 fills</span>
-            </div>
-            <svg class="fuel-svg" viewBox="0 0 360 140" preserveAspectRatio="none" aria-hidden="true">
-                <defs>
-                    <linearGradient id="fg" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="oklch(0.620 0.160 45)" stop-opacity="0.30"/>
-                        <stop offset="100%" stop-color="oklch(0.620 0.160 45)" stop-opacity="0"/>
-                    </linearGradient>
-                </defs>
-                {{-- Horizontal grid rules. --}}
-                <g stroke="oklch(0.880 0.038 80)" stroke-dasharray="2 4">
-                    <line x1="0" y1="35"  x2="360" y2="35"/>
-                    <line x1="0" y1="70"  x2="360" y2="70"/>
-                    <line x1="0" y1="105" x2="360" y2="105"/>
-                </g>
-                {{-- Area under the line. --}}
-                <path d="M 0 80 L 30 70 L 60 90 L 90 60 L 120 65 L 150 55 L 180 70 L 210 45 L 240 55 L 270 40 L 300 60 L 330 35 L 360 50 L 360 140 L 0 140 Z"
-                      fill="url(#fg)"/>
-                {{-- The line itself. --}}
-                <path d="M 0 80 L 30 70 L 60 90 L 90 60 L 120 65 L 150 55 L 180 70 L 210 45 L 240 55 L 270 40 L 300 60 L 330 35 L 360 50"
-                      fill="none" stroke="oklch(0.620 0.160 45)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                {{-- Recent points. --}}
-                <g fill="oklch(0.500 0.160 45)">
-                    <circle cx="270" cy="40" r="3"/>
-                    <circle cx="300" cy="60" r="3"/>
-                    <circle cx="330" cy="35" r="3"/>
-                    <circle cx="360" cy="50" r="3"/>
-                </g>
-            </svg>
-            <div class="fuel-row">
-                <div class="stat"><div class="v">Rs 24.30</div><div class="k">per km</div></div>
-                <div class="stat"><div class="v">412 L</div><div class="k">this year</div></div>
-                <div class="stat"><div class="v">9,840 km</div><div class="k">since Jan</div></div>
+            <div>
+                <span class="tick" aria-hidden="true">{!! $tick !!}</span>
+                <h3 class="h3">Backups you control</h3>
+                <p>Save a password-protected backup file anywhere you like. Read the <a href="/privacy">privacy notice</a>.</p>
             </div>
         </div>
     </div>
@@ -881,8 +272,8 @@
 {{-- ====================== PRICING TEASER ====================== --}}
 <section class="band wrap pricing-teaser" id="pricing-teaser">
     <div class="reveal">
-        <p class="eyebrow" style="justify-content:center;"><span class="line"></span> Pricing</p>
-        <h2 class="h2">Free to track.<br><span class="accent">Pro</span><span class="roman">, to scan.</span></h2>
+        <p class="eyebrow" style="justify-content:center;">Pricing</p>
+        <h2 class="h2">Free to track. <span class="accent">Pro to scan.</span></h2>
         <p class="lede" style="margin-left: auto; margin-right: auto; max-width: 52ch;">Entries, lists, splits, fuel and encrypted backups: free, no account. Pro adds unlimited receipt scanning, billed by Google Play with a 7-day free trial.</p>
     </div>
 
@@ -932,8 +323,8 @@
 {{-- ====================== FAQ ====================== --}}
 <section class="band wrap" id="faq">
     <div class="reveal" style="max-width: 760px;">
-        <p class="eyebrow"><span class="line"></span> Common questions</p>
-        <h2 class="h2">Things people ask,<br><span class="accent">before installing</span><span class="roman">.</span></h2>
+        <p class="eyebrow">Common questions</p>
+        <h2 class="h2">Things people ask, <span class="accent">before installing</span>.</h2>
     </div>
 
     <div class="faq-list reveal" style="max-width: 760px;">
@@ -975,14 +366,12 @@
 {{-- ====================== CTA ====================== --}}
 <section class="wrap" id="cta">
     <div class="cta-band reveal">
-        <h2 class="h2">Start tracking<br><span class="accent">your month</span><span class="roman">.</span></h2>
+        <h2 class="h2">Start tracking <span class="accent">your month</span>.</h2>
         <p>Free, no account, encrypted on your phone. Install it and log your first expense in a few seconds.</p>
-        <div style="display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap;">
-            <a class="btn btn-accent" href="{{ $playUrl }}" target="_blank" rel="noopener">
-                <span class="play-mark" aria-hidden="true">▶</span>
-                Get it on Google Play
-            </a>
-        </div>
+        <a class="btn btn-primary" href="{{ $playUrl }}" target="_blank" rel="noopener">
+            <span class="play-mark" aria-hidden="true">▶</span>
+            Get it on Google Play
+        </a>
     </div>
 </section>
 
@@ -990,7 +379,7 @@
 
 @section('scripts')
 <script>
-    // FAQ: expanding one collapses the others. Subtle, expected, not magic.
+    // FAQ: expanding one collapses the others.
     document.querySelectorAll('.faq-list details').forEach((d) => {
         d.addEventListener('toggle', () => {
             if (d.open) {

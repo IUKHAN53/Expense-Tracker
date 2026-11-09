@@ -5,7 +5,7 @@
 
 @section('head-style')
         .contact-hero {
-            padding: clamp(48px, 8vh, 96px) 0 clamp(24px, 4vh, 56px);
+            padding-top: clamp(48px, 8vh, 96px); padding-bottom: clamp(24px, 4vh, 56px);
         }
 
         .channels {
@@ -25,7 +25,7 @@
         .channel .icon {
             width: 36px; height: 36px;
             border-radius: 50%;
-            background: oklch(0.96 0.040 75);
+            background: var(--primary);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -122,7 +122,7 @@
 
 <section class="contact-hero wrap">
     <p class="eyebrow rise"><span class="line"></span> Contact</p>
-    <h1 class="display rise d-1">Say hello<span class="accent">.</span></h1>
+    <h1 class="display rise d-1">Say hello.</h1>
     <p class="lede rise d-2" style="margin-top: var(--s-6); max-width: 52ch;">A real human reads every email. Replies within seven days, often the same day. Pick whichever channel matches your question.</p>
 </section>
 
@@ -160,7 +160,7 @@
 
     <div class="topics reveal">
         <p class="eyebrow"><span class="line"></span> Pick a topic</p>
-        <h2 class="h2">What are you writing about<span class="accent">?</span></h2>
+        <h2 class="h2">What are you writing about?</h2>
 
         <div class="topics-grid">
             <div class="topic">
@@ -193,7 +193,7 @@
 
 <section class="wrap">
     <div class="reveal" style="text-align: center; padding: clamp(60px, 10vh, 120px) 0;">
-        <h2 class="h2">Not using it yet?<br><span class="accent">Get Kharcha</span><span class="roman">.</span></h2>
+        <h2 class="h2">Not using it yet?<br><span class="accent">Get Kharcha</span>.</h2>
         <p class="lede" style="margin: var(--s-6) auto var(--s-8); max-width: 44ch;">Free, no account, encrypted on your phone.</p>
         <a class="btn btn-primary" href="{{ $playUrl }}">
             Get it on Google Play
